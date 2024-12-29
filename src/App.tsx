@@ -1,12 +1,9 @@
 import './App.css';
-import React from 'react';
+import { router } from './routes/Router';
+import { RouterProvider } from 'react-router-dom';
 
 function App() {
-  return (
-    <>
-      <div className="text-fuchsia-500">안녕하세요!</div>
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
