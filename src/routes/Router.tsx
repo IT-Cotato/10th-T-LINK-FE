@@ -38,12 +38,12 @@ export const router = createBrowserRouter([
     children: [
       {
         path: 'roomlist',
-        element: <RoomList />,
         children: [
+          { index: true, element: <RoomList /> },
           {
-            path: 'roomId',
-            element: <RoomDetail />,
+            path: ':roomId',
             children: [
+              { index: true, element: <RoomDetail /> },
               { path: 'materials', element: <Materials /> },
               { path: 'homework', element: <Homework /> },
               { path: 'stats', element: <Statistics /> },
