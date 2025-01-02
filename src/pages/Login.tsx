@@ -1,5 +1,14 @@
+import { useNavigate } from 'react-router-dom';
+import KakaoLoginButton from '../components/KakaoLoginButton';
+
 const Login = () => {
-  return <div>Login</div>;
+  const navigate = useNavigate();
+  return (
+    <div className="flex flex-col">
+      <KakaoLoginButton />
+      <button onClick={() => navigate('/signup')}>회원 가입</button>
+    </div>
+  );
 };
 
 export default Login;
