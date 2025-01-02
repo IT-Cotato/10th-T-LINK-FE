@@ -8,6 +8,12 @@ import RoomList from '../pages/RoomList';
 import Calendar from '../pages/Calendar';
 import MyPage from '../pages/MyPage';
 import Layout from '../components/Layout';
+import RoomDetail from '../pages/RoomDetail';
+import Materials from '../pages/Materials';
+import Homework from '../pages/Homework';
+import CounselingDiary from '../pages/CounselingDiary';
+import Payment from '../pages/Payment';
+import Statistics from '../pages/Statistics';
 
 export const router = createBrowserRouter([
   {
@@ -31,8 +37,21 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        path: 'rooms',
-        element: <RoomList />,
+        path: 'roomlist',
+        children: [
+          { index: true, element: <RoomList /> },
+          {
+            path: ':roomId',
+            children: [
+              { index: true, element: <RoomDetail /> },
+              { path: 'materials', element: <Materials /> },
+              { path: 'homework', element: <Homework /> },
+              { path: 'stats', element: <Statistics /> },
+              { path: 'diary', element: <CounselingDiary /> },
+              { path: 'payment', element: <Payment /> },
+            ],
+          },
+        ],
       },
       {
         path: 'calendar',
