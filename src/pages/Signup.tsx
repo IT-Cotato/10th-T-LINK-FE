@@ -1,10 +1,16 @@
+import { useState } from 'react';
+import Header from '../components/Header';
+import RoleSelectionButton from '../components/RoleSelectionButton';
 const Signup = () => {
+  const [role, setRole] = useState('');
   return (
     <div className="flex flex-col">
-      <h3>당신은 누구인가요?</h3>
-      <button>선생님</button>
-      <button>학생</button>
-      <button>학부모</button>
+      <Header />
+      <h1>어디로 링크할까요?</h1>
+      <h3>선택하신 정보에 따라 화면이 달라져요!</h3>
+      <RoleSelectionButton />
+      <RoleSelectionButton />
+      <RoleSelectionButton />
     </div>
   );
 };
