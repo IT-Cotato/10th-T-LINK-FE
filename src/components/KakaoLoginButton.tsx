@@ -1,4 +1,4 @@
-import kakao_login from '../assets/images/kakao_login.png';
+import Kakao_login from '../assets/images/Kakao_login.png';
 
 const KakaoLoginButton = () => {
   const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API;
@@ -12,7 +12,7 @@ const KakaoLoginButton = () => {
   return (
     <div>
       <button className="bg-transparent" onClick={handleKakaoLogin}>
-        <img alt="카카오 로그인" src={kakao_login} />
+        <img alt="카카오 로그인" src={Kakao_login} />
       </button>
     </div>
   );

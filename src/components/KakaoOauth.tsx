@@ -28,7 +28,7 @@ const KakaoOauth = () => {
         // navigate('/');
       } else if (status === 'new') {
         // 신규 회원인 경우 -> 회원가입 페이지로 이동
-        navigate(`/signup`);
+        navigate('/signup');
       }
     } catch (err) {
       console.log(`로그인 실패: ${err}`);
