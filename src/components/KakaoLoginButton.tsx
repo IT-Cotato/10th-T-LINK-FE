@@ -11,9 +11,9 @@ const KakaoLoginButton = () => {
 
   return (
     <div>
-      <button className="bg-transparent" onClick={handleKakaoLogin}>
-        <img alt="카카오 로그인" src={Kakao_login} />
-      </button>
+      <div className="py-6 hover:cursor-pointer" onClick={handleKakaoLogin}>
+        <img className="" alt="카카오 로그인" src={Kakao_login} />
+      </div>
     </div>
   );
 };

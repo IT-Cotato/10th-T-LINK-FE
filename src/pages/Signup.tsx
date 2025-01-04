@@ -31,11 +31,11 @@ const Signup = () => {
   return (
     <div className="flex flex-col px-5">
       <Header />
-      <div className="flex flex-col py-4">
+      <div className="flex flex-col justify-between py-4 h-24">
         <h1 className="text-heading6 font-bold text-gray-900">어디로 링크할까요?</h1>
         <h3 className="text-body3 font-regular text-gray-600">선택하신 정보에 따라 화면이 달라져요!</h3>
       </div>
-      <div className="flex flex-col py-6 gap-4 cursor-pointer">
+      <div className="flex flex-col py-6 gap-4 cursor-pointer mb-40">
         {RoleList.map((item) => (
           <RoleSelectionButton
             key={item.id}

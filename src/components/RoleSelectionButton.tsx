@@ -21,7 +21,7 @@ const RoleSelectionButton = ({ role, onSelect, isSelected }: RoleProps) => {
         >
           <img className="w-9 h-9" src={src} alt={title} />
         </div>
-        <div className="text-gray-900">
+        <div className="flex flex-col justify-between text-gray-900">
           <h1 className={`text-body1 font-bold ${isSelected ? 'text-primary_800' : ''}`}>{title}</h1>
           <h3 className="text-body4 font-regular">{description}</h3>
         </div>
