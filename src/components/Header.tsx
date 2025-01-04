@@ -4,7 +4,7 @@ import { GoArrowLeft } from 'react-icons/go';
 const Header = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex items-center px-4 py-1.5">
+    <div className="flex items-center px-2 py-1.5">
       <div className="flex p-2.5 justify-center items-center cursor-pointer" onClick={() => navigate(-1)}>
         <GoArrowLeft size={24} />
       </div>
