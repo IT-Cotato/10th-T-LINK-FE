@@ -1,4 +1,4 @@
-import Kakao_login from '../assets/images/Kakao_login.png';
+import Kakao_logo from '../assets/images/Kakao_logo.png';
 
 const KakaoLoginButton = () => {
   const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API;
@@ -10,10 +10,13 @@ const KakaoLoginButton = () => {
   };
 
   return (
-    <div>
-      <div className="py-6 hover:cursor-pointer" onClick={handleKakaoLogin}>
-        <img className="" alt="카카오 로그인" src={Kakao_login} />
-      </div>
+    <div className="flex px-4 py-6 justify-center">
+      <button className="flex px-3.5 py-3 justify-center items-center flex-1 rounded-md bg-kakao">
+        <div className="flex justify-center items-center gap-2 px-6">
+          <img className="w-4 h-4" alt="카카오 로그인" src={Kakao_logo} onClick={handleKakaoLogin} />
+          <h3>카카오로 계속하기</h3>
+        </div>
+      </button>
     </div>
   );
 };

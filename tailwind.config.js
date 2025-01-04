@@ -79,6 +79,8 @@ export default {
         sub2_60: '#0E46B8',
         sub2_80: '#08338B',
         sub2_100: '#042363',
+
+        kakao: '#FEE500',
       },
     },
   },
