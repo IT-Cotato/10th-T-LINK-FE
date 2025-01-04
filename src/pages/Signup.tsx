@@ -1,6 +1,7 @@
-import axios from 'axios';
+import instance from '../api/axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { postRole } from '../api/authAPI';
 
 import Header from '../components/Header';
 import RoleSelectionButton from '../components/RoleSelectionButton';
@@ -11,14 +12,9 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const sendRoleToServer = async () => {
-    try {
-      const res = await axios.post('백에서 주는 url입력', { role });
-      const data = res.data;
-      console.log(data);
-      navigate('/');
-    } catch (err) {
-      console.log(`회원가입 실패: ${err}`);
-    }
+    const data = await postRole(role);
+    console.log(data);
+    navigate('/');
   };
 
   const handleStart = () => {
@@ -29,25 +25,27 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex flex-col px-5">
+    <div>
       <Header />
-      <div className="flex flex-col justify-between py-4 h-24">
-        <h1 className="text-heading6 font-bold text-gray-900">어디로 링크할까요?</h1>
-        <h3 className="text-body3 font-regular text-gray-600">선택하신 정보에 따라 화면이 달라져요!</h3>
+      <div className="flex flex-col px-5">
+        <div className="flex flex-col justify-between py-4 h-24">
+          <h1 className="text-heading6 font-bold text-gray-900">어디로 링크할까요?</h1>
+          <h3 className="text-body3 font-regular text-gray-600">선택하신 정보에 따라 화면이 달라져요!</h3>
+        </div>
+        <div className="flex flex-col py-6 gap-4 cursor-pointer mb-40">
+          {RoleList.map((item) => (
+            <RoleSelectionButton
+              key={item.id}
+              role={item}
+              onSelect={() => setRole(item.role)}
+              isSelected={role === item.role}
+            />
+          ))}
+        </div>
+        <button disabled={!role} className="text-gray-400" onClick={handleStart}>
+          시작하기
+        </button>
       </div>
-      <div className="flex flex-col py-6 gap-4 cursor-pointer mb-40">
-        {RoleList.map((item) => (
-          <RoleSelectionButton
-            key={item.id}
-            role={item}
-            onSelect={() => setRole(item.role)}
-            isSelected={role === item.role}
-          />
-        ))}
-      </div>
-      <button disabled={!role} className="text-gray-400" onClick={handleStart}>
-        시작하기
-      </button>
     </div>
   );
 };
