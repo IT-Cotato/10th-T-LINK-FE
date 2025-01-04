@@ -4,11 +4,11 @@ import { GoArrowLeft } from 'react-icons/go';
 const Header = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex">
-      <button onClick={() => navigate(-1)}>
-        <GoArrowLeft />
+    <div className="flex items-center h-16">
+      <button className="bg-transparent" onClick={() => navigate(-1)}>
+        <GoArrowLeft size={24} />
       </button>
-      <div>로고 이미지</div>
+      <div className="flex-1"></div>
     </div>
   );
 };
