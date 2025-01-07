@@ -4,22 +4,19 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        regular: ['Pretendard-Regular'],
-        medium: ['Pretendard-Medium'],
-        bold: ['Pretendard-Bold'],
-        semibold: ['Pretendard-SemiBold'],
+        sans: ['Pretendard', 'sans-serif'],
       },
       fontSize: {
-        heading2: ['68px'],
-        heading3: ['48px'],
-        heading4: ['36px'],
-        heading5: ['30px'],
-        heading6: ['24px'],
-        body1: ['20px'],
-        body2: ['18px'],
-        body3: ['16px'],
-        body4: ['14px'],
-        caption1: ['12px'],
+        heading2: ['4.25rem'],
+        heading3: ['3rem'],
+        heading4: ['2.25rem'],
+        heading5: ['1.875rem'],
+        heading6: ['1.5rem'],
+        body1: ['1.25rem'],
+        body2: ['1.125rem'],
+        body3: ['1rem'],
+        body4: ['.875rem'],
+        caption1: ['.75rem'],
       },
       colors: {
         // gray
@@ -84,5 +81,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar')],
 };
