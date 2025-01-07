@@ -4,10 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        regular: ['Pretendard-Regular'],
-        medium: ['Pretendard-Medium'],
-        bold: ['Pretendard-Bold'],
-        semibold: ['Pretendard-SemiBold'],
+        sans: ['Pretendard', 'sans-serif'],
       },
       fontSize: {
         heading2: ['68px'],
