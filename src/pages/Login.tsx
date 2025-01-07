@@ -10,7 +10,7 @@ const Login = () => {
         <div>일정 관리부터 과제 제출까지</div>
         <div>편리하게 이용하고 공유해요</div>
       </div>
-      <div className="flex-grow px-4">온보딩 일러스트레이션</div>
+      <div className="px-4 ">온보딩 일러스트레이션</div>
       <KakaoLoginButton />
     </div>
   );

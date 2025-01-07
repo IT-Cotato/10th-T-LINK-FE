@@ -42,8 +42,12 @@ const Signup = () => {
         ))}
       </div>
       <div className="flex-grow" />
-      <div className="px-5 py-6 flex justify-center">
-        <button disabled={!role} className="flex-1 px-4 py-3.5 text-gray-400 enabled:text-black" onClick={handleStart}>
+      <div className="px-5 py-6 flex justify-center fixed bottom-0 max-w-[500px] w-full">
+        <button
+          disabled={!role}
+          className="flex-1 px-4 py-3.5 text-gray-400 bg-gray-50 enabled:text-black"
+          onClick={handleStart}
+        >
           시작하기
         </button>
       </div>
