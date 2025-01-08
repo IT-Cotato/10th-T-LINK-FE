@@ -14,6 +14,7 @@ import Homework from '../pages/Homework';
 import CounselingDiary from '../pages/CounselingDiary';
 import Payment from '../pages/Payment';
 import Statistics from '../pages/Statistics';
+import CreateRoom from '../pages/CreateRoom';
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +41,7 @@ export const router = createBrowserRouter([
         path: 'roomlist',
         children: [
           { index: true, element: <RoomList /> },
+          { path: 'createroom', element: <CreateRoom /> },
           {
             path: ':roomId',
             children: [
