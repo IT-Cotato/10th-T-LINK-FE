@@ -1,4 +1,4 @@
-import { Permission } from '../pages/CreateRoom';
+import { Permission } from '../context/RoomContext';
 
 type TypeProps = {
   type: Permission;

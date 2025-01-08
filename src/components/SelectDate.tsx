@@ -1,4 +1,4 @@
-import { Day } from '../pages/CreateRoom';
+import { Day } from '../context/RoomContext';
 
 type DayProps = {
   day: Day;
@@ -9,7 +9,7 @@ const SelectDate = ({ day, handleClick }: DayProps) => {
   return (
     <div>
       <button
-        className={`px-4 text-white  ${day.isClicked ? 'bg-gray-300' : 'bg-black'}`}
+        className={`px-4 text-white  ${day.isClicked ? 'bg-black' : 'bg-gray-300'}`}
         onClick={() => handleClick(day.id)}
       >
         {day.date}
