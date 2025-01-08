@@ -1,6 +1,6 @@
 import PermissionToggle from '../components/PermissionToggle';
 import SelectDate from '../components/SelectDate';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRoomContext } from '../context/RoomContext';
 import { Day, Permission } from '../context/RoomContext';
 
@@ -36,10 +36,12 @@ const CreateRoom = () => {
 
   const handleClick = (id: number) => {
     setDayList(dayList.map((day) => (id === day.id ? { ...day, isClicked: !day.isClicked } : day)));
+  };
 
+  useEffect(() => {
     const selectedDays = dayList.filter((day) => day.isClicked).map((day) => day.date);
     setDays(selectedDays);
-  };
+  }, [dayList]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.placeholder === '방이름') setRoomName(e.target.value);
@@ -82,9 +84,6 @@ const CreateRoom = () => {
       studentP[4].isChecked,
     );
   };
-  console.log(rooms);
-  console.log(dayList);
-
   return (
     <div className="flex flex-col gap-16">
       <input placeholder="방이름" onChange={handleChange} value={roomName} />

@@ -5,6 +5,7 @@ import { useRoomContext } from '../context/RoomContext';
 const RoomList = () => {
   const navigate = useNavigate();
   const { rooms } = useRoomContext();
+  console.log(rooms);
 
   return (
     <div className="flex flex-col">
