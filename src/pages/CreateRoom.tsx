@@ -3,8 +3,10 @@ import SelectDate from '../components/SelectDate';
 import { useEffect, useState } from 'react';
 import { useRoomContext } from '../context/RoomContext';
 import { Day, Permission } from '../context/RoomContext';
+import { useNavigate } from 'react-router-dom';
 
 const CreateRoom = () => {
+  const navigate = useNavigate();
   const { onCreate, rooms } = useRoomContext();
   const [roomName, setRoomName] = useState('');
   const [subject, setSubject] = useState('');
@@ -23,13 +25,13 @@ const CreateRoom = () => {
     { id: 0, type: 'materials', title: '강의 자료함', isChecked: false },
     { id: 1, type: 'homework', title: '주차별 숙제', isChecked: false },
     { id: 2, type: 'stats', title: '성적 통계', isChecked: false },
-    { id: 3, type: 'counseling', title: '상담 일지', isChecked: false },
-    { id: 4, type: 'payment', title: '입금', isChecked: false },
+    { id: 3, type: 'counseling', title: '상담 일지', isChecked: true },
+    { id: 4, type: 'payment', title: '입금', isChecked: true },
   ]);
   const [studentP, setstudentP] = useState<Permission[]>([
-    { id: 5, type: 'materials', title: '강의 자료함', isChecked: false },
-    { id: 6, type: 'homework', title: '주차별 숙제', isChecked: false },
-    { id: 7, type: 'stats', title: '성적 통계', isChecked: false },
+    { id: 5, type: 'materials', title: '강의 자료함', isChecked: true },
+    { id: 6, type: 'homework', title: '주차별 숙제', isChecked: true },
+    { id: 7, type: 'stats', title: '성적 통계', isChecked: true },
     { id: 8, type: 'counseling', title: '상담 일지', isChecked: false },
     { id: 9, type: 'payment', title: '입금', isChecked: false },
   ]);
@@ -49,9 +51,13 @@ const CreateRoom = () => {
   };
 
   const handleCheck = (id: number) => {
-    if (id < 5) setparentP(parentP.map((type) => (id === type.id ? { ...type, isChecked: !type.isChecked } : type)));
-    if (id >= 5) setstudentP(studentP.map((type) => (id === type.id ? { ...type, isChecked: !type.isChecked } : type)));
+    if (id >= 3 && id <= 7) return;
+    else if (id < 5)
+      setparentP(parentP.map((type) => (id === type.id ? { ...type, isChecked: !type.isChecked } : type)));
+    else if (id >= 5)
+      setstudentP(studentP.map((type) => (id === type.id ? { ...type, isChecked: !type.isChecked } : type)));
   };
+  console.log(rooms);
 
   const handleCreate = (
     roomName: string,
@@ -60,11 +66,6 @@ const CreateRoom = () => {
     pMaterials: boolean,
     pHomework: boolean,
     pStats: boolean,
-    pCounseling: boolean,
-    pPayment: boolean,
-    sMaterials: boolean,
-    sHomework: boolean,
-    sStats: boolean,
     sCounseling: boolean,
     sPayment: boolean,
   ) => {
@@ -75,14 +76,10 @@ const CreateRoom = () => {
       parentP[0].isChecked,
       parentP[1].isChecked,
       parentP[2].isChecked,
-      parentP[3].isChecked,
-      parentP[4].isChecked,
-      studentP[0].isChecked,
-      studentP[1].isChecked,
-      studentP[2].isChecked,
       studentP[3].isChecked,
       studentP[4].isChecked,
     );
+    navigate('/user/roomlist');
   };
   return (
     <div className="flex flex-col gap-16">
@@ -93,18 +90,21 @@ const CreateRoom = () => {
           <SelectDate key={day.id} day={day} handleClick={handleClick} />
         ))}
       </div>
-      <div className="flex flex-col">
-        <h1>학생 권한설정</h1>
-        {studentP.map((type) => (
-          <PermissionToggle key={type.id} type={type} handleCheck={handleCheck} />
-        ))}
+      <div className="flex justify-between">
+        <div className="flex flex-col">
+          <h1>학부모 권한설정</h1>
+          {parentP.map((type) => (
+            <PermissionToggle key={type.id} type={type} handleCheck={handleCheck} />
+          ))}
+        </div>
+        <div className="flex flex-col">
+          <h1>학생 권한설정</h1>
+          {studentP.map((type) => (
+            <PermissionToggle key={type.id} type={type} handleCheck={handleCheck} />
+          ))}
+        </div>
       </div>
-      <div className="flex flex-col">
-        <h1>학부모 권한설정</h1>
-        {parentP.map((type) => (
-          <PermissionToggle key={type.id} type={type} handleCheck={handleCheck} />
-        ))}
-      </div>
+
       <button
         onClick={() =>
           handleCreate(
@@ -114,21 +114,15 @@ const CreateRoom = () => {
             parentP[0].isChecked,
             parentP[1].isChecked,
             parentP[2].isChecked,
-            parentP[3].isChecked,
-            parentP[4].isChecked,
-            studentP[0].isChecked,
-            studentP[1].isChecked,
-            studentP[2].isChecked,
             studentP[3].isChecked,
             studentP[4].isChecked,
           )
         }
         className="text-white"
       >
-        다음
+        완료
       </button>
     </div>
   );
 };
-
 export default CreateRoom;

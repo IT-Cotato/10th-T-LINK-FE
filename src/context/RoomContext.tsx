@@ -21,11 +21,11 @@ export type Room = {
   pMaterials: boolean;
   pHomework: boolean;
   pStats: boolean;
-  pCounseling: boolean;
-  pPayment: boolean;
-  sMaterials: boolean;
-  sHomework: boolean;
-  sStats: boolean;
+  pCounseling: true;
+  pPayment: true;
+  sMaterials: true;
+  sHomework: true;
+  sStats: true;
   sCounseling: boolean;
   sPayment: boolean;
 };
@@ -39,11 +39,6 @@ type RoomContextType = {
     pMaterials: boolean,
     pHomework: boolean,
     pStats: boolean,
-    pCounseling: boolean,
-    pPayment: boolean,
-    sMaterials: boolean,
-    sHomework: boolean,
-    sStats: boolean,
     sCounseling: boolean,
     sPayment: boolean,
   ) => void;
@@ -71,11 +66,6 @@ export const RoomProvider = ({ children }: { children: ReactNode }) => {
     pMaterials: boolean,
     pHomework: boolean,
     pStats: boolean,
-    pCounseling: boolean,
-    pPayment: boolean,
-    sMaterials: boolean,
-    sHomework: boolean,
-    sStats: boolean,
     sCounseling: boolean,
     sPayment: boolean,
   ) => {
@@ -87,11 +77,11 @@ export const RoomProvider = ({ children }: { children: ReactNode }) => {
       pMaterials: pMaterials,
       pHomework: pHomework,
       pStats: pStats,
-      pCounseling: pCounseling,
-      pPayment: pPayment,
-      sMaterials: sMaterials,
-      sHomework: sHomework,
-      sStats: sStats,
+      pCounseling: true,
+      pPayment: true,
+      sMaterials: true,
+      sHomework: true,
+      sStats: true,
       sCounseling: sCounseling,
       sPayment: sPayment,
     };
