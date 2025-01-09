@@ -15,6 +15,7 @@ import CounselingDiary from '../pages/CounselingDiary';
 import Payment from '../pages/Payment';
 import Statistics from '../pages/Statistics';
 import CreateRoom from '../pages/CreateRoom';
+import KakaoOauth from '../components/KakaoOauth';
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ export const router = createBrowserRouter([
     path: 'login',
     element: <Login />,
   },
+  { path: 'oauth', element: <KakaoOauth /> },
   {
     path: 'signup',
     element: <Signup />,
