@@ -1,63 +1,68 @@
 import { useState } from 'react';
-import { GoHome } from 'react-icons/go';
-import { GoHomeFill } from 'react-icons/go';
 import { useNavigate } from 'react-router-dom';
+
+import CalendarSvg from '../assets/images/calendar.svg?react';
+import CalendarFill from '../assets/images/calendarFill.svg?react';
+import HomeSvg from '../assets/images/home.svg?react';
+import HomeFill from '../assets/images/homeFill.svg?react';
+import MypageSvg from '../assets/images/mypage.svg?react';
+import MyPageFill from '../assets/images/mypageFill.svg?react';
+import Indicator from '../assets/images/Indicator.svg?react';
 
 // useLocationd을 사용해 경로로 접근하는 방식도 고려 필요
 // 경로로 접근할 일은 없으니 상관없나?
 
 const NavBar = () => {
   const nav = useNavigate();
-  const [currentMenu, setCurrentMenu] = useState<string>('roomList');
+  const [currentMenu, setCurrentMenu] = useState<string>('roomlist');
+  console.log(currentMenu);
+
+  const menus = [
+    {
+      menu: '과외방',
+      name: 'roomlist',
+      inactive: <HomeSvg className="w-6 h-6" />,
+      active: <HomeFill className="w-6 h-6" />,
+    },
+    {
+      menu: '달력',
+      name: 'calendar',
+      inactive: <CalendarSvg className="w-6 h-6" />,
+      active: <CalendarFill className="w-6 h-6" />,
+    },
+    {
+      menu: '내 정보',
+      name: 'mypage',
+      inactive: <MypageSvg className="w-6 h-6" />,
+      active: <MyPageFill className="w-6 h-6" />,
+    },
+  ];
 
   return (
-    <div className="border-t border-gray-300 flex">
-      <div className="py-2 flex justify-around w-full">
-        {/* 과외방 */}
-        <div
-          className="flex-col cursor-pointer"
-          onClick={() => {
-            setCurrentMenu('roomList');
-            nav('roomlist');
-          }}
-        >
-          {currentMenu == 'roomList' ? (
-            <GoHomeFill className="w-[42px] h-[42px]" />
-          ) : (
-            <GoHome className="w-[42px] h-[42px]" />
-          )}
-          <p className="text-center">과외방</p>
-        </div>
-        {/* 캘린더 */}
-        <div
-          className="flex-col cursor-pointer"
-          onClick={() => {
-            setCurrentMenu('calendar');
-            nav('calendar');
-          }}
-        >
-          {currentMenu == 'calendar' ? (
-            <GoHomeFill className="w-[42px] h-[42px]" />
-          ) : (
-            <GoHome className="w-[42px] h-[42px]" />
-          )}
-          <p className="text-center">캘린더</p>
-        </div>
-        {/* 내 정보 */}
-        <div
-          className="flex-col cursor-pointer"
-          onClick={() => {
-            setCurrentMenu('mypage');
-            nav('mypage');
-          }}
-        >
-          {currentMenu == 'mypage' ? (
-            <GoHomeFill className="w-[42px] h-[42px]" />
-          ) : (
-            <GoHome className="w-[42px] h-[42px]" />
-          )}
-          <p className="text-center">내 정보</p>
-        </div>
+    <div className="border-t border-gray-200 flex">
+      <div className="grid grid-cols-3 w-full px-[7.5px]">
+        {menus.map((menuItem) => (
+          <div
+            key={menuItem.name}
+            className="flex-col cursor-pointer px-4 py-[6px] flex justify-center items-center"
+            onClick={() => {
+              setCurrentMenu(menuItem.name);
+              nav(menuItem.name);
+            }}
+          >
+            <div
+              className={`items-center flex flex-col pb-[8px] gap-1 ${currentMenu === menuItem.name ? 'pt-[11px]' : 'pt-[6px]'}`}
+            >
+              {currentMenu === menuItem.name ? menuItem.active : menuItem.inactive}
+              <p
+                className={`text-center ${currentMenu === menuItem.name ? 'text-body4 text-primary_600 font-semibold' : 'text-caption1 text-gray-500'}`}
+              >
+                {menuItem.menu}
+                {currentMenu === menuItem.name ? <Indicator /> : ''}
+              </p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
