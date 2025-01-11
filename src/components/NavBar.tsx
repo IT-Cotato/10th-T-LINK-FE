@@ -44,22 +44,22 @@ const NavBar = () => {
         {menus.map((menuItem) => (
           <div
             key={menuItem.name}
-            className="flex-col cursor-pointer px-4 py-[6px] flex justify-center items-center"
+            className={`flex-col cursor-pointer px-4 flex items-center ${currentMenu === menuItem.name ? 'pt-[6px] pb-[0px]' : 'py-[6px]'}`}
             onClick={() => {
               setCurrentMenu(menuItem.name);
               nav(menuItem.name);
             }}
           >
             <div
-              className={`items-center flex flex-col pb-[8px] gap-1 ${currentMenu === menuItem.name ? 'pt-[11px]' : 'pt-[6px]'}`}
+              className={`items-center flex flex-col gap-1 ${currentMenu === menuItem.name ? 'pt-[4px] pb-[0px]' : 'pt-[9px] pb-[2px]'}`}
             >
               {currentMenu === menuItem.name ? menuItem.active : menuItem.inactive}
               <p
                 className={`text-center ${currentMenu === menuItem.name ? 'text-body4 text-primary_600 font-semibold' : 'text-caption1 text-gray-500'}`}
               >
                 {menuItem.menu}
-                {currentMenu === menuItem.name ? <Indicator /> : ''}
               </p>
+              {currentMenu === menuItem.name ? <Indicator className="h-[6px]" /> : ''}
             </div>
           </div>
         ))}
