@@ -1,12 +1,12 @@
-import Kakao_logo from '../assets/images/Kakao_logo.png';
+import kakao_logo from '../assets/images/kakao_logo.png';
 
 const KakaoLoginButton = () => {
   const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API;
   const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
-  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
+  const KAKAO_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`;
 
   const handleKakaoLogin = () => {
-    window.location.href = kakaoURL;
+    window.location.href = KAKAO_URL;
   };
 
   return (
@@ -16,7 +16,7 @@ const KakaoLoginButton = () => {
         onClick={handleKakaoLogin}
       >
         <div className="flex justify-center items-center gap-2 px-6">
-          <img className="w-4 h-4" alt="카카오 로그인" src={Kakao_logo} />
+          <img className="w-4 h-4" alt="카카오 로그인" src={kakao_logo} />
           <h3>카카오로 계속하기</h3>
         </div>
       </button>
