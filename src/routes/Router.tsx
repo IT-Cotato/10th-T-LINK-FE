@@ -14,6 +14,8 @@ import Homework from '../pages/Homework';
 import CounselingDiary from '../pages/CounselingDiary';
 import Payment from '../pages/Payment';
 import Statistics from '../pages/Statistics';
+import CreateRoom from '../pages/CreateRoom';
+import KakaoOauth from '../components/KakaoOauth';
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +26,7 @@ export const router = createBrowserRouter([
     path: 'login',
     element: <Login />,
   },
+  { path: 'oauth', element: <KakaoOauth /> },
   {
     path: 'signup',
     element: <Signup />,
@@ -40,6 +43,7 @@ export const router = createBrowserRouter([
         path: 'roomlist',
         children: [
           { index: true, element: <RoomList /> },
+          { path: 'createroom', element: <CreateRoom /> },
           {
             path: ':roomId',
             children: [
