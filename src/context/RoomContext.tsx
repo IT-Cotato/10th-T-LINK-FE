@@ -1,47 +1,29 @@
 import { createContext, ReactNode, useContext, useState, useRef } from 'react';
 
-export type Day = {
-  id: number;
-  date: string;
-  isClicked: boolean;
-};
-
-export type Permission = {
-  id: number;
-  type: string;
-  title: string;
-  isChecked: boolean;
-};
-
 export type Room = {
   id: number;
   roomName: string;
+  studentName: string;
   subject: string;
   days: string[];
-  pMaterials: boolean;
-  pHomework: boolean;
-  pStats: boolean;
-  pCounseling: true;
-  pPayment: true;
-  sMaterials: true;
-  sHomework: true;
-  sStats: true;
-  sCounseling: boolean;
-  sPayment: boolean;
+  parentPermissions: string[];
+  studentPermissions: string[];
 };
+
+export type OnSubmit = (
+  id: number,
+  roomName: string,
+  studentName: string,
+  subject: string,
+  days: string[],
+  parentPermissions: string[],
+  studentPermissions: string[],
+) => void;
 
 type RoomContextType = {
   rooms: Room[];
-  onCreate: (
-    roomName: string,
-    subject: string,
-    days: string[],
-    pMaterials: boolean,
-    pHomework: boolean,
-    pStats: boolean,
-    sCounseling: boolean,
-    sPayment: boolean,
-  ) => void;
+  onCreate: OnSubmit;
+  onUpdate: OnSubmit;
   onDelete: (id: number) => void;
 };
 
@@ -60,37 +42,50 @@ export const RoomProvider = ({ children }: { children: ReactNode }) => {
   const idRef = useRef(0);
 
   const onCreate = (
+    id: number,
     roomName: string,
+    studentName: string,
     subject: string,
     days: string[],
-    pMaterials: boolean,
-    pHomework: boolean,
-    pStats: boolean,
-    sCounseling: boolean,
-    sPayment: boolean,
+    parentPermissions: string[],
+    studentPermissions: string[],
   ) => {
     const newRoom: Room = {
       id: idRef.current++,
       roomName: roomName,
+      studentName: studentName,
       subject: subject,
       days: days,
-      pMaterials: pMaterials,
-      pHomework: pHomework,
-      pStats: pStats,
-      pCounseling: true,
-      pPayment: true,
-      sMaterials: true,
-      sHomework: true,
-      sStats: true,
-      sCounseling: sCounseling,
-      sPayment: sPayment,
+      parentPermissions: parentPermissions,
+      studentPermissions: studentPermissions,
     };
     setRooms([...rooms, newRoom]);
+  };
+
+  const onUpdate = (
+    id: number,
+    roomName: string,
+    studentName: string,
+    subject: string,
+    days: string[],
+    parentPermissions: string[],
+    studentPermissions: string[],
+  ) => {
+    const updatedRoom: Room = {
+      id: id,
+      roomName: roomName,
+      studentName: studentName,
+      subject: subject,
+      days: days,
+      parentPermissions: parentPermissions,
+      studentPermissions: studentPermissions,
+    };
+    setRooms(rooms.map((room) => (room.id === id ? updatedRoom : room)));
   };
 
   const onDelete = (id: number) => {
     setRooms(rooms.filter((room) => room.id !== id));
   };
 
-  return <RoomContext.Provider value={{ rooms, onCreate, onDelete }}>{children}</RoomContext.Provider>;
+  return <RoomContext.Provider value={{ rooms, onCreate, onUpdate, onDelete }}>{children}</RoomContext.Provider>;
 };
