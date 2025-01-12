@@ -1,12 +1,18 @@
 import instance from './axios';
 
-export const postAuthCode = async (code: string) => {
-  const res = await instance.post('/login', code); // 백에서 주는 url
+interface UserInfo {
+  role: string;
+  username: string;
+  phoneNumber: string;
+  birthday: string;
+}
 
+export const postAuthCode = async (code: string) => {
+  const res = await instance.post('/api/auth/kakao/signin', code);
   return res.data;
 };
 
-export const postRole = async (role: string) => {
-  const res = await instance.post('/signup', role); // 백에서 주는 url
+export const postUserInfo = async (userInfo: UserInfo) => {
+  const res = await instance.post('/api/v1/user', userInfo);
   return res.data;
 };

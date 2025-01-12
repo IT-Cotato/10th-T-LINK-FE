@@ -1,7 +1,7 @@
 import instance from '../api/axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { postRole } from '../api/authApi';
+import { postUserInfo } from '../api/authApi';
 
 import Header from '../components/Header';
 import RoleSelectionButton from '../components/RoleSelectionButton';
@@ -11,17 +11,18 @@ const Signup = () => {
   const [role, setRole] = useState('');
   const navigate = useNavigate();
 
-  const sendRoleToServer = async () => {
-    const data = await postRole(role);
+  /*const sendInfoToServer = async () => {
+    const data = await postUserInfo(userInfo);
     console.log(data);
     navigate('/');
   };
+  */
 
   const handleStart = () => {
     if (!role) return;
 
     console.log(`선택한 역할: ${role}`);
-    sendRoleToServer();
+    // navigate(이름, 전화번호 입력하는 페이지)
   };
 
   return (
