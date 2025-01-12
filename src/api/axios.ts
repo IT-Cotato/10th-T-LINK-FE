@@ -29,13 +29,13 @@ instance.interceptors.response.use(
   },
   async (error) => {
     // 토큰 만료 시
-    const msg = error.response.data.msg; // 백엔드에서 토큰 만료됐다고 알려주는 msg("Expired Access Token")
+    const msg = error.response.data.message; // 백엔드에서 토큰 만료됐다고 알려주는 msg
     const refreshToken = localStorage.getItem('refreshToken');
-    if (error.response.status === 401 && msg === 'Expired Access Token') {
+    if (error.response.status === 401 && msg === '사용자의 로그인 검증을 실패했습니다.') {
       try {
         if (refreshToken) {
           const res = await axios.post(
-            '/백에서 주는 url',
+            '/api/auth/kakao/token',
             { refreshToken },
             {
               headers: {
@@ -43,9 +43,10 @@ instance.interceptors.response.use(
               },
             },
           );
-          localStorage.setItem('accessToken', res.headers.accessToken);
+          localStorage.setItem('accessToken', res.headers.Authorization); // 백에서 header/body 중 어디로 주는 지 확인 후 수정
 
-          error.config.headers.Authorization = `Bearer ${res.headers.accessToken}`;
+          // 새 토큰으로 헤더 업데이트 후 재요청
+          error.config.headers.Authorization = `Bearer ${res.headers.Authorization}`;
           return axios(error.config);
         }
       } catch (refreshErr) {
