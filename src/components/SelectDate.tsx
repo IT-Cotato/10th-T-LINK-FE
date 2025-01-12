@@ -1,19 +1,19 @@
-import { Week } from '../utils/WeekList';
+import { LessonDay } from '../utils/LessonDaysList';
 
-type WeekProps = {
-  week: Week;
+type LessonDayProps = {
+  lessonDayItem: LessonDay;
   isClicked: boolean;
-  handleWeekClick: (day: string) => void;
+  handleDaysClick: (day: string) => void;
 };
 
-const SelectDate = ({ week, isClicked, handleWeekClick }: WeekProps) => {
+const SelectDate = ({ lessonDayItem, isClicked, handleDaysClick }: LessonDayProps) => {
   return (
     <div>
       <button
-        className={`px-4 text-white  ${isClicked ? 'bg-black' : 'bg-gray-300'}`}
-        onClick={() => handleWeekClick(week.date)}
+        className={`px-4 text-white ${isClicked ? 'bg-black' : 'bg-gray-300'}`}
+        onClick={() => handleDaysClick(lessonDayItem.lessonDay)} // lessonDay만 전달
       >
-        {week.date}
+        {lessonDayItem.lessonDay}
       </button>
     </div>
   );

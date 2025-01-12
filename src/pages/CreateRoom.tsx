@@ -1,6 +1,6 @@
 import RoomEditor from '../components/RoomEditor';
 import { useState } from 'react';
-import { Room, useRoomContext } from '../context/RoomContext';
+import { Room, useRoomContext, SimpleLessonDay, SimplePermission } from '../context/RoomContext';
 import { useNavigate } from 'react-router-dom';
 
 const CreateRoom = () => {
@@ -13,11 +13,11 @@ const CreateRoom = () => {
     roomName: string,
     studentName: string,
     subject: string,
-    days: string[],
-    parentPermissions: string[],
-    studentPermissions: string[],
+    lessonDays: SimpleLessonDay[],
+    parentPermissions: SimplePermission,
+    studentPermissions: SimplePermission,
   ) => {
-    onCreate(id, roomName, studentName, subject, days, parentPermissions, studentPermissions);
+    onCreate(id, roomName, studentName, subject, lessonDays, parentPermissions, studentPermissions);
     navigate('/user/roomlist');
   };
 

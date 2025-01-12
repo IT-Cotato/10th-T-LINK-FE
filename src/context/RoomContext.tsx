@@ -1,13 +1,25 @@
 import { createContext, ReactNode, useContext, useState, useRef } from 'react';
 
+export type SimpleLessonDay = {
+  lessonDay: string;
+};
+
+export type SimplePermission = {
+  lecture_file: boolean;
+  homework: boolean;
+  gradeStatistic: boolean;
+  counselingLog: boolean;
+  deposit: boolean;
+};
+
 export type Room = {
   id: number;
   roomName: string;
   studentName: string;
   subject: string;
-  days: string[];
-  parentPermissions: string[];
-  studentPermissions: string[];
+  lessonDays: SimpleLessonDay[];
+  parentPermissions: SimplePermission;
+  studentPermissions: SimplePermission;
 };
 
 export type OnSubmit = (
@@ -15,9 +27,9 @@ export type OnSubmit = (
   roomName: string,
   studentName: string,
   subject: string,
-  days: string[],
-  parentPermissions: string[],
-  studentPermissions: string[],
+  lessonDays: SimpleLessonDay[],
+  parentPermissions: SimplePermission,
+  studentPermissions: SimplePermission,
 ) => void;
 
 type RoomContextType = {
@@ -46,16 +58,16 @@ export const RoomProvider = ({ children }: { children: ReactNode }) => {
     roomName: string,
     studentName: string,
     subject: string,
-    days: string[],
-    parentPermissions: string[],
-    studentPermissions: string[],
+    lessonDays: SimpleLessonDay[],
+    parentPermissions: SimplePermission,
+    studentPermissions: SimplePermission,
   ) => {
     const newRoom: Room = {
       id: idRef.current++,
       roomName: roomName,
       studentName: studentName,
       subject: subject,
-      days: days,
+      lessonDays: lessonDays,
       parentPermissions: parentPermissions,
       studentPermissions: studentPermissions,
     };
@@ -67,16 +79,16 @@ export const RoomProvider = ({ children }: { children: ReactNode }) => {
     roomName: string,
     studentName: string,
     subject: string,
-    days: string[],
-    parentPermissions: string[],
-    studentPermissions: string[],
+    lessonDays: SimpleLessonDay[],
+    parentPermissions: SimplePermission,
+    studentPermissions: SimplePermission,
   ) => {
     const updatedRoom: Room = {
       id: id,
       roomName: roomName,
       studentName: studentName,
       subject: subject,
-      days: days,
+      lessonDays: lessonDays,
       parentPermissions: parentPermissions,
       studentPermissions: studentPermissions,
     };

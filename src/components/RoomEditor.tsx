@@ -1,9 +1,9 @@
-import PermissionToggle from '../components/PermissionToggle';
 import SelectDate from '../components/SelectDate';
 import { useEffect, useState } from 'react';
-import { OnSubmit, Room } from '../context/RoomContext';
-import { WeekList } from '../utils/WeekList';
+import { OnSubmit, Room, SimpleLessonDay, SimplePermission } from '../context/RoomContext';
+import { LessonDaysList } from '../utils/LessonDaysList';
 import { ParentPermissions, StudentPermissions } from '../utils/PermissionList';
+import PermissionToggle from './PermissionToggle';
 
 type EditProps = {
   currentRoom: Room | undefined;
@@ -21,10 +21,23 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
     roomName: '',
     studentName: '',
     subject: '',
-    days: [''],
-    parentPermissions: ['counseling', 'payment'],
-    studentPermissions: ['materials', 'homework', 'stats'],
+    lessonDays: [] as SimpleLessonDay[],
+    parentPermissions: {
+      lecture_file: false,
+      homework: false,
+      gradeStatistic: false,
+      counselingLog: true,
+      deposit: true,
+    },
+    studentPermissions: {
+      lecture_file: true,
+      homework: true,
+      gradeStatistic: true,
+      counselingLog: false,
+      deposit: false,
+    },
   });
+  console.log(input);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.placeholder === '방이름') setInput((prev) => ({ ...prev, roomName: e.target.value }));
@@ -32,47 +45,38 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
     if (e.target.placeholder === '과목명') setInput((prev) => ({ ...prev, subject: e.target.value }));
   };
 
-  const handleToggleCheck = (id: number, permission: string) => {
-    if (id >= 3 && id <= 7) return;
-    else if (id < 5)
-      setInput((prev) => {
-        const newPermissions = prev.parentPermissions.includes(permission)
-          ? prev.parentPermissions.filter((p) => p !== permission)
-          : [...prev.parentPermissions, permission];
-        return {
-          ...prev,
-          parentPermissions: newPermissions.sort(
-            (a, b) =>
-              ParentPermissions.find((permission) => permission.type === a)?.id! -
-              ParentPermissions.find((permission) => permission.type === b)?.id!,
-          ),
-        };
-      });
-    else if (id >= 5)
-      setInput((prev) => {
-        const newPermissions = prev.studentPermissions.includes(permission)
-          ? prev.studentPermissions.filter((p) => p !== permission)
-          : [...prev.studentPermissions, permission];
-        return {
-          ...prev,
-          studentPermissions: newPermissions.sort(
-            (a, b) =>
-              StudentPermissions.find((permission) => permission.type === a)?.id! -
-              StudentPermissions.find((permission) => permission.type === b)?.id!,
-          ),
-        };
-      });
+  const handleDaysClick = (lessonDay: string) => {
+    setInput((prev) => {
+      const newDays = prev.lessonDays.some((d) => d.lessonDay === lessonDay)
+        ? prev.lessonDays.filter((d) => d.lessonDay !== lessonDay)
+        : [...prev.lessonDays, { lessonDay }];
+      return { ...prev, lessonDays: newDays };
+    });
   };
 
-  const handleWeekClick = (day: string) => {
-    setInput((prev) => {
-      const newDays = prev.days.includes(day) ? prev.days.filter((d) => d !== day) : [...prev.days, day];
-      const sortedDays = newDays.sort(
-        (a, b) => WeekList.find((week) => week.date === a)?.id! - WeekList.find((week) => week.date === b)?.id!,
-      );
+  const handleToggleCheck = (id: number, permissionType: keyof SimplePermission) => {
+    if (id >= 3 && id <= 7) return;
+    else if (id < 3) {
+      setInput((prev) => {
+        const updatedPermissions = { ...prev.parentPermissions };
 
-      return { ...prev, days: sortedDays };
-    });
+        if (updatedPermissions[permissionType] !== undefined) {
+          updatedPermissions[permissionType] = !updatedPermissions[permissionType];
+        }
+
+        return { ...prev, parentPermissions: updatedPermissions };
+      });
+    } else if (id > 7) {
+      setInput((prev) => {
+        const updatedPermissions = { ...prev.studentPermissions };
+
+        if (updatedPermissions[permissionType] !== undefined) {
+          updatedPermissions[permissionType] = !updatedPermissions[permissionType];
+        }
+
+        return { ...prev, studentPermissions: updatedPermissions };
+      });
+    }
   };
 
   return (
@@ -81,12 +85,12 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
       <input placeholder="학생이름" onChange={handleInputChange} value={input.studentName} />
       <input placeholder="과목명" onChange={handleInputChange} value={input.subject} />
       <div className="flex gap-4 justify-center">
-        {WeekList.map((week) => (
+        {LessonDaysList.map((lessonDayItem) => (
           <SelectDate
-            key={week.id}
-            week={week}
-            isClicked={input.days.includes(week.date)}
-            handleWeekClick={handleWeekClick}
+            key={lessonDayItem.id}
+            lessonDayItem={lessonDayItem}
+            isClicked={input.lessonDays.find((day) => day.lessonDay === lessonDayItem.lessonDay) !== undefined}
+            handleDaysClick={handleDaysClick}
           />
         ))}
       </div>
@@ -96,9 +100,9 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
           {ParentPermissions.map((permission) => (
             <PermissionToggle
               key={permission.id}
-              isChecked={input.parentPermissions.includes(permission.type)}
               permission={permission}
               handleToggleCheck={handleToggleCheck}
+              isChecked={input.parentPermissions[permission.type as keyof SimplePermission]}
             />
           ))}
         </div>
@@ -107,9 +111,9 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
           {StudentPermissions.map((permission) => (
             <PermissionToggle
               key={permission.id}
-              isChecked={input.studentPermissions.includes(permission.type)}
               permission={permission}
               handleToggleCheck={handleToggleCheck}
+              isChecked={input.studentPermissions[permission.type as keyof SimplePermission]}
             />
           ))}
         </div>
@@ -121,7 +125,7 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
             input.roomName,
             input.studentName,
             input.subject,
-            input.days,
+            input.lessonDays,
             input.parentPermissions,
             input.studentPermissions,
           )
