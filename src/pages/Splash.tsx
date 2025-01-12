@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import mainlogo from '../assets/images/mainlogo.png';
 
 const Splash = () => {
   const navigate = useNavigate();
@@ -12,7 +13,11 @@ const Splash = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  return <div>Splash</div>;
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <img className="w-20" src={mainlogo} alt="mainlogo" />
+    </div>
+  );
 };
 
 export default Splash;
