@@ -1,8 +1,11 @@
 import { ChangeEvent, useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const CreateHomework = () => {
   const [fileNames, setFileNames] = useState<string[]>([]); // 파일 이름 목록
   const [isActive, setIsActive] = useState<boolean>(false); // 드래그 활성화 상태
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
   const handleDragStart = () => setIsActive(true);
   const handleDragEnd = () => setIsActive(false);
@@ -25,6 +28,16 @@ const CreateHomework = () => {
 
   return (
     <div className="px-4">
+      <div className="flex w-full">
+        <DatePicker
+          className="react-datepicker"
+          dateFormat="yyyy.MM.dd"
+          shouldCloseOnSelect
+          minDate={new Date()}
+          selected={selectedDate}
+          onChange={(date) => setSelectedDate(date)}
+        />
+      </div>
       <div
         className={`border-2 py-10 flex items-center justify-center cursor-pointer ${
           isActive ? 'border-primary_500 bg-primary_50' : 'border-gray-400'
