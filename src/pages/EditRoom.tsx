@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { Room, useRoomContext } from '../context/RoomContext';
+import { Room, useRoomContext, SimpleLessonDay, SimplePermission } from '../context/RoomContext';
 import { useEffect, useState } from 'react';
 import RoomEditor from '../components/RoomEditor';
 
@@ -26,11 +26,11 @@ const EditRoom = () => {
     roomName: string,
     studentName: string,
     subject: string,
-    days: string[],
-    parentPermissions: string[],
-    studentPermissions: string[],
+    lessonDays: SimpleLessonDay[],
+    parentPermissions: SimplePermission,
+    studentPermissions: SimplePermission,
   ) => {
-    onUpdate(paramsId, roomName, studentName, subject, days, parentPermissions, studentPermissions);
+    onUpdate(paramsId, roomName, studentName, subject, lessonDays, parentPermissions, studentPermissions);
     navigate('/user/roomlist');
   };
 
