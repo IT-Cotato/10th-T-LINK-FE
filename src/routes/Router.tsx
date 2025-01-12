@@ -16,6 +16,7 @@ import Payment from '../pages/Payment';
 import Statistics from '../pages/Statistics';
 import CreateRoom from '../pages/CreateRoom';
 import KakaoOauth from '../components/KakaoOauth';
+import CreateHomework from '../pages/CreateHomework';
 import EditRoom from '../pages/EditRoom';
 
 export const router = createBrowserRouter([
@@ -52,6 +53,7 @@ export const router = createBrowserRouter([
               { path: 'edit', element: <EditRoom /> },
               { path: 'materials', element: <Materials /> },
               { path: 'homework', element: <Homework /> },
+              { path: 'homework/create', element: <CreateHomework /> },
               { path: 'stats', element: <Statistics /> },
               { path: 'diary', element: <CounselingDiary /> },
               { path: 'payment', element: <Payment /> },

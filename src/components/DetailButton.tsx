@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import 강의자료함 from '/강의자료함.png';
 
 interface DetailButtonProps {
@@ -7,6 +8,8 @@ interface DetailButtonProps {
 const DetailButton = ({ type }: DetailButtonProps) => {
   let title = '';
   let description = '';
+
+  const nav = useNavigate();
 
   switch (type) {
     case 'materials':
@@ -21,7 +24,7 @@ const DetailButton = ({ type }: DetailButtonProps) => {
       title = '성적 통계';
       description = '성적을 확인하세요';
       break;
-    case 'counseling':
+    case 'diary':
       title = '상담 일지';
       description = '상담 기록을 확인하세요';
       break;
@@ -32,7 +35,12 @@ const DetailButton = ({ type }: DetailButtonProps) => {
   }
 
   return (
-    <div className="bg-slate-200 p-4 rounded-[20px] flex-col items-start flex gap-6">
+    <div
+      className="bg-slate-200 p-4 rounded-[20px] flex-col items-start flex gap-6 cursor-pointer"
+      onClick={() => {
+        nav(type);
+      }}
+    >
       {type !== 'payment' && <img src={강의자료함} className="h-[80px] w-[80px]"></img>}
       <div className="m-0">
         <h3 className="text-[18px] font-bold">{title}</h3>
