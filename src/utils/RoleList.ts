@@ -1,6 +1,6 @@
-import Boy from '../assets/images/Boy.png';
-import Mom from '../assets/images/Mom.png';
-import Teacher from '../assets/images/Teacher.png';
+import boy from '../assets/images/boy.png';
+import mom from '../assets/images/mom.png';
+import teacher from '../assets/images/teacher.png';
 
 export interface Role {
   id: number;
@@ -15,21 +15,21 @@ export const RoleList: Role[] = [
     id: 0,
     title: '학생',
     description: '선생님과 소통하고 과제를 제출해요.',
-    src: Boy,
+    src: boy,
     role: 'student',
   },
   {
     id: 1,
     title: '선생님',
     description: '학생, 학부모와 소통하고 수업해요.',
-    src: Teacher,
+    src: teacher,
     role: 'teacher',
   },
   {
     id: 2,
     title: '학부모',
     description: '선생님과 소통하고 입금해요.',
-    src: Mom,
+    src: mom,
     role: 'parent',
   },
 ];

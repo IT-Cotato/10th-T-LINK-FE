@@ -11,9 +11,14 @@ const KakaoOauth = () => {
   const handleAuth = async () => {
     if (!code) return;
 
-    const { accessToken, status } = await postAuthCode(code);
-    console.log(accessToken);
-    console.log(status);
+    const { accessToken, refreshToken, status } = await postAuthCode(code);
+
+    if (accessToken) {
+      localStorage.setItem('accesstoken', accessToken);
+    }
+    if (refreshToken) {
+      localStorage.setItem('refreshToken', refreshToken);
+    }
 
     if (status === 'existing') {
       // 이미 회원인 경우 로그인 완료 -> 메인페이지로 이동

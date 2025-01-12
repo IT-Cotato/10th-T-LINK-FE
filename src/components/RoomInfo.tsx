@@ -1,12 +1,14 @@
 import { MdDeleteOutline } from 'react-icons/md';
 import { CiEdit } from 'react-icons/ci';
 import { Room, useRoomContext } from '../context/RoomContext';
+import { useNavigate } from 'react-router-dom';
 
 type RoomProps = {
   room: Room;
 };
 
 const RoomInfo = ({ room }: RoomProps) => {
+  const navigate = useNavigate();
   const { onDelete } = useRoomContext();
 
   const handleDelete = (id: number) => {
@@ -19,10 +21,12 @@ const RoomInfo = ({ room }: RoomProps) => {
         <img className="w-9 h-9" />
       </div>
       <div className="flex flex-1 flex-col text-gray-900 cursor-pointer">
-        <h1 className="text-body1 font-bold leading-9">{room.roomName}</h1>
-        <h3 className="text-body4 font-regular leading-6">학생이름</h3>
+        <h1 className="text-body1 font-bold leading-9">
+          [{room.subject}] {room.roomName}
+        </h1>
+        <h3 className="text-body4 font-regular leading-6">{room.studentName}</h3>
       </div>
-      <div className="cursor-pointer">
+      <div className="cursor-pointer" onClick={() => navigate(`${room.id}/edit`)}>
         <CiEdit size={20} />
       </div>
       <div className="cursor-pointer" onClick={() => handleDelete(room.id)}>
