@@ -1,18 +1,19 @@
-import { Day } from '../context/RoomContext';
+import { Week } from '../utils/WeekList';
 
-type DayProps = {
-  day: Day;
-  handleClick: (id: number) => void;
+type WeekProps = {
+  week: Week;
+  isClicked: boolean;
+  handleWeekClick: (day: string) => void;
 };
 
-const SelectDate = ({ day, handleClick }: DayProps) => {
+const SelectDate = ({ week, isClicked, handleWeekClick }: WeekProps) => {
   return (
     <div>
       <button
-        className={`px-4 text-white  ${day.isClicked ? 'bg-black' : 'bg-gray-300'}`}
-        onClick={() => handleClick(day.id)}
+        className={`px-4 text-white  ${isClicked ? 'bg-black' : 'bg-gray-300'}`}
+        onClick={() => handleWeekClick(week.date)}
       >
-        {day.date}
+        {week.date}
       </button>
     </div>
   );
