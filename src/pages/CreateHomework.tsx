@@ -73,11 +73,7 @@ const CreateHomework = () => {
 
     // api 호출
     try {
-      const response = await instance.post(`/api/v1/rooms/${roomId}/homeworks`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await instance.post(`/api/v1/rooms/${roomId}/homeworks`, formData);
 
       if (response.status === 201) {
         console.log('숙제 업로드 성공');
