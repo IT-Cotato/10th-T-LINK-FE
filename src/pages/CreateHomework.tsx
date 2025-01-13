@@ -39,8 +39,6 @@ const CreateHomework = () => {
   };
 
   const validateForm = (): boolean => {
-    let isValid = true;
-
     if (!deadline) {
       alert('마감 날짜를 선택해주세요');
       return false;
