@@ -1,18 +1,19 @@
-import { Day } from '../context/RoomContext';
+import { LessonDay } from '../models/room.model';
 
-type DayProps = {
-  day: Day;
-  handleClick: (id: number) => void;
+type LessonDayProps = {
+  lessonDayItem: LessonDay;
+  isClicked: boolean;
+  handleDaysClick: (day: string) => void;
 };
 
-const SelectDate = ({ day, handleClick }: DayProps) => {
+const SelectDate = ({ lessonDayItem, isClicked, handleDaysClick }: LessonDayProps) => {
   return (
     <div>
       <button
-        className={`px-4 text-white  ${day.isClicked ? 'bg-black' : 'bg-gray-300'}`}
-        onClick={() => handleClick(day.id)}
+        className={`px-4 text-white ${isClicked ? 'bg-black' : 'bg-gray-300'}`}
+        onClick={() => handleDaysClick(lessonDayItem.lessonDay)} // lessonDay만 전달
       >
-        {day.date}
+        {lessonDayItem.lessonDay}
       </button>
     </div>
   );
