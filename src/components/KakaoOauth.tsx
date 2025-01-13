@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { postAuthCode } from '../api/authApi';
+import { postAuthCode } from '../api/auth.api';
 
 const KakaoOauth = () => {
   const navigate = useNavigate();

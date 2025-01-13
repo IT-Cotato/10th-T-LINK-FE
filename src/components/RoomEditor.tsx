@@ -1,6 +1,6 @@
 import SelectDate from '../components/SelectDate';
 import { useEffect, useState } from 'react';
-import { OnSubmit, Room, SimpleLessonDay, SimplePermission } from '../context/RoomContext';
+import { Room, OnSubmit, SimpleLessonDay, SimplePermission, RoomInfo } from '../models/room.model';
 import { LessonDaysList } from '../utils/LessonDaysList';
 import { ParentPermissions, StudentPermissions } from '../utils/PermissionList';
 import PermissionToggle from './PermissionToggle';
@@ -17,24 +17,24 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
     }
   }, [currentRoom]);
 
-  const [input, setInput] = useState({
+  const [input, setInput] = useState<RoomInfo>({
     roomName: '',
     studentName: '',
     subject: '',
     lessonDays: [] as SimpleLessonDay[],
-    parentPermissions: {
-      lecture_file: false,
-      homework: false,
-      gradeStatistic: false,
-      counselingLog: true,
-      deposit: true,
-    },
     studentPermissions: {
       lecture_file: true,
       homework: true,
       gradeStatistic: true,
       counselingLog: false,
       deposit: false,
+    },
+    parentPermissions: {
+      lecture_file: false,
+      homework: false,
+      gradeStatistic: false,
+      counselingLog: true,
+      deposit: true,
     },
   });
   console.log(input);
@@ -55,25 +55,21 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
   };
 
   const handleToggleCheck = (id: number, permissionType: keyof SimplePermission) => {
-    if (id >= 3 && id <= 7) return;
-    else if (id < 3) {
+    if (id <= 2 || id >= 8) return;
+    else if (id >= 5) {
       setInput((prev) => {
         const updatedPermissions = { ...prev.parentPermissions };
-
         if (updatedPermissions[permissionType] !== undefined) {
           updatedPermissions[permissionType] = !updatedPermissions[permissionType];
         }
-
         return { ...prev, parentPermissions: updatedPermissions };
       });
-    } else if (id > 7) {
+    } else if (id >= 3) {
       setInput((prev) => {
         const updatedPermissions = { ...prev.studentPermissions };
-
         if (updatedPermissions[permissionType] !== undefined) {
           updatedPermissions[permissionType] = !updatedPermissions[permissionType];
         }
-
         return { ...prev, studentPermissions: updatedPermissions };
       });
     }
@@ -118,20 +114,7 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
           ))}
         </div>
       </div>
-      <button
-        onClick={() =>
-          onSubmit(
-            0,
-            input.roomName,
-            input.studentName,
-            input.subject,
-            input.lessonDays,
-            input.parentPermissions,
-            input.studentPermissions,
-          )
-        }
-        className="text-white"
-      >
+      <button onClick={() => onSubmit(input)} className="text-white">
         완료
       </button>
     </div>
