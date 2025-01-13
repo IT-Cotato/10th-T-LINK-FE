@@ -13,6 +13,7 @@ instance.interceptors.request.use(
   (config) => {
     // 요청이 전달되기 전에 헤더에 토큰 추가
     // 추후에 바꿔도 될 듯 => 상의 필요
+    // 여기에 role도 추가
     const token = localStorage.getItem('token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
