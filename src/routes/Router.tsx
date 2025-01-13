@@ -18,6 +18,7 @@ import CreateRoom from '../pages/CreateRoom';
 import KakaoOauth from '../components/KakaoOauth';
 import EditRoom from '../pages/EditRoom';
 import SignupForm from '../pages/SignupForm';
+import SignupComplete from '../pages/SignupComplete';
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,7 @@ export const router = createBrowserRouter([
     element: <Signup />,
   },
   { path: 'signupform', element: <SignupForm /> },
+  { path: 'signupcomplete', element: <SignupComplete /> },
   {
     path: 'user',
     element: (
