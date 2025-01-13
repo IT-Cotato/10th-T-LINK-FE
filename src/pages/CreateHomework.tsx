@@ -1,11 +1,14 @@
 import { ChangeEvent, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import instance from '../api/axios';
+import { useParams } from 'react-router-dom';
 
 const CreateHomework = () => {
+  const { roomId } = useParams<{ roomId: string }>();
   const [fileList, setFileList] = useState<File[]>([]); // 파일 이름 목록
   const [isActive, setIsActive] = useState<boolean>(false); // 드래그 활성화 상태
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date()); // 선택된 숙제 마감 날짜
+  const [deadline, setDeadline] = useState<Date | null>(new Date()); // 선택된 숙제 마감 날짜
   const [desc, setDesc] = useState<string>(''); // 숙제 설명
 
   const handleDragStart = () => setIsActive(true);
@@ -35,22 +38,49 @@ const CreateHomework = () => {
     setFileList((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const validateForm = (): boolean => {
+    if (!deadline) {
+      alert('마감 날짜를 선택해주세요');
+      return false;
+    }
+
+    if (!desc.trim()) {
+      alert('숙제 설명을 입력해주세요');
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
     const formData = new FormData();
 
     fileList.forEach((file) => {
-      formData.append('fileList', file);
+      formData.append('homeworkFiles', file);
     });
 
-    if (desc) formData.append('description', desc);
-    if (selectedDate) formData.append('dueDate', selectedDate.toISOString());
+    formData.append('description', desc);
+    formData.append('deadline', deadline!.toISOString().split('T')[0]);
 
     // 확인용 출력
     for (const [key, value] of formData.entries()) {
       console.log(`${key}:`, value);
     }
 
-    // 여기서 api 호출
+    // api 호출
+    try {
+      const response = await instance.post(`/api/v1/rooms/${roomId}/homeworks`, formData);
+
+      if (response.status === 201) {
+        console.log('숙제 업로드 성공');
+      }
+    } catch (error) {
+      console.log('숙제 업로드 실패', error);
+    }
   };
 
   return (
@@ -61,8 +91,8 @@ const CreateHomework = () => {
           dateFormat="yyyy.MM.dd"
           shouldCloseOnSelect
           minDate={new Date()}
-          selected={selectedDate}
-          onChange={(date) => setSelectedDate(date)}
+          selected={deadline}
+          onChange={(date) => setDeadline(date)}
         />
       </div>
       <div>

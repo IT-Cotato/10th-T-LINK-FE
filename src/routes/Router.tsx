@@ -17,6 +17,7 @@ import Statistics from '../pages/Statistics';
 import CreateRoom from '../pages/CreateRoom';
 import KakaoOauth from '../components/KakaoOauth';
 import CreateHomework from '../pages/CreateHomework';
+import HomeworkDetail from '../pages/HomeworkDetail';
 import EditRoom from '../pages/EditRoom';
 
 export const router = createBrowserRouter([
@@ -52,8 +53,9 @@ export const router = createBrowserRouter([
               { index: true, element: <RoomDetail /> },
               { path: 'edit', element: <EditRoom /> },
               { path: 'materials', element: <Materials /> },
-              { path: 'homework', element: <Homework /> },
-              { path: 'homework/create', element: <CreateHomework /> },
+              { path: 'homework', element: <Homework /> }, // 숙제방
+              { path: 'homework/create', element: <CreateHomework /> }, // 숙제 업로드
+              { path: 'homework/:homeworkId', element: <HomeworkDetail /> }, // 숙제 상세
               { path: 'stats', element: <Statistics /> },
               { path: 'diary', element: <CounselingDiary /> },
               { path: 'payment', element: <Payment /> },
