@@ -33,7 +33,7 @@ const RoomList = () => {
         ))}
       </div>
       <div className="flex justify-end py-8">
-        <button onClick={() => navigate('createroom')} className="text-white px-4">
+        <button onClick={() => navigate('createroom')} className="text-white px-4 bg-black">
           + 과외방 개설
         </button>
       </div>
