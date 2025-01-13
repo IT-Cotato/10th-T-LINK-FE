@@ -13,8 +13,12 @@ instance.interceptors.request.use(
   (config) => {
     // 요청이 전달되기 전 헤더에 토큰 추가
     const accessToken = localStorage.getItem('accessToken');
+    const roleInfo = localStorage.getItem('roleInfo');
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    if (roleInfo) {
+      config.headers.RoleInfo = roleInfo;
     }
     return config;
   },
@@ -54,6 +58,7 @@ instance.interceptors.response.use(
 
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
+        localStorage.removeItem('roleInfo');
         window.location.href = '/login';
       }
     }

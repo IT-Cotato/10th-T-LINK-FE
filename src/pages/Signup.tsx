@@ -10,19 +10,12 @@ import { RoleList } from '../utils/RoleList';
 const Signup = () => {
   const [role, setRole] = useState('');
   const navigate = useNavigate();
-
-  /*const sendInfoToServer = async () => {
-    const data = await postUserInfo(userInfo);
-    console.log(data);
-    navigate('/');
-  };
-  */
-
   const handleStart = () => {
     if (!role) return;
 
     console.log(`선택한 역할: ${role}`);
-    // navigate(이름, 전화번호 입력하는 페이지)
+    localStorage.setItem('roleInfo', role);
+    navigate('/signupform');
   };
 
   return (
