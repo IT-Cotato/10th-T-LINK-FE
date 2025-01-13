@@ -1,4 +1,4 @@
-import { LessonDay } from '../utils/LessonDaysList';
+import { LessonDay } from '../models/room.model';
 
 type LessonDayProps = {
   lessonDayItem: LessonDay;
