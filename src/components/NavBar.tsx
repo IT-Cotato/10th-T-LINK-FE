@@ -15,7 +15,6 @@ import Indicator from '../assets/images/Indicator.svg?react';
 const NavBar = () => {
   const nav = useNavigate();
   const [currentMenu, setCurrentMenu] = useState<string>('roomlist');
-  console.log(currentMenu);
 
   const menus = [
     {
