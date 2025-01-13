@@ -10,19 +10,12 @@ import { RoleList } from '../utils/RoleList';
 const Signup = () => {
   const [role, setRole] = useState('');
   const navigate = useNavigate();
-
-  /*const sendInfoToServer = async () => {
-    const data = await postUserInfo(userInfo);
-    console.log(data);
-    navigate('/');
-  };
-  */
-
   const handleStart = () => {
     if (!role) return;
 
     console.log(`선택한 역할: ${role}`);
-    // navigate(이름, 전화번호 입력하는 페이지)
+    localStorage.setItem('roleInfo', role);
+    navigate('/signupform');
   };
 
   return (
@@ -49,7 +42,7 @@ const Signup = () => {
           className="flex-1 px-4 py-3.5 text-gray-500 bg-gray-100 enabled:text-white enabled:bg-primary_700 font-semibold"
           onClick={handleStart}
         >
-          시작하기
+          다음
         </button>
       </div>
     </div>
