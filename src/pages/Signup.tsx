@@ -42,7 +42,7 @@ const Signup = () => {
           className="flex-1 px-4 py-3.5 text-gray-500 bg-gray-100 enabled:text-white enabled:bg-primary_700 font-semibold"
           onClick={handleStart}
         >
-          시작하기
+          다음
         </button>
       </div>
     </div>
