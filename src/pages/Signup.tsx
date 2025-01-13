@@ -1,7 +1,7 @@
 import instance from '../api/axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { postUserInfo } from '../api/authApi';
+import { postUserInfo } from '../api/auth.api';
 
 import Header from '../components/Header';
 import RoleSelectionButton from '../components/RoleSelectionButton';

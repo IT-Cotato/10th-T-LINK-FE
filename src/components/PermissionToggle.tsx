@@ -1,13 +1,12 @@
-import { Permission } from '../utils/PermissionList';
-import { SimplePermission } from '../context/RoomContext';
+import { SimplePermission, Permission } from '../models/room.model';
 
-type TypeProps = {
+type ToggleProps = {
   permission: Permission;
   handleToggleCheck: (id: number, permissionType: keyof SimplePermission) => void;
   isChecked: boolean;
 };
 
-const PermissionToggle = ({ permission, handleToggleCheck, isChecked }: TypeProps) => {
+const PermissionToggle = ({ permission, handleToggleCheck, isChecked }: ToggleProps) => {
   return (
     <div className="flex">
       {permission.title}

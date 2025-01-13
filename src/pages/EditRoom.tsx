@@ -1,36 +1,25 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { Room, useRoomContext, SimpleLessonDay, SimplePermission } from '../context/RoomContext';
 import { useEffect, useState } from 'react';
 import RoomEditor from '../components/RoomEditor';
+import { Room, RoomInfo } from '../models/room.model';
+import { getCurrentRoomInfo, patchRoomInfo } from '../api/roomList.api';
 
 const EditRoom = () => {
   const navigate = useNavigate();
+  const [currentRoom, setCurrentRoom] = useState<Room | undefined>(undefined);
   const params = useParams<{ roomId: string }>();
   const paramsId = Number(params.roomId);
-  const { rooms, onUpdate } = useRoomContext();
-  const [currentRoom, setCurrentRoom] = useState<Room | undefined>(undefined);
 
   useEffect(() => {
-    const currentRoom = rooms.find((room) => room.id === paramsId);
-    if (!currentRoom) {
-      window.alert('존재하지 않는 과외방입니다.');
-      navigate('roomlist');
-    } else {
+    const fetchCurrentRoom = async () => {
+      const currentRoom = await getCurrentRoomInfo(paramsId);
       setCurrentRoom(currentRoom);
-    }
-  }, [params.roomId, rooms, navigate]);
-  console.log(currentRoom);
+    };
+    fetchCurrentRoom();
+  }, []);
 
-  const handleUpdate = (
-    id: number,
-    roomName: string,
-    studentName: string,
-    subject: string,
-    lessonDays: SimpleLessonDay[],
-    parentPermissions: SimplePermission,
-    studentPermissions: SimplePermission,
-  ) => {
-    onUpdate(paramsId, roomName, studentName, subject, lessonDays, parentPermissions, studentPermissions);
+  const handleUpdate = async (roomInfo: RoomInfo) => {
+    const status = await patchRoomInfo(roomInfo, paramsId);
     navigate('/user/roomlist');
   };
 

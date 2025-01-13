@@ -1,17 +1,35 @@
 import { useNavigate } from 'react-router-dom';
 import RoomInfo from '../components/RoomInfo';
-import { useRoomContext } from '../context/RoomContext';
+import { useEffect, useState } from 'react';
+import { getRoomList, deleteRoom } from '../api/roomList.api';
+import { SimpleRoomInfo } from '../models/room.model';
 
 const RoomList = () => {
   const navigate = useNavigate();
-  const { rooms } = useRoomContext();
-  console.log(rooms);
+  const [rooms, setRooms] = useState<SimpleRoomInfo[]>([]);
+
+  useEffect(() => {
+    const fetchRooms = async () => {
+      const roomList = await getRoomList();
+      setRooms(roomList);
+    };
+    fetchRooms();
+  }, []);
+
+  const handleDelete = async (roomId: number) => {
+    try {
+      await deleteRoom(roomId);
+      setRooms((prevRooms) => prevRooms.filter((room) => room.roomId !== roomId)); // Update state
+    } catch (error) {
+      console.error('Failed to delete room:', error);
+    }
+  };
 
   return (
     <div className="flex flex-col">
       <div>
         {rooms.map((room) => (
-          <RoomInfo key={room.id} room={room} />
+          <RoomInfo room={room} handleDelete={handleDelete} />
         ))}
       </div>
       <div className="flex justify-end py-8">

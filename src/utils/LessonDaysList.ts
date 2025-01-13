@@ -1,7 +1,4 @@
-export interface LessonDay {
-  id: number;
-  lessonDay: string;
-}
+import { LessonDay } from '../models/room.model';
 
 export const LessonDaysList: LessonDay[] = [
   { id: 0, lessonDay: '월' },
