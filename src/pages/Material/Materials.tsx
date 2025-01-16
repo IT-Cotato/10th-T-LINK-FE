@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import instance from '../api/axios';
+import instance from '../../api/axios';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 
 interface Material {
@@ -15,7 +15,7 @@ const Materials = () => {
 
   useEffect(() => {
     getMaterials();
-  });
+  }, []);
 
   const getMaterials = async () => {
     try {
@@ -38,8 +38,8 @@ const Materials = () => {
   return (
     <div>
       {materialList.map((material) => (
-        <div key={material.lectureFileBoxId} className="border p-4 rounded mb-2">
-          <h3 className="font-bold">숙제 ID: {material.lectureFileBoxId}</h3>
+        <div key={material.lectureFileBoxId} className="border p-4 rounded mb-2 cursor-pointer">
+          <h3 className="font-bold">강의자료 ID: {material.lectureFileBoxId}</h3>
           <p>설명: {material.description}</p>
           <p>업데이트된 날짜: {material.updatedAt}</p>
         </div>
