@@ -1,6 +1,6 @@
-import boy from '../assets/images/boy.png';
-import mom from '../assets/images/mom.png';
-import teacher from '../assets/images/teacher.png';
+import boy from '../assets/images/student_boy.png';
+import mom from '../assets/images/parent_mom.png';
+import teacher from '../assets/images/teacher_woman.png';
 
 export interface Role {
   id: number;

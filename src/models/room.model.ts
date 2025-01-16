@@ -35,8 +35,11 @@ export interface SimpleRoomInfo {
   roomName: string;
   studentName: string;
   subject: string;
+  lessonDays: SimpleLessonDay[];
   student: {
-    profileImgUrl: string; // 이부분 아직 확실 x
+    studentId: number;
+    gender: string;
+    backgroundColor: string;
   };
 }
 
