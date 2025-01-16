@@ -57,7 +57,8 @@ export const router = createBrowserRouter([
             children: [
               { index: true, element: <RoomDetail /> },
               { path: 'edit', element: <EditRoom /> },
-              { path: 'materials', element: <Materials /> },
+              { path: 'materials', element: <Materials /> }, // 강의 자료함
+              { path: 'materials/create', element: <CreateMaterials /> }, // 강의 자료 업로드
               { path: 'homework', element: <Homework /> }, // 숙제방
               { path: 'homework/create', element: <CreateHomework /> }, // 숙제 업로드
               { path: 'homework/:homeworkId', element: <HomeworkDetail /> }, // 숙제 상세
