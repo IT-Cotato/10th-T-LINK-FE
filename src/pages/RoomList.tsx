@@ -4,9 +4,54 @@ import { useEffect, useState } from 'react';
 import { getRoomList, deleteRoom } from '../api/roomList.api';
 import { SimpleRoomInfo } from '../models/room.model';
 
+const mockData = [
+  {
+    roomId: 1,
+    roomName: '방1',
+    studentName: '학생 1',
+    subject: '과목1',
+    lessonDays: [
+      {
+        lessonDay: '월',
+      },
+      {
+        lessonDay: '수',
+      },
+    ],
+    student: {
+      studentId: 32,
+      gender: '남',
+      backgroundColor: '#000957',
+    },
+  },
+  {
+    roomId: 2,
+    roomName: '방2',
+    studentName: '학생 2',
+    subject: '과목2',
+    lessonDays: [
+      {
+        lessonDay: '금',
+      },
+      {
+        lessonDay: '토',
+      },
+      {
+        lessonDay: '일',
+      },
+    ],
+    student: {
+      studentId: 45,
+      gender: '여',
+      backgroundColor: '#ffffff',
+    },
+  },
+];
+
 const RoomList = () => {
+  const roleInfo = localStorage.getItem('roleInfo');
   const navigate = useNavigate();
-  const [rooms, setRooms] = useState<SimpleRoomInfo[]>([]);
+  const [rooms, setRooms] = useState<SimpleRoomInfo[]>(mockData);
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -33,7 +78,7 @@ const RoomList = () => {
         ))}
       </div>
       <div className="flex justify-end py-8">
-        <button onClick={() => navigate('createroom')} className="text-white px-4">
+        <button onClick={() => navigate('createroom')} className="text-white px-4 bg-black">
           + 과외방 개설
         </button>
       </div>

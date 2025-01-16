@@ -114,7 +114,7 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
           ))}
         </div>
       </div>
-      <button onClick={() => onSubmit(input)} className="text-white">
+      <button onClick={() => onSubmit(input)} className="text-white bg-black">
         완료
       </button>
     </div>
