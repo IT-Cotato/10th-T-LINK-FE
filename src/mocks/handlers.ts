@@ -80,4 +80,37 @@ export const handlers = [
       },
     );
   }),
+
+  // 방 상세정보 가져오기
+  http.get('https://api.t-link.site/api/v1/rooms/:roomId', ({ params }) => {
+    const roomId = Array.isArray(params.roomId) ? params.roomId[0] : params.roomId;
+
+    if (!roomId) {
+      return HttpResponse.json({ error: 'Invalid roomId' }, { status: 400 });
+    }
+
+    return HttpResponse.json(
+      {
+        roomId: parseInt(roomId, 10), // `roomId`를 안전하게 정수로 변환
+        roomName: '중3 대현동',
+        studentName: '용가리',
+        subject: '수학',
+        lessonDays: ['월', '수'],
+        nextDepositDate: '2025-02-03',
+        permission: {
+          lecture_files: true,
+          homework: true,
+          gradeStatistic: true,
+          counselingLog: true,
+          deposit: true,
+        },
+      },
+      {
+        status: 200, // 성공 상태 코드
+        headers: {
+          'Access-Control-Allow-Origin': '*', // CORS 설정
+        },
+      },
+    );
+  }),
 ];

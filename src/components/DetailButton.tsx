@@ -3,9 +3,11 @@ import 강의자료함 from '/강의자료함.png';
 
 interface DetailButtonProps {
   type: string;
+  nextDepositDate?: string;
+  isPermission: boolean;
 }
 
-const DetailButton = ({ type }: DetailButtonProps) => {
+const DetailButton = ({ type, nextDepositDate, isPermission }: DetailButtonProps) => {
   let title = '';
   let description = '';
 
@@ -30,18 +32,28 @@ const DetailButton = ({ type }: DetailButtonProps) => {
       break;
     case 'payment':
       title = '입금';
-      description = '다음 입금일은 2025.01.12입니다.';
+      description = `다음 입금일은 ${nextDepositDate}입니다.`;
+      break;
+    case 'invite':
+      title = '학생 초대하기';
+      description = '초대링크를 공유해주세요';
       break;
   }
 
+  const isVisible = type !== 'payment' && type !== 'invite';
+
   return (
     <div
-      className="bg-slate-200 p-4 rounded-[20px] flex-col items-start flex gap-6 cursor-pointer"
+      className={`p-4 rounded-[20px] flex-col items-start flex gap-6 cursor-pointer ${
+        isPermission ? 'bg-slate-200 cursor-pointer' : 'bg-gray-300 opacity-50 cursor-not-allowed'
+      }`}
       onClick={() => {
-        nav(type);
+        if (isPermission) {
+          nav(type);
+        }
       }}
     >
-      {type !== 'payment' && <img src={강의자료함} className="h-[80px] w-[80px]"></img>}
+      {isVisible && <img src={강의자료함} className="h-[80px] w-[80px]" alt="강의자료함" />}
       <div className="m-0">
         <h3 className="text-[18px] font-bold">{title}</h3>
         <p className="text-[13px]">{description}</p>
