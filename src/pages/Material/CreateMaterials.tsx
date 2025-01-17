@@ -57,7 +57,7 @@ const CreateMaterials = () => {
       formData.append('lectureFiles', file);
     });
 
-    formData.append('description', desc);
+    formData.append('lectureFileName', desc);
 
     // 확인용 출력
     for (const [key, value] of formData.entries()) {

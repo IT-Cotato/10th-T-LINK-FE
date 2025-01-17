@@ -22,6 +22,7 @@ import CreateMaterials from '../pages/Material/CreateMaterials';
 import Homework from '../pages/Homework/Homework';
 import CreateHomework from '../pages/Homework/CreateHomework';
 import HomeworkDetail from '../pages/Homework/HomeworkDetail';
+import MaterialDetail from '../pages/Material/MaterialDetail';
 
 export const router = createBrowserRouter([
   {
@@ -59,6 +60,7 @@ export const router = createBrowserRouter([
               { path: 'edit', element: <EditRoom /> },
               { path: 'materials', element: <Materials /> }, // 강의 자료함
               { path: 'materials/create', element: <CreateMaterials /> }, // 강의 자료 업로드
+              { path: 'materials/:materialId', element: <MaterialDetail /> }, // 강의 자료 상세
               { path: 'homework', element: <Homework /> }, // 숙제방
               { path: 'homework/create', element: <CreateHomework /> }, // 숙제 업로드
               { path: 'homework/:homeworkId', element: <HomeworkDetail /> }, // 숙제 상세

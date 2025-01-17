@@ -38,7 +38,11 @@ const Materials = () => {
   return (
     <div>
       {materialList.map((material) => (
-        <div key={material.lectureFileBoxId} className="border p-4 rounded mb-2 cursor-pointer">
+        <div
+          key={material.lectureFileBoxId}
+          className="border p-4 rounded mb-2 cursor-pointer"
+          onClick={() => nav(`${material.lectureFileBoxId}`)}
+        >
           <h3 className="font-bold">강의자료 ID: {material.lectureFileBoxId}</h3>
           <p>설명: {material.description}</p>
           <p>업데이트된 날짜: {material.updatedAt}</p>
