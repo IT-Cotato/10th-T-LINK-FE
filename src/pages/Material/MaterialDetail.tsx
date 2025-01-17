@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import instance from '../../api/axios';
 
 interface File {
@@ -9,6 +9,7 @@ interface File {
 }
 
 const MaterialDetail = () => {
+  const nav = useNavigate();
   const { roomId, materialId } = useParams<{ roomId: string; materialId: string }>();
   const [name, setName] = useState<string>('');
   const [lectureFiles, setLectureFiles] = useState<File[]>([]);
@@ -42,6 +43,18 @@ const MaterialDetail = () => {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      const response = await instance.delete(`/api/v1/rooms/${roomId}/lectureFiles/${materialId}`);
+      if (response.status == 200) {
+        console.log('강의자료가 삭제되었습니다.');
+        nav(-1);
+      }
+    } catch (error) {
+      console.log('강의 자료 삭제 실패', error);
+    }
+  };
+
   if (loading) {
     return <div>로딩 중...</div>;
   }
@@ -60,6 +73,9 @@ const MaterialDetail = () => {
           </li>
         ))}
       </ul>
+      <button onClick={handleDelete} className="bg-primary_400">
+        삭제
+      </button>
     </div>
   );
 };
