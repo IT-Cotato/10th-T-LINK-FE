@@ -4,6 +4,8 @@ import { SimpleRoomInfo } from '../models/room.model';
 import { useNavigate } from 'react-router-dom';
 import student_boy from '../assets/images/student_boy.png';
 import student_girl from '../assets/images/student_girl.png';
+import ProfileModal from './ProfileModal';
+import { useState } from 'react';
 
 type RoomProps = {
   room: SimpleRoomInfo;
@@ -11,11 +13,17 @@ type RoomProps = {
 };
 
 const RoomInfo = ({ room, handleDelete }: RoomProps) => {
+  const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
 
   return (
     <div className="flex items-center py-2.5 gap-4 px-4">
-      <div className="flex items-center p-1.5" style={{ backgroundColor: room.student.backgroundColor }}>
+      {modalOpen && <ProfileModal setModalOpen={setModalOpen} id={room.student.studentId} />}
+      <div
+        className="flex items-center p-1.5 cursor-pointer"
+        onClick={() => setModalOpen(true)}
+        style={{ backgroundColor: room.student.backgroundColor }}
+      >
         {room.student.gender === '남' ? (
           <img className="w-9 h-9" src={student_boy} />
         ) : (

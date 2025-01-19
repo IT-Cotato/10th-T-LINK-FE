@@ -7,6 +7,12 @@ export const getRoomList = async () => {
   return res.data.rooms;
 };
 
+// 프로필 모달창 (프로픽 클릭 시)
+export const getProfileModal = async (userId: number) => {
+  const res = await instance.get(`/api/v1/users/${userId}/profile`);
+  return res.data;
+};
+
 // 과외방 정보 출력(수정 시)
 export const getCurrentRoomInfo = async (roomId: number) => {
   const res = await instance.get(`/api/v1/rooms/${roomId}/info`);

@@ -1,6 +1,6 @@
-import teacher from '../assets/images/Teacher.png';
-import student from '../assets/images/Boy.png';
-import mom from '../assets/images/Mom.png';
+import teacher from '../assets/images/teacher_woman.png';
+import student from '../assets/images/student_boy.png';
+import mom from '../assets/images/parent_mom.png';
 import DefaultProfile from '../assets/images/profile.svg?react';
 import { FaAngleRight } from 'react-icons/fa6';
 
