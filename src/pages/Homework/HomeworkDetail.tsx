@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import instance from '../api/axios';
+import instance from '../../api/axios';
 
 interface File {
   originalName: string;

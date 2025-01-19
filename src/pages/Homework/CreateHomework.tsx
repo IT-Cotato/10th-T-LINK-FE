@@ -1,8 +1,8 @@
 import { ChangeEvent, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import instance from '../api/axios';
 import { useParams } from 'react-router-dom';
+import instance from '../../api/axios';
 
 const CreateHomework = () => {
   const { roomId } = useParams<{ roomId: string }>();

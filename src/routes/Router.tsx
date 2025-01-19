@@ -9,18 +9,20 @@ import Calendar from '../pages/Calendar';
 import MyPage from '../pages/MyPage';
 import Layout from '../components/Layout';
 import RoomDetail from '../pages/RoomDetail';
-import Materials from '../pages/Materials';
-import Homework from '../pages/Homework';
 import CounselingDiary from '../pages/CounselingDiary';
 import Payment from '../pages/Payment';
 import Statistics from '../pages/Statistics';
 import CreateRoom from '../pages/CreateRoom';
 import KakaoOauth from '../components/KakaoOauth';
-import CreateHomework from '../pages/CreateHomework';
-import HomeworkDetail from '../pages/HomeworkDetail';
 import EditRoom from '../pages/EditRoom';
 import SignupForm from '../pages/SignupForm';
 import SignupComplete from '../pages/SignupComplete';
+import Materials from '../pages/Material/Materials';
+import CreateMaterials from '../pages/Material/CreateMaterials';
+import Homework from '../pages/Homework/Homework';
+import CreateHomework from '../pages/Homework/CreateHomework';
+import HomeworkDetail from '../pages/Homework/HomeworkDetail';
+import MaterialDetail from '../pages/Material/MaterialDetail';
 
 export const router = createBrowserRouter([
   {
@@ -56,7 +58,9 @@ export const router = createBrowserRouter([
             children: [
               { index: true, element: <RoomDetail /> },
               { path: 'edit', element: <EditRoom /> },
-              { path: 'materials', element: <Materials /> },
+              { path: 'materials', element: <Materials /> }, // 강의 자료함
+              { path: 'materials/create', element: <CreateMaterials /> }, // 강의 자료 업로드
+              { path: 'materials/:materialId', element: <MaterialDetail /> }, // 강의 자료 상세
               { path: 'homework', element: <Homework /> }, // 숙제방
               { path: 'homework/create', element: <CreateHomework /> }, // 숙제 업로드
               { path: 'homework/:homeworkId', element: <HomeworkDetail /> }, // 숙제 상세
