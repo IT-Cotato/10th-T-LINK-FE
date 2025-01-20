@@ -1,8 +1,8 @@
-import RoomEditor from '../components/RoomEditor';
+import RoomEditor from '../../components/RoomEditor';
 import { useState } from 'react';
-import { RoomInfo, Room } from '../models/room.model';
+import { RoomInfo, Room } from '../../models/room.model';
 import { useNavigate } from 'react-router-dom';
-import { postRoomInfo } from '../api/roomList.api';
+import { postRoomInfo } from '../../api/roomList.api';
 
 const CreateRoom = () => {
   const navigate = useNavigate();

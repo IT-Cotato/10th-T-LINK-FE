@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import DetailButton from '../components/DetailButton';
+import DetailButton from '../../components/DetailButton';
 import { useParams } from 'react-router-dom';
-import { RoomDetails } from '../models/room.model';
+import { RoomDetails } from '../../models/room.model';
 
 const RoomDetail = () => {
   const { roomId } = useParams<{ roomId: string }>();

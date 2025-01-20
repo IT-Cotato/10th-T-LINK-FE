@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { postUserInfo } from '../api/auth.api';
-import Header from '../components/Header';
-import { UserInfo } from '../models/user.model';
+import { postUserInfo } from '../../api/auth.api';
+import Header from '../../components/Header';
+import { UserInfo } from '../../models/user.model';
 
 const SignupForm = () => {
   const navigate = useNavigate();
