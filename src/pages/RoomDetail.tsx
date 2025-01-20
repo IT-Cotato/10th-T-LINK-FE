@@ -1,22 +1,11 @@
 import { useEffect, useState } from 'react';
 import DetailButton from '../components/DetailButton';
-import instance from '../api/axios';
 import { useParams } from 'react-router-dom';
-import { SimpleLessonDay, SimplePermission } from '../models/room.model';
-
-interface RoomDetail {
-  roomId: number;
-  roomName: string;
-  studentName: string;
-  subject: string;
-  lessonDays: SimpleLessonDay[];
-  nextDepositDate: string;
-  permission: SimplePermission;
-}
+import { RoomDetails } from '../models/room.model';
 
 const RoomDetail = () => {
   const { roomId } = useParams<{ roomId: string }>();
-  const [roomDetail, setRoomDetail] = useState<RoomDetail | null>(null);
+  const [roomDetail, setRoomDetail] = useState<RoomDetails | null>(null);
   useEffect(() => {
     getRoomInfo();
   }, [roomId]);
@@ -26,10 +15,10 @@ const RoomDetail = () => {
       // 확인용 mock data
       const mockResponse = {
         roomId: 1,
-        roomName: 'Mock Room',
-        studentName: 'John Doe',
-        subject: 'Math',
-        lessonDays: [{ lessonDay: 'Monday' }, { lessonDay: 'Wednesday' }], // 수정된 부분
+        roomName: '대현동 중3',
+        studentName: '다람쥐',
+        subject: '수학',
+        lessonDays: [{ lessonDay: 'Monday' }, { lessonDay: 'Wednesday' }],
         nextDepositDate: '2025-01-31',
         permission: {
           lecture_file: true,
@@ -42,10 +31,8 @@ const RoomDetail = () => {
 
       setRoomDetail(mockResponse);
 
-      // const response = await instance.get(`/api/v1/rooms/${roomId}`);
-      // if (response.status == 200) {
-      //   setRoomDetail(response.data.data);
-      // }
+      // const data = await getRoomDetail(roomId!);
+      // setRoomDetail(response.data.data);
     } catch (error) {
       console.log('방 정보 가젿오기 실패', error);
     }

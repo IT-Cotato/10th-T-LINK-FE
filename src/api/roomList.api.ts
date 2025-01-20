@@ -36,3 +36,8 @@ export const deleteRoom = async (roomId: number) => {
   const res = await instance.delete(`/api/v1/rooms/${roomId}`);
   return res.status;
 };
+
+export const getRoomDetail = async (roomId: number) => {
+  const res = await instance.get(`/api/v1/rooms/${roomId}`);
+  return res.status;
+};
