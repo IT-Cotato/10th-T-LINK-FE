@@ -1,33 +1,28 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import instance from '../../api/axios';
-
-interface File {
-  originalName: string;
-  fileUrl: string;
-}
+import { getHomeworkDeatil } from '../../api/homework.api';
+import { HomeworkFile } from '../../models/homework.model';
 
 const HomeworkDetail = () => {
   const { roomId, homeworkId } = useParams<{ roomId: string; homeworkId: string }>();
   const [description, setDescription] = useState<string>('');
-  const [teacherFiles, setTeacherFiles] = useState<File[]>([]);
-  const [studentFiles, setStudentFiles] = useState<File[]>([]);
+  const [teacherFiles, setTeacherFiles] = useState<HomeworkFile[]>([]);
+  const [studentFiles, setStudentFiles] = useState<HomeworkFile[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     getHomeworkDetail();
   }, [roomId, homeworkId]);
 
+  // 숙제 상세 조회
   const getHomeworkDetail = async () => {
     setLoading(true);
     try {
-      const response = await instance.get(`/api/v1/rooms/${roomId}/homeworks/${homeworkId}`);
+      const data = await getHomeworkDeatil(roomId!, homeworkId!);
 
-      if (response.status == 200) {
-        setDescription(response.data.description);
-        setTeacherFiles(response.data.teacherFiles || []);
-        setStudentFiles(response.data.studentFiles || []);
-      }
+      setDescription(data.description);
+      setTeacherFiles(data.teacherFiles || []);
+      setStudentFiles(data.studentFiles || []);
     } catch (error) {
       console.log('숙제 상세 페이지를 불러오는데 실패했습니다.', error);
     } finally {

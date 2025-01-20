@@ -1,18 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import instance from '../../api/axios';
-
-interface Homework {
-  homeworkId: number;
-  createdAt: string;
-  description: string;
-  deadline: string;
-}
+import { getHomework } from '../../api/homework.api';
+import { Homeworks } from '../../models/homework.model';
 
 const Homework = () => {
   const { roomId } = useParams<{ roomId: string }>();
   const nav = useNavigate();
-  const [homeworkList, setHomeworkList] = useState<Homework[]>([]);
+  const [homeworkList, setHomeworkList] = useState<Homeworks[]>([]);
 
   useEffect(() => {
     getHomeworkList();
@@ -20,20 +14,20 @@ const Homework = () => {
 
   const getHomeworkList = async () => {
     try {
-      const response = await instance.get(`/api/v1/rooms/${roomId}/homeworks`);
-      if (response.status == 200) {
-        setHomeworkList(response.data.homeworks);
-      }
+      const data = await getHomework(roomId!);
+      console.log('숙제 업로드 성공:', data);
+      setHomeworkList(data);
     } catch (error) {
       console.log('숙제 목록 조회 실패', error);
     }
   };
+
   return (
     <div>
       {homeworkList.map((homework) => (
         <div key={homework.homeworkId} className="border p-4 rounded mb-2">
           <h3 className="font-bold">숙제 ID: {homework.homeworkId}</h3>
-          <p>설명: {homework.description}</p>
+          <p>설명: {homework.homeworkName}</p>
           <p>생성일: {homework.createdAt}</p>
           <p>마감일: {homework.deadline}</p>
         </div>

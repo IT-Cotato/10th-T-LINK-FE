@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useParams } from 'react-router-dom';
-import instance from '../../api/axios';
+import { uploadHomework } from '../../api/homework.api';
 
 const CreateHomework = () => {
   const { roomId } = useParams<{ roomId: string }>();
@@ -52,34 +52,23 @@ const CreateHomework = () => {
     return true;
   };
 
+  // 숙제 업로드
   const handleSubmit = async () => {
     if (!validateForm()) {
       return;
     }
 
-    const formData = new FormData();
+    const payload = {
+      homeworkName: desc,
+      deadline: deadline!.toISOString().split('T')[0],
+      homeworkFiles: fileList,
+    };
 
-    fileList.forEach((file) => {
-      formData.append('homeworkFiles', file);
-    });
-
-    formData.append('description', desc);
-    formData.append('deadline', deadline!.toISOString().split('T')[0]);
-
-    // 확인용 출력
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
-    }
-
-    // api 호출
     try {
-      const response = await instance.post(`/api/v1/rooms/${roomId}/homeworks`, formData);
-
-      if (response.status === 201) {
-        console.log('숙제 업로드 성공');
-      }
+      const data = await uploadHomework(roomId!, payload);
+      console.log('숙제 업로드 성공:', data);
     } catch (error) {
-      console.log('숙제 업로드 실패', error);
+      console.error(error);
     }
   };
 

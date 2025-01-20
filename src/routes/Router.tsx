@@ -9,7 +9,6 @@ import Calendar from '../pages/Calendar';
 import MyPage from '../pages/MyPage';
 import Layout from '../components/Layout';
 import RoomDetail from '../pages/RoomDetail';
-import CounselingDiary from '../pages/CounselingDiary';
 import Payment from '../pages/Payment';
 import Statistics from '../pages/Statistics';
 import CreateRoom from '../pages/CreateRoom';
@@ -23,6 +22,7 @@ import Homework from '../pages/Homework/Homework';
 import CreateHomework from '../pages/Homework/CreateHomework';
 import HomeworkDetail from '../pages/Homework/HomeworkDetail';
 import MaterialDetail from '../pages/Material/MaterialDetail';
+import CounselingDiary from '../pages/Counseling/CounselingDiary';
 
 export const router = createBrowserRouter([
   {
@@ -65,7 +65,7 @@ export const router = createBrowserRouter([
               { path: 'homework/create', element: <CreateHomework /> }, // 숙제 업로드
               { path: 'homework/:homeworkId', element: <HomeworkDetail /> }, // 숙제 상세
               { path: 'stats', element: <Statistics /> },
-              { path: 'diary', element: <CounselingDiary /> },
+              { path: 'diary', element: <CounselingDiary /> }, // 상담 일지
               { path: 'payment', element: <Payment /> },
             ],
           },
