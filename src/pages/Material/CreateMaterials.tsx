@@ -1,8 +1,7 @@
 import { ChangeEvent, useState } from 'react';
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import instance from '../../api/axios';
 import { useParams } from 'react-router-dom';
+import { uploadLectureFile } from '../../api/materials.api';
 
 const CreateMaterials = () => {
   const { roomId } = useParams<{ roomId: string }>();
@@ -51,26 +50,15 @@ const CreateMaterials = () => {
       return;
     }
 
-    const formData = new FormData();
-
-    fileList.forEach((file) => {
-      formData.append('lectureFiles', file);
-    });
-
-    formData.append('lectureFileName', desc);
-
-    // 확인용 출력
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
-    }
+    const payload = {
+      lectureFileBoxName: desc,
+      lectureFiles: fileList,
+    };
 
     // api 호출
     try {
-      const response = await instance.post(`/api/v1/rooms/${roomId}/lectureFileBoxes`, formData);
-
-      if (response.status === 201) {
-        console.log('강의자료 업로드 성공');
-      }
+      const data = await uploadLectureFile(roomId!, payload);
+      console.log('강의자료 업로드 성공');
     } catch (error) {
       console.log('강의 자료 업로드 실패', error);
     }

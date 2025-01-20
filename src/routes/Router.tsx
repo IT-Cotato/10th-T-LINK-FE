@@ -1,28 +1,28 @@
 // router.ts
 import { createBrowserRouter } from 'react-router-dom';
 import ProtectedRoute from '../components/ProtectedRoute';
-import Signup from '../pages/Signup';
+import Signup from '../pages/Signup/Signup';
 import Login from '../pages/Login';
 import Splash from '../pages/Splash';
-import RoomList from '../pages/RoomList';
+import RoomList from '../pages/Room/RoomList';
 import Calendar from '../pages/Calendar';
 import MyPage from '../pages/MyPage';
 import Layout from '../components/Layout';
-import RoomDetail from '../pages/RoomDetail';
-import CounselingDiary from '../pages/CounselingDiary';
+import RoomDetail from '../pages/Room/RoomDetail';
 import Payment from '../pages/Payment';
 import Statistics from '../pages/Statistics';
-import CreateRoom from '../pages/CreateRoom';
+import CreateRoom from '../pages/Room/CreateRoom';
 import KakaoOauth from '../components/KakaoOauth';
-import EditRoom from '../pages/EditRoom';
-import SignupForm from '../pages/SignupForm';
-import SignupComplete from '../pages/SignupComplete';
+import EditRoom from '../pages/Room/EditRoom';
+import SignupForm from '../pages/Signup/SignupForm';
+import SignupComplete from '../pages/Signup/SignupComplete';
 import Materials from '../pages/Material/Materials';
 import CreateMaterials from '../pages/Material/CreateMaterials';
 import Homework from '../pages/Homework/Homework';
 import CreateHomework from '../pages/Homework/CreateHomework';
 import HomeworkDetail from '../pages/Homework/HomeworkDetail';
 import MaterialDetail from '../pages/Material/MaterialDetail';
+import CounselingDiary from '../pages/Counseling/CounselingDiary';
 
 export const router = createBrowserRouter([
   {
@@ -65,7 +65,7 @@ export const router = createBrowserRouter([
               { path: 'homework/create', element: <CreateHomework /> }, // 숙제 업로드
               { path: 'homework/:homeworkId', element: <HomeworkDetail /> }, // 숙제 상세
               { path: 'stats', element: <Statistics /> },
-              { path: 'diary', element: <CounselingDiary /> },
+              { path: 'diary', element: <CounselingDiary /> }, // 상담 일지
               { path: 'payment', element: <Payment /> },
             ],
           },

@@ -1,11 +1,11 @@
-import instance from '../api/axios';
+import instance from '../../api/axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { postUserInfo } from '../api/auth.api';
+import { postUserInfo } from '../../api/auth.api';
 
-import Header from '../components/Header';
-import RoleSelectionButton from '../components/RoleSelectionButton';
-import { RoleList } from '../utils/RoleList';
+import Header from '../../components/Header';
+import RoleSelectionButton from '../../components/RoleSelectionButton';
+import { RoleList } from '../../utils/RoleList';
 
 const Signup = () => {
   const [role, setRole] = useState('');

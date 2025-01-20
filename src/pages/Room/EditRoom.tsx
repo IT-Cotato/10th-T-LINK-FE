@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import RoomEditor from '../components/RoomEditor';
-import { Room, RoomInfo } from '../models/room.model';
-import { getCurrentRoomInfo, patchRoomInfo } from '../api/roomList.api';
+import RoomEditor from '../../components/RoomEditor';
+import { Room, RoomInfo } from '../../models/room.model';
+import { getCurrentRoomInfo, patchRoomInfo } from '../../api/roomList.api';
 
 const EditRoom = () => {
   const navigate = useNavigate();

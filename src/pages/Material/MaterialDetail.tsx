@@ -31,11 +31,9 @@ const MaterialDetail = () => {
           fileUrl: 'https://cyber.ewha.ac.kr/mod/resource/view.php?id=2294701',
         },
       ]);
-      //   const response = await instance.get(`/api/v1/rooms/${roomId}/lectureFileBoxes/${materialId}`);
-      //   if (response.status == 200) {
-      //     setName(response.data.lectureFileBoxName);
-      //     setLectureFiles(response.data.lectureFiles || []);
-      //   }
+      //   const data = await getLectureFileDeatil(roomId!, materialId!)
+      //     setName(data.lectureFileBoxName);
+      //     setLectureFiles(data.lectureFiles || []);
     } catch (error) {
       console.log('강의 자료 페이지를 불러오는데 실패했습니다.', error);
     } finally {

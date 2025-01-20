@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import RoomInfo from '../components/RoomInfo';
+import RoomInfo from '../../components/RoomInfo';
 import { useEffect, useState } from 'react';
-import { getRoomList, deleteRoom } from '../api/roomList.api';
-import { SimpleRoomInfo } from '../models/room.model';
+import { getRoomList, deleteRoom } from '../../api/roomList.api';
+import { SimpleRoomInfo } from '../../models/room.model';
 
 const mockData = [
   {
