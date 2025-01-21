@@ -24,6 +24,7 @@ import HomeworkDetail from '../pages/Homework/HomeworkDetail';
 import MaterialDetail from '../pages/Material/MaterialDetail';
 import CounselingDiary from '../pages/Counseling/CounselingDiary';
 import CreateCounseling from '../pages/Counseling/CreateCounseling';
+import CounselingDetail from '../pages/Counseling/CounselingDetail';
 
 export const router = createBrowserRouter([
   {
@@ -68,6 +69,7 @@ export const router = createBrowserRouter([
               { path: 'stats', element: <Statistics /> },
               { path: 'diary', element: <CounselingDiary /> }, // 상담 일지
               { path: 'diary/create', element: <CreateCounseling /> }, // 상담 일지 업로드
+              { path: 'diary/:counselingId', element: <CounselingDetail /> }, // 상담 일지 상세
               { path: 'payment', element: <Payment /> },
             ],
           },

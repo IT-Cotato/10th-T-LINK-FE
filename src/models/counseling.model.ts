@@ -10,5 +10,15 @@ export interface CounselingInfo {
   title: string;
   content: string;
   engagement: 'upper' | 'middle' | 'lower';
-  homeworkSubmitted?: boolean;
+  homeworkSubmitted: boolean | null;
+}
+
+// 상담일지 상세 조회
+export interface CounselingLogDetail {
+  counselingLogId: number;
+  title: string;
+  content: string;
+  engagement: string;
+  homeworkSubmitted: boolean | null;
+  updatedAt: string;
 }
