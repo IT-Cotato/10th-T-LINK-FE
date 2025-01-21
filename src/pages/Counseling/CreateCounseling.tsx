@@ -4,20 +4,26 @@ import { RiEmotionNormalLine } from 'react-icons/ri';
 import { RiEmotionUnhappyLine } from 'react-icons/ri';
 import { FaRegCheckCircle } from 'react-icons/fa';
 import { FaRegTimesCircle } from 'react-icons/fa';
-import { postCounselingLogs } from '../../api/counseling.api';
-import { useNavigate, useParams } from 'react-router-dom';
+import { patchCounselingLog, postCounselingLogs } from '../../api/counseling.api';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const CreateCounseling = () => {
   const nav = useNavigate();
   const { roomId } = useParams<{ roomId: string }>();
 
+  const location = useLocation();
+  const isEdit = new URLSearchParams(location.search).get('isEdit') === 'true';
+  const initialData = location.state?.counselingDetail;
+
   const formatDate = (date: Date) => `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
   const todayFormatted = formatDate(new Date());
 
-  const [title, setTitle] = useState('');
-  const [engagement, setEngagement] = useState<'upper' | 'middle' | 'lower'>('upper');
-  const [homeworkSubmitted, setHomeworkSubmitted] = useState<boolean>();
-  const [content, setContent] = useState<string>('');
+  const [title, setTitle] = useState<string>(isEdit ? initialData.title : '');
+  const [content, setContent] = useState<string>(isEdit ? initialData.content : '');
+  const [engagement, setEngagement] = useState<string>(isEdit ? initialData.engagement : 'upper');
+  const [homeworkSubmitted, setHomeworkSubmitted] = useState<boolean | null>(
+    isEdit ? initialData.homeworkSubmitted : null,
+  );
 
   const isValidForm = () => {
     if (!title.trim()) return '제목을 입력해주세요!';
@@ -26,6 +32,7 @@ const CreateCounseling = () => {
     return '';
   };
 
+  // 생성 및 수정
   const handleSubmit = async () => {
     const error = isValidForm();
     if (error) {
@@ -41,13 +48,21 @@ const CreateCounseling = () => {
     };
 
     try {
-      const response = await postCounselingLogs(roomId!, payload);
-      if (response.status == 200) {
-        console.log('상담일지 업로드 성공');
-        nav(-1);
+      if (isEdit) {
+        const response = await patchCounselingLog(roomId!, initialData.counselingLogId, payload);
+        if (response.status == 200) {
+          console.log('상담일지 수정 성공');
+          nav(`/user/roomlist/${roomId}/diary/${initialData.counselingLogId}`);
+        }
+      } else {
+        const response = await postCounselingLogs(roomId!, payload);
+        if (response.status == 200) {
+          console.log('상담일지 업로드 성공');
+          nav(`/user/roomlist/${roomId}/diary`);
+        }
       }
     } catch (error) {
-      console.log('상담일지 업로드 실패');
+      console.log(isEdit ? '수정 실패' : '생성 실패', error);
     }
   };
 
@@ -55,7 +70,7 @@ const CreateCounseling = () => {
     <div className="flex flex-col w-full h-full">
       <div>
         <input placeholder="상담 제목을 입력해주세요" onChange={(e) => setTitle(e.target.value)} value={title}></input>
-        <p>{todayFormatted}</p>
+        <p>{isEdit ? initialData.updatedAt : todayFormatted}</p>
       </div>
       <div className="flex border border-black mx-3 flex-col my-5 h-full">
         <div className="flex items-center gap-1">
@@ -103,7 +118,7 @@ const CreateCounseling = () => {
       </div>
       <div className="flex justify-end">
         <button className="bg-primary_400 w-20" onClick={handleSubmit}>
-          완료
+          {isEdit ? '수정 완료' : '생성 완료'}
         </button>
       </div>
     </div>

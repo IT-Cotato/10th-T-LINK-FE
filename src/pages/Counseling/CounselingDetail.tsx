@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { FaRegCheckCircle, FaRegTimesCircle } from 'react-icons/fa';
 import { RiEmotionHappyLine, RiEmotionNormalLine, RiEmotionUnhappyLine } from 'react-icons/ri';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { CounselingLogDetail } from '../../models/counseling.model';
-import { getCounselingLogDetail } from '../../api/counseling.api';
+import { deleteCounselingLog, getCounselingLogDetail } from '../../api/counseling.api';
 
 const CounselingDetail = () => {
+  const nav = useNavigate();
   const { roomId, counselingId } = useParams<{ roomId: string; counselingId: string }>();
   const [counselingDetail, setCounselingDetail] = useState<CounselingLogDetail>();
   const [isLoading, setIsLoading] = useState(true);
@@ -31,6 +32,23 @@ const CounselingDetail = () => {
       console.log('상세 조회 실패');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleModify = () => {
+    nav(`/user/roomlist/${roomId}/diary/create?isEdit=true`, { state: { counselingDetail } });
+  };
+
+  // 삭제
+  const handleDelete = async () => {
+    try {
+      const response = await deleteCounselingLog(roomId!, counselingId!);
+      if (response.status == 200) {
+        console.log('삭제 성공');
+        nav(-1);
+      }
+    } catch (error) {
+      console.log('삭제 실패');
     }
   };
 
@@ -62,7 +80,12 @@ const CounselingDetail = () => {
         <div className="mx-3 resize-none h-full my-6 border border-gray-300">{counselingDetail.content}</div>
       </div>
       <div className="flex justify-end">
-        <button className="bg-primary_400 w-20">수정</button>
+        <button className="bg-primary_400 w-20" onClick={handleModify}>
+          수정
+        </button>
+        <button className="bg-red-400 w-20" onClick={handleDelete}>
+          삭제
+        </button>
       </div>
     </div>
   );

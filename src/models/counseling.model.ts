@@ -5,11 +5,11 @@ export interface CounselingLogs {
   updatedAt: string;
 }
 
-// 상담일지 업로드
+// 상담일지 업로드 && 수정
 export interface CounselingInfo {
   title: string;
   content: string;
-  engagement: 'upper' | 'middle' | 'lower';
+  engagement: string;
   homeworkSubmitted: boolean | null;
 }
 

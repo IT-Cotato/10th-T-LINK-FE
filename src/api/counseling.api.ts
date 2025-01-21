@@ -18,3 +18,15 @@ export const getCounselingLogDetail = async (roomId: string, counselingLogId: st
   const response = await instance.get(`/api/v1/rooms/${roomId}/counselingLogs/${counselingLogId}`);
   return response.data;
 };
+
+// 상담 일지 삭제
+export const deleteCounselingLog = async (roomId: string, counselingLogId: string) => {
+  const response = await instance.delete(`/api/v1/rooms/${roomId}/counselingLogs/${counselingLogId}`);
+  return response.data;
+};
+
+// 상담 일지 수정
+export const patchCounselingLog = async (roomId: string, counselingLogId: string, payload: CounselingInfo) => {
+  const response = await instance.put(`/api/v1/rooms/${roomId}/counselingLogs/${counselingLogId}`, payload);
+  return response.data;
+};
