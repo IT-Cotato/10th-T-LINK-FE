@@ -25,6 +25,7 @@ import MaterialDetail from '../pages/Material/MaterialDetail';
 import CounselingDiary from '../pages/Counseling/CounselingDiary';
 import CreateCounseling from '../pages/Counseling/CreateCounseling';
 import CounselingDetail from '../pages/Counseling/CounselingDetail';
+import UserPolicy from '../pages/UserPolicy';
 
 export const router = createBrowserRouter([
   {
@@ -79,11 +80,16 @@ export const router = createBrowserRouter([
         path: 'calendar',
         element: <Calendar />,
       },
-      {
-        path: 'mypage',
-        element: <MyPage />,
-      },
+      { path: 'mypage', element: <MyPage /> },
     ],
+  },
+  {
+    path: 'user/mypage/terms', // 이용약관인데 유저만 접근 가능하지만, 메뉴바가 없어서 별도로 분리
+    element: (
+      <ProtectedRoute>
+        <UserPolicy />
+      </ProtectedRoute>
+    ),
   },
 ]);
 
