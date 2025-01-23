@@ -54,7 +54,7 @@ const UserPolicy = () => {
   return (
     <div className="flex flex-col mb-[62px]">
       {/* 헤더 */}
-      <div className="fixed py-2 px-[6px] border-b-2 border-gray-100 flex items-center bg-white w-full">
+      <div className="fixed py-2 px-[6px] border-b-2 border-gray-100 flex items-center bg-white w-full max-w-[500px]">
         <div className="flex p-2.5 justify-center items-center cursor-pointer" onClick={() => nav(-1)}>
           <GoArrowLeft size={24} />
         </div>
