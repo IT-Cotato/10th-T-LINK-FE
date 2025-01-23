@@ -28,7 +28,6 @@ export interface RoomInfo {
   lessonDays: SimpleLessonDay[];
   studentPermissions: SimplePermission;
   parentPermissions: SimplePermission;
-  nextDepositDate: string;
 }
 
 export interface SimpleRoomInfo {

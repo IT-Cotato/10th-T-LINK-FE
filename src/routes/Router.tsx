@@ -25,6 +25,7 @@ import MaterialDetail from '../pages/Material/MaterialDetail';
 import CounselingDiary from '../pages/Counseling/CounselingDiary';
 import CreateCounseling from '../pages/Counseling/CreateCounseling';
 import CounselingDetail from '../pages/Counseling/CounselingDetail';
+import ShareLink from '../pages/Room/ShareLink';
 
 export const router = createBrowserRouter([
   {
@@ -55,6 +56,7 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <RoomList /> },
           { path: 'createroom', element: <CreateRoom /> },
+          { path: 'sharelink', element: <ShareLink /> },
           {
             path: ':roomId',
             children: [
