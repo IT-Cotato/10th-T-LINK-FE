@@ -5,11 +5,13 @@ import BottomButton from '../assets/images/term_button.svg?react';
 import TopButton from '../assets/images/Top Button.svg?react';
 
 import { useEffect, useState } from 'react';
+import Modal, { MODAL_TYPE } from '../components/Modal';
 
 const UserPolicy = () => {
   const nav = useNavigate();
   const [isBottom, setIsBottom] = useState(false);
   const [button, setButton] = useState(<BottomButton />);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const detectBottom = () => {
     const scrollTop = window.scrollY; // 스크롤된 높이
@@ -83,7 +85,13 @@ const UserPolicy = () => {
           </div>
         </div>
         {/* 탈퇴 */}
-        <div className="p-4 font-semibold text-body3 tracking-[-0.048px] leading-7 cursor-pointer">회원 탈퇴</div>
+        <div
+          className="p-4 font-semibold text-body3 tracking-[-0.048px] leading-7 cursor-pointer"
+          onClick={() => setModalOpen(true)}
+        >
+          회원 탈퇴
+        </div>
+        {modalOpen && <Modal setModalOpen={setModalOpen} type={MODAL_TYPE.QUIT} />}
         <div className="fixed bottom-[14px] left-1/2 transform -translate-x-1/2 cursor-pointer" onClick={handleScroll}>
           {button}
         </div>

@@ -5,11 +5,11 @@ import DefaultProfile from '../assets/images/profile.svg?react';
 import { FaAngleRight } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import LogoutModal from '../components/logoutModal';
+import Modal, { MODAL_TYPE } from '../components/Modal';
 
 const MyPage = () => {
   const nav = useNavigate();
-  const [modal, setModal] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const userName = '김과외';
   const userRole = '선생님';
   const userMent = '안녕하세요! 과외 경력 6년차 김과외입니다! 잘 부탁드립니다~';
@@ -25,16 +25,6 @@ const MyPage = () => {
 
   // 반드시 존재한다고 가정
   const currentRoleCard = roleCard.find((card) => card.role === userRole)!;
-
-  const handleModal = (value: string) => {
-    if (value == 'false') {
-      setModal(false);
-      console.log('취소');
-    } else if (value == 'logout') {
-      console.log('로그아웃');
-      // logout 로직
-    }
-  };
 
   return (
     <div>
@@ -83,15 +73,11 @@ const MyPage = () => {
         </div>
         <div
           className="py-2 font-semibold text-body3 tracking-[-0.048px] leading-7 cursor-pointer"
-          onClick={() => setModal(true)}
+          onClick={() => setModalOpen(true)}
         >
           로그아웃
         </div>
-        {modal && (
-          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <LogoutModal onSelected={handleModal} />
-          </div>
-        )}
+        {modalOpen && <Modal setModalOpen={setModalOpen} type={MODAL_TYPE.LOGOUT} />}
       </div>
     </div>
   );
