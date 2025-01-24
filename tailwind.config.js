@@ -20,7 +20,7 @@ export default {
       },
       colors: {
         // gray
-        gray_50: '#F4F4F4',
+        gray_50: '#F5F5F5',
         gray_100: '#EDEDEC',
         gray_200: '#DFDEDA',
         gray_300: '#C6C4C1',
