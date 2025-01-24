@@ -3,8 +3,13 @@ import student from '../assets/images/student_boy.png';
 import mom from '../assets/images/parent_mom.png';
 import DefaultProfile from '../assets/images/profile.svg?react';
 import { FaAngleRight } from 'react-icons/fa6';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import Modal, { MODAL_TYPE } from '../components/Modal';
 
 const MyPage = () => {
+  const nav = useNavigate();
+  const [modalOpen, setModalOpen] = useState(false);
   const userName = '김과외';
   const userRole = '선생님';
   const userMent = '안녕하세요! 과외 경력 6년차 김과외입니다! 잘 부탁드립니다~';
@@ -59,11 +64,20 @@ const MyPage = () => {
       </div>
       {/* 이용약관 및 로그아웃 */}
       <div className="py-2 px-4">
-        <div className="py-2 font-semibold text-body3 tracking-[-0.048px] leading-7 cursor-pointer flex justify-between items-center">
+        <div
+          className="py-2 font-semibold text-body3 tracking-[-0.048px] leading-7 cursor-pointer flex justify-between items-center"
+          onClick={() => nav('terms')}
+        >
           <p>이용약관</p>
           <FaAngleRight className="fill-gray-500" />
         </div>
-        <div className="py-2 font-semibold text-body3 tracking-[-0.048px] leading-7 cursor-pointer">로그아웃</div>
+        <div
+          className="py-2 font-semibold text-body3 tracking-[-0.048px] leading-7 cursor-pointer"
+          onClick={() => setModalOpen(true)}
+        >
+          로그아웃
+        </div>
+        {modalOpen && <Modal setModalOpen={setModalOpen} type={MODAL_TYPE.LOGOUT} />}
       </div>
     </div>
   );
