@@ -8,6 +8,9 @@ const Layout = () => {
   const headerHeight = useRef<HTMLDivElement>(null);
   const navBarHeight = useRef<HTMLDivElement>(null);
   const [heights, setHeights] = useState({ header: 0, navbar: 0 });
+  const clientHeight = document.documentElement.clientHeight;
+
+  console.log(clientHeight);
 
   useEffect(() => {
     if (headerHeight.current && navBarHeight.current) {
@@ -18,7 +21,7 @@ const Layout = () => {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen scrollbar-none">
+    <div className="flex flex-col">
       <div className="fixed w-full max-w-[500px]" ref={headerHeight}>
         <Header />
       </div>
@@ -27,8 +30,7 @@ const Layout = () => {
         style={{
           marginTop: `${heights.header}px`,
           marginBottom: `${heights.navbar}px`,
-          // 이거 100vh로 안하고 이걸로 햇는데... 딱히 적용이 안되는 것 같아서 나중에 확인해봐야함.
-          height: `calc(100vh - ${heights.header + heights.navbar}px)`,
+          height: `calc(100dvh - ${heights.header + heights.navbar}px)`,
         }}
       >
         <Outlet />

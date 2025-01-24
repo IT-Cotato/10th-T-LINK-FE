@@ -9,8 +9,9 @@ const CreateRoom = () => {
   const [currentRoom, setCurrentRoom] = useState<Room | undefined>(undefined);
 
   const handleCreate = async (roomInfo: RoomInfo) => {
-    const roomId = await postRoomInfo(roomInfo);
-    navigate('/user/roomlist');
+    //const roomId = await postRoomInfo(roomInfo);
+    const roomId = 3; // 임시
+    navigate('/user/roomlist/sharelink', { state: { roodId: roomId } });
   };
 
   return (

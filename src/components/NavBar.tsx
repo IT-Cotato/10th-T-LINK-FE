@@ -38,7 +38,7 @@ const NavBar = () => {
   ];
 
   return (
-    <div className="border-t border-gray-200 flex">
+    <div className="border-t border-gray-200 flex bg-white">
       <div className="grid grid-cols-3 w-full px-[7.5px]">
         {menus.map((menuItem) => (
           <div

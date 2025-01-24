@@ -37,7 +37,14 @@ export const deleteRoom = async (roomId: number) => {
   return res.status;
 };
 
+// 과외방 상세
 export const getRoomDetail = async (roomId: number) => {
   const res = await instance.get(`/api/v1/rooms/${roomId}`);
   return res.status;
+};
+
+// 공유 링크 조회
+export const getShareLink = async (roomId: number) => {
+  const res = await instance.get(`/api/v1/rooms/${roomId}/shareCode`);
+  return res.data.code;
 };
