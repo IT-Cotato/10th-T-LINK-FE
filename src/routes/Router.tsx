@@ -14,7 +14,8 @@ import Statistics from '../pages/Statistics';
 import CreateRoom from '../pages/Room/CreateRoom';
 import KakaoOauth from '../components/KakaoOauth';
 import EditRoom from '../pages/Room/EditRoom';
-import SignupForm from '../pages/Signup/SignupForm';
+import FormTel from '../pages/Signup/FormTel';
+import FormBasic from '../pages/Signup/FormBasic';
 import SignupComplete from '../pages/Signup/SignupComplete';
 import Materials from '../pages/Material/Materials';
 import CreateMaterials from '../pages/Material/CreateMaterials';
@@ -42,7 +43,8 @@ export const router = createBrowserRouter([
     path: 'signup',
     element: <Signup />,
   },
-  { path: 'signupform', element: <SignupForm /> },
+  { path: 'formbasic', element: <FormBasic /> },
+  { path: 'formtel', element: <FormTel /> },
   { path: 'signupcomplete', element: <SignupComplete /> },
   {
     path: 'user',

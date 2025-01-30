@@ -15,7 +15,7 @@ const Signup = () => {
 
     console.log(`선택한 역할: ${role}`);
     localStorage.setItem('roleInfo', role);
-    navigate('/signupform');
+    navigate('/formbasic');
   };
 
   return (
