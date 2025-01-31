@@ -65,7 +65,7 @@ const RoomDetail = () => {
         isPermission={roomDetail.permission.deposit}
       />
       {/* role 보고 선생님이면 isPermission true */}
-      <DetailButton type="invite" isPermission={true} />
+      <DetailButton type="sharecode" isPermission={true} />
     </div>
   );
 };

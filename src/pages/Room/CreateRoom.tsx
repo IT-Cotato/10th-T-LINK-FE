@@ -11,7 +11,7 @@ const CreateRoom = () => {
   const handleCreate = async (roomInfo: RoomInfo) => {
     //const roomId = await postRoomInfo(roomInfo);
     const roomId = 3; // 임시
-    navigate('/user/roomlist/sharelink', { state: { roodId: roomId } });
+    navigate('/user/roomlist/sharecode', { state: { roomId: roomId } });
   };
 
   return (
