@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import student_boy from '../assets/images/student_boy.png';
 import student_girl from '../assets/images/student_girl.png';
 import ProfileModal from './ProfileModal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import StudentEditModal from './StudentEditModal';
 
 type RoomProps = {
   room: SimpleRoomInfo;
@@ -13,15 +14,23 @@ type RoomProps = {
 };
 
 const RoomInfo = ({ room, handleDelete }: RoomProps) => {
-  const [modalOpen, setModalOpen] = useState(false);
+  const roleInfo = 'student';
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [StudentEditOpen, setStudentEditOpen] = useState(false);
   const navigate = useNavigate();
+
+  const handleEdit = () => {
+    if (roleInfo === 'student') setStudentEditOpen(true);
+    else if (roleInfo === 'teacher') navigate(`${room.roomId}/edit`);
+  };
 
   return (
     <div className="flex items-center py-2.5 gap-4 px-4">
-      {modalOpen && <ProfileModal setModalOpen={setModalOpen} id={room.student.studentId} />}
+      {profileOpen && <ProfileModal setModalOpen={setProfileOpen} id={room.student.studentId} />}
+      {StudentEditOpen && <StudentEditModal setModalOpen={setStudentEditOpen} id={room.roomId} />}
       <div
         className="flex items-center p-1.5 cursor-pointer"
-        onClick={() => setModalOpen(true)}
+        onClick={() => setProfileOpen(true)}
         style={{ backgroundColor: room.student.backgroundColor }}
       >
         {room.student.gender === '남' ? (
@@ -39,11 +48,11 @@ const RoomInfo = ({ room, handleDelete }: RoomProps) => {
           <h3> {room.lessonDays.map((lessonDay) => `#${lessonDay.lessonDay}요일`)}</h3>
         </div>
       </div>
-      <div className="cursor-pointer" onClick={() => navigate(`${room.roomId}/edit`)}>
+      <div className="cursor-pointer" onClick={handleEdit}>
         <CiEdit size={20} />
       </div>
       <div className="cursor-pointer" onClick={() => handleDelete(room.roomId)}>
-        <MdDeleteOutline size={20} />
+        {roleInfo === 'teacher' && <MdDeleteOutline size={20} />}
       </div>
     </div>
   );

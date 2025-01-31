@@ -1,28 +1,28 @@
 import { useEffect, useState } from 'react';
-import { getShareLink } from '../../api/roomList.api';
+import { getShareCode } from '../../api/roomList.api';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Toast from '../../components/Toast';
 
-const ShareLink = () => {
+const ShareCode = () => {
   const location = useLocation();
   const navigation = useNavigate();
 
-  const [link, setLink] = useState('aaa');
+  const [code, setCode] = useState('aaa');
   const [toast, setToast] = useState(false);
 
   useEffect(() => {
     const roomId = location.state?.roomId;
 
-    /* const getLink = async () => {
-      const link = await getShareLink(roomId);
-      setLink(link);
+    /* const getCode = async () => {
+      const code = await getShareCode(roomId);
+      setCode(code);
     };
-    getLink(); */
+    getCode(); */
   }, []);
 
-  const handleCopy = async (link: string) => {
+  const handleCopy = async (code: string) => {
     try {
-      await navigator.clipboard.writeText(link);
+      await navigator.clipboard.writeText(code);
       setToast(true);
     } catch (e) {
       alert('failed');
@@ -38,7 +38,7 @@ const ShareLink = () => {
       <div className="flex flex-col items-center border-2 p-5">
         <h1>과외방 링크</h1>
         <h1>학생에게 참여링크를 공유 해주세요</h1>
-        <button onClick={() => handleCopy(link)}>링크 복사 버튼</button>
+        <button onClick={() => handleCopy(code)}>링크 복사 버튼</button>
         {toast && <Toast setToast={setToast} />}
         <button onClick={() => handleSubmit()} className="text-white bg-black">
           완료
@@ -48,4 +48,4 @@ const ShareLink = () => {
   );
 };
 
-export default ShareLink;
+export default ShareCode;

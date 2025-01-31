@@ -53,18 +53,19 @@ const RoomList = () => {
   const navigate = useNavigate();
   const [rooms, setRooms] = useState<SimpleRoomInfo[]>(mockData);
 
+  const fetchRooms = async () => {
+    const rooms = await getRoomList();
+    setRooms(rooms);
+  };
+
   useEffect(() => {
-    const fetchRooms = async () => {
-      const roomList = await getRoomList();
-      setRooms(roomList);
-    };
     fetchRooms();
   }, []);
 
   const handleDelete = async (roomId: number) => {
     try {
-      await deleteRoom(roomId);
-      setRooms((prevRooms) => prevRooms.filter((room) => room.roomId !== roomId)); // Update state
+      const status = await deleteRoom(roomId);
+      if (status === 200) await fetchRooms();
     } catch (error) {
       console.error('Failed to delete room:', error);
     }

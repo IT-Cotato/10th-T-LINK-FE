@@ -1,12 +1,12 @@
 import SelectDate from '../components/SelectDate';
 import { useEffect, useState } from 'react';
-import { Room, OnSubmit, SimpleLessonDay, SimplePermission, RoomInfo } from '../models/room.model';
+import { OnSubmit, SimpleLessonDay, SimplePermission, RoomInfo } from '../models/room.model';
 import { LessonDaysList } from '../utils/LessonDaysList';
 import { ParentPermissions, StudentPermissions } from '../utils/PermissionList';
 import PermissionToggle from './PermissionToggle';
 
 type EditProps = {
-  currentRoom: Room | undefined;
+  currentRoom: RoomInfo | undefined;
   onSubmit: OnSubmit;
 };
 
