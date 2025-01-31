@@ -8,9 +8,6 @@ const Layout = () => {
   const headerHeight = useRef<HTMLDivElement>(null);
   const navBarHeight = useRef<HTMLDivElement>(null);
   const [heights, setHeights] = useState({ header: 0, navbar: 0 });
-  const clientHeight = document.documentElement.clientHeight;
-
-  console.log(clientHeight);
 
   useEffect(() => {
     if (headerHeight.current && navBarHeight.current) {

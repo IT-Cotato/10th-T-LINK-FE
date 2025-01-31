@@ -4,9 +4,6 @@ const baseURL = import.meta.env.VITE_BASE_URL;
 const instance: AxiosInstance = axios.create({
   baseURL: baseURL,
   timeout: 10000,
-  // headers: {
-  //   'Content-Type': 'application/json',
-  // },
 });
 
 instance.interceptors.request.use(

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import CalendarInfo from '../components/CalendarInfo';
-import { Clicked } from '../models/calendar.model';
 import { hasLesson, hasDeposit } from '../utils/CalendarUtils';
-import DateHandler from '../components/DateHandler';
-import CalendarGrid from '../components/CalendarGrid';
 import { getCalendar } from '../api/calendar.api';
+import CalendarInfo from '../components/Calendar/CalendarInfo';
+import { Clicked } from '../models/calendar.model';
+import DateHandler from '../components/Calendar/DateHandler';
+import CalendarGrid from '../components/Calendar/CalendarGrid';
 
 const mockData = [
   {

@@ -1,4 +1,4 @@
-import { Clicked } from '../models/calendar.model';
+import { Clicked } from '../../models/calendar.model';
 import CalendarLesson from './CalendarLesson';
 import CalendarDeposit from './CalendarDeposit';
 import CalendarNolesson from './CalendarNolesson';
