@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { hasLesson, hasDeposit } from '../utils/CalendarUtils';
+import { getCalendar } from '../api/calendar.api';
 import CalendarInfo from '../components/Calendar/CalendarInfo';
 import { Clicked } from '../models/calendar.model';
-import { hasLesson, hasDeposit } from '../utils/CalendarUtils';
 import DateHandler from '../components/Calendar/DateHandler';
 import CalendarGrid from '../components/Calendar/CalendarGrid';
 
@@ -32,6 +33,7 @@ const mockData = [
 ];
 
 const Calendar = () => {
+  const roleInfo = 'student';
   const [date, setDate] = useState(new Date());
   const [clickDate, setClickDate] = useState<Clicked>({
     date: date,
@@ -40,6 +42,14 @@ const Calendar = () => {
     roomname: hasDeposit(date, mockData),
     subjectAndRoom: hasLesson(date, mockData),
   });
+
+  /* useEffect(() => {
+    const fetchCalendar = async () => {
+      const dateInfo = await getCalendar();
+      setClickDate(dateInfo);
+    };
+  }, []);
+  */
 
   const handleDayClick = (day: Date | null) => {
     if (!day) return;
@@ -57,7 +67,7 @@ const Calendar = () => {
     <div className="px-4">
       <DateHandler date={date} setDate={setDate} />
       <CalendarGrid date={date} data={mockData} handleDayClick={handleDayClick} clickDate={clickDate} />
-      <CalendarInfo clickDate={clickDate} />
+      <CalendarInfo roleInfo={roleInfo} clickDate={clickDate} />
     </div>
   );
 };
