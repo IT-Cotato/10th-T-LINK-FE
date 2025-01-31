@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-interface ModalProps {
+interface LogoutModalProps {
   setModalOpen: (value: boolean) => void;
   type: (typeof MODAL_TYPE)[keyof typeof MODAL_TYPE];
 }
@@ -16,7 +16,7 @@ export const MODAL_TYPE = {
   QUIT: 'quit',
 } as const;
 
-const Modal = ({ setModalOpen, type }: ModalProps) => {
+const LogoutModal = ({ setModalOpen, type }: LogoutModalProps) => {
   const DEFAULT_TYPE = {
     text: '',
     buttonText: '',
@@ -54,28 +54,25 @@ const Modal = ({ setModalOpen, type }: ModalProps) => {
 
   return (
     <>
-      <div className="fixed inset-0 bg-black opacity-60 max-w-[500px] mx-auto z-10"></div>
-      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
-        <div className="w-[320px] p-4 flex flex-col rounded-2xl items-center justify-center gap-8 bg-white">
-          <p className="text-[18px] font-semibold">{modalType.text}</p>
-          <div className="flex w-full gap-3 text-[16px] font-semibold">
-            <button
-              className="flex-1 py-[14px] bg-primary_700 text-white rounded-[4px] box-border text-center"
-              onClick={modalType.onClick}
-            >
-              {modalType.buttonText}
-            </button>
-            <button
-              className="flex-1 py-[14px] bg-white text-black border border-gray-500 rounded-[4px] box-border text-center"
-              onClick={() => setModalOpen(false)}
-            >
-              취소
-            </button>
-          </div>
+      <div className="w-[320px] p-4 flex flex-col rounded-2xl items-center justify-center gap-8 bg-white">
+        <p className="text-[18px] font-semibold">{modalType.text}</p>
+        <div className="flex w-full gap-3 text-[16px] font-semibold">
+          <button
+            className="flex-1 py-[14px] bg-primary_700 text-white rounded-[4px] box-border text-center"
+            onClick={modalType.onClick}
+          >
+            {modalType.buttonText}
+          </button>
+          <button
+            className="flex-1 py-[14px] bg-white text-black border border-gray-500 rounded-[4px] box-border text-center"
+            onClick={() => setModalOpen(false)}
+          >
+            취소
+          </button>
         </div>
       </div>
     </>
   );
 };
 
-export default Modal;
+export default LogoutModal;

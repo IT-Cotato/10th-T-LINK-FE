@@ -1,5 +1,5 @@
-import wow from '../assets/images/wow.png';
-import vector from '../assets/images/vector_gray.png';
+import wow from '../../assets/images/wow.png';
+import vector from '../../assets/images/vector_gray.png';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 

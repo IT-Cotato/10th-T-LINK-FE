@@ -5,7 +5,8 @@ import BottomButton from '../assets/images/term_button.svg?react';
 import TopButton from '../assets/images/Top Button.svg?react';
 
 import { useEffect, useState } from 'react';
-import Modal, { MODAL_TYPE } from '../components/Modal';
+import Modal from '../components/Modal/Modal';
+import LogoutModal, { MODAL_TYPE } from '../components/Modal/LogoutModal';
 
 const UserPolicy = () => {
   const nav = useNavigate();
@@ -91,7 +92,11 @@ const UserPolicy = () => {
         >
           회원 탈퇴
         </div>
-        {modalOpen && <Modal setModalOpen={setModalOpen} type={MODAL_TYPE.QUIT} />}
+        {modalOpen && (
+          <Modal onClose={() => setModalOpen(false)}>
+            <LogoutModal setModalOpen={setModalOpen} type={MODAL_TYPE.QUIT} />
+          </Modal>
+        )}
         <div className="fixed bottom-[14px] left-1/2 transform -translate-x-1/2 cursor-pointer" onClick={handleScroll}>
           {button}
         </div>

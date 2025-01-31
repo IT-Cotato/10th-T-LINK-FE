@@ -1,5 +1,5 @@
-import money from '../assets/images/money.png';
-import vector from '../assets/images/vector.png';
+import money from '../../assets/images/money.png';
+import vector from '../../assets/images/vector.png';
 
 type DepositProps = {
   roomname: string;
