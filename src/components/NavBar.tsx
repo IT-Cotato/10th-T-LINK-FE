@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import CalendarSvg from '../assets/images/calendar.svg?react';
 import CalendarFill from '../assets/images/calendarFill.svg?react';
@@ -9,12 +9,15 @@ import MypageSvg from '../assets/images/mypage.svg?react';
 import MyPageFill from '../assets/images/mypageFill.svg?react';
 import Indicator from '../assets/images/Indicator.svg?react';
 
-// useLocationd을 사용해 경로로 접근하는 방식도 고려 필요
-// 경로로 접근할 일은 없으니 상관없나?
-
 const NavBar = () => {
   const nav = useNavigate();
+  const location = useLocation();
   const [currentMenu, setCurrentMenu] = useState<string>('roomlist');
+
+  useEffect(() => {
+    const pathname = location.pathname.split('/');
+    setCurrentMenu(pathname[2]);
+  }, [location]);
 
   const menus = [
     {
@@ -45,7 +48,6 @@ const NavBar = () => {
             key={menuItem.name}
             className={`flex-col cursor-pointer px-4 flex items-center ${currentMenu === menuItem.name ? 'pt-[6px] pb-[0px]' : 'py-[6px]'}`}
             onClick={() => {
-              setCurrentMenu(menuItem.name);
               nav(menuItem.name);
             }}
           >
