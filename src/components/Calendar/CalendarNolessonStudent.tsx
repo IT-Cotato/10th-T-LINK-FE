@@ -1,6 +1,5 @@
-import wow from '../assets/images/wow.png';
-import vector from '../assets/images/vector_gray.png';
-import { MdKeyboardArrowRight } from 'react-icons/md';
+import wow from '../../assets/images/wow.png';
+import vector from '../../assets/images/vector_gray.png';
 
 const CalendarNolessonStudent = () => {
   return (
