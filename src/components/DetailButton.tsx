@@ -1,5 +1,7 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import 강의자료함 from '/강의자료함.png';
+import { useEffect, useState } from 'react';
+import Toast from './Toast';
 
 interface DetailButtonProps {
   type: string;
@@ -10,6 +12,10 @@ interface DetailButtonProps {
 const DetailButton = ({ type, nextDepositDate, isPermission }: DetailButtonProps) => {
   let title = '';
   let description = '';
+
+  const [code, setCode] = useState('');
+  const [toast, setToast] = useState(false);
+  const { roomId } = useParams();
 
   const nav = useNavigate();
 
@@ -34,25 +40,40 @@ const DetailButton = ({ type, nextDepositDate, isPermission }: DetailButtonProps
       title = '입금';
       description = `다음 입금일은 ${nextDepositDate}입니다.`;
       break;
-    case 'invite':
+    case 'sharecode':
       title = '학생 초대하기';
       description = '초대링크를 공유해주세요';
       break;
   }
 
-  const isVisible = type !== 'payment' && type !== 'invite';
+  const isVisible = type !== 'payment' && type !== 'sharecode';
+
+  useEffect(() => {
+    setCode(`http://localhost:5173/user/roomlist/${roomId}/invite`);
+  }, [roomId]);
+
+  const handleClick = async () => {
+    if (type === 'sharecode') {
+      try {
+        await navigator.clipboard.writeText(code);
+        setToast(true);
+      } catch (e) {
+        alert('초대 코드 복사에 실패했습니다.');
+      }
+    } else if (isPermission) {
+      nav(type);
+    }
+  };
 
   return (
     <div
       className={`p-4 rounded-[20px] flex-col items-start flex gap-6 cursor-pointer ${
         isPermission ? 'bg-slate-200 cursor-pointer' : 'bg-gray-300 opacity-50 cursor-not-allowed'
       }`}
-      onClick={() => {
-        if (isPermission) {
-          nav(type);
-        }
-      }}
+      onClick={handleClick}
     >
+      {toast && <Toast setToast={setToast} />}
+
       {isVisible && <img src={강의자료함} className="h-[80px] w-[80px]" alt="강의자료함" />}
       <div className="m-0">
         <h3 className="text-[18px] font-bold">{title}</h3>

@@ -28,6 +28,7 @@ import CreateCounseling from '../pages/Counseling/CreateCounseling';
 import CounselingDetail from '../pages/Counseling/CounselingDetail';
 import UserPolicy from '../pages/UserPolicy';
 import ShareCode from '../pages/Room/ShareCode';
+import Invite from '../pages/Invite';
 
 export const router = createBrowserRouter([
   {
@@ -76,6 +77,7 @@ export const router = createBrowserRouter([
               { path: 'diary/create', element: <CreateCounseling /> }, // 상담 일지 업로드
               { path: 'diary/:counselingId', element: <CounselingDetail /> }, // 상담 일지 상세
               { path: 'payment', element: <Payment /> },
+              { path: 'invite', element: <Invite /> },
             ],
           },
         ],

@@ -7,17 +7,13 @@ const ShareCode = () => {
   const location = useLocation();
   const navigation = useNavigate();
 
-  const [code, setCode] = useState('aaa');
+  const [code, setCode] = useState('');
   const [toast, setToast] = useState(false);
 
   useEffect(() => {
-    const roomId = location.state?.roomId;
-
-    /* const getCode = async () => {
-      const code = await getShareCode(roomId);
-      setCode(code);
-    };
-    getCode(); */
+    const roomId = location.state.roomId;
+    console.log(roomId);
+    setCode(`http://localhost:5173/user/roomlist/${roomId}/invite`);
   }, []);
 
   const handleCopy = async (code: string) => {
