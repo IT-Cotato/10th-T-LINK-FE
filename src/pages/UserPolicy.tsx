@@ -7,6 +7,7 @@ import TopButton from '../assets/images/Top Button.svg?react';
 import { useEffect, useState } from 'react';
 import Modal from '../components/Modal/Modal';
 import LogoutModal, { MODAL_TYPE } from '../components/Modal/LogoutModal';
+import Header from '../components/Header';
 
 const UserPolicy = () => {
   const nav = useNavigate();
@@ -57,14 +58,8 @@ const UserPolicy = () => {
   return (
     <div className="flex flex-col mb-[62px]">
       {/* 헤더 */}
-      <div className="fixed py-2 px-[6px] border-b-2 border-gray-100 flex items-center bg-white w-full max-w-[500px]">
-        <div className="flex p-2.5 justify-center items-center cursor-pointer" onClick={() => nav(-1)}>
-          <GoArrowLeft size={24} />
-        </div>
-        <div className="flex-1 text-center text-body2 font-semibold leading-6 tracking-[-0.27px]">이용약관</div>
-        <div className="w-11" />
-      </div>
-      <div className="flex flex-col mt-[62px]">
+      <Header />
+      <div className="flex flex-col">
         {/* 이용약관 */}
         <div className="p-4 border-b-2 border-gray-100 flex flex-col gap-2 tracking-[-0.048px] leading-7 text-body3">
           <p className="font-semibold ">1. 비즈니스 파트너 개인정보 처리방침</p>
