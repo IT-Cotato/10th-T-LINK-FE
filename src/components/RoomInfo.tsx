@@ -7,6 +7,7 @@ import student_girl from '../assets/images/student_girl.png';
 import ProfileModal from './Modal/ProfileModal';
 import { useEffect, useState } from 'react';
 import StudentEditModal from './Modal/StudentEditModal';
+import Modal from './Modal/Modal';
 
 type RoomProps = {
   room: SimpleRoomInfo;
@@ -26,8 +27,16 @@ const RoomInfo = ({ room, roleInfo, handleDelete }: RoomProps) => {
 
   return (
     <div className="flex items-center py-2.5 gap-4 px-4">
-      {profileOpen && <ProfileModal setModalOpen={setProfileOpen} id={room.student.studentId} />}
-      {StudentEditOpen && <StudentEditModal setModalOpen={setStudentEditOpen} id={room.roomId} />}
+      {profileOpen && (
+        <Modal onClose={() => setProfileOpen(false)}>
+          <ProfileModal setModalOpen={setProfileOpen} id={room.student.studentId} />
+        </Modal>
+      )}
+      {StudentEditOpen && (
+        <Modal onClose={() => setStudentEditOpen(false)}>
+          <StudentEditModal setModalOpen={setStudentEditOpen} id={room.roomId} />
+        </Modal>
+      )}
       <div
         className="flex items-center p-1.5 cursor-pointer"
         onClick={() => setProfileOpen(true)}

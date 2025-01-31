@@ -79,7 +79,7 @@ const MyPage = () => {
           로그아웃
         </div>
         {modalOpen && (
-          <Modal>
+          <Modal onClose={() => setModalOpen(false)}>
             <LogoutModal setModalOpen={setModalOpen} type={MODAL_TYPE.LOGOUT} />
           </Modal>
         )}

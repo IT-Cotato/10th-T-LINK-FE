@@ -93,7 +93,7 @@ const UserPolicy = () => {
           회원 탈퇴
         </div>
         {modalOpen && (
-          <Modal>
+          <Modal onClose={() => setModalOpen(false)}>
             <LogoutModal setModalOpen={setModalOpen} type={MODAL_TYPE.QUIT} />
           </Modal>
         )}
