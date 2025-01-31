@@ -49,22 +49,24 @@ const mockData = [
 ];
 
 const RoomList = () => {
-  const roleInfo = localStorage.getItem('roleInfo');
+  // const roleInfo = localStorage.getItem('roleInfo');
+  const roleInfo = 'teacher';
   const navigate = useNavigate();
   const [rooms, setRooms] = useState<SimpleRoomInfo[]>(mockData);
 
+  const fetchRooms = async () => {
+    const rooms = await getRoomList();
+    setRooms(rooms);
+  };
+
   useEffect(() => {
-    const fetchRooms = async () => {
-      const roomList = await getRoomList();
-      setRooms(roomList);
-    };
     fetchRooms();
   }, []);
 
   const handleDelete = async (roomId: number) => {
     try {
-      await deleteRoom(roomId);
-      setRooms((prevRooms) => prevRooms.filter((room) => room.roomId !== roomId)); // Update state
+      const status = await deleteRoom(roomId);
+      if (status === 200) await fetchRooms();
     } catch (error) {
       console.error('Failed to delete room:', error);
     }
@@ -74,13 +76,15 @@ const RoomList = () => {
     <div className="flex flex-col">
       <div>
         {rooms.map((room) => (
-          <RoomInfo room={room} handleDelete={handleDelete} />
+          <RoomInfo roleInfo={roleInfo} room={room} handleDelete={handleDelete} />
         ))}
       </div>
       <div className="flex justify-end py-8">
-        <button onClick={() => navigate('createroom')} className="text-white px-4 bg-black">
-          + 과외방 개설
-        </button>
+        {roleInfo === 'teacher' && (
+          <button onClick={() => navigate('createroom')} className="text-white px-4 bg-black">
+            + 과외방 개설
+          </button>
+        )}
       </div>
     </div>
   );

@@ -27,7 +27,7 @@ import CounselingDiary from '../pages/Counseling/CounselingDiary';
 import CreateCounseling from '../pages/Counseling/CreateCounseling';
 import CounselingDetail from '../pages/Counseling/CounselingDetail';
 import UserPolicy from '../pages/UserPolicy';
-import ShareLink from '../pages/Room/ShareLink';
+import ShareCode from '../pages/Room/ShareCode';
 
 export const router = createBrowserRouter([
   {
@@ -59,7 +59,7 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <RoomList /> },
           { path: 'createroom', element: <CreateRoom /> },
-          { path: 'sharelink', element: <ShareLink /> },
+          { path: 'sharecode', element: <ShareCode /> },
           {
             path: ':roomId',
             children: [

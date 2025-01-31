@@ -1,14 +1,13 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import RoomEditor from '../../components/RoomEditor';
-import { Room, RoomInfo } from '../../models/room.model';
+import { RoomInfo } from '../../models/room.model';
 import { getCurrentRoomInfo, patchRoomInfo } from '../../api/roomList.api';
 
 const EditRoom = () => {
   const navigate = useNavigate();
-  // const [currentRoom, setCurrentRoom] = useState<Room | undefined>(undefined);
-  const [currentRoom, setCurrentRoom] = useState<Room | undefined>({
-    roomId: 2,
+  // const [currentRoom, setCurrentRoom] = useState<RoomInfo>();
+  const [currentRoom, setCurrentRoom] = useState<RoomInfo>({
     roomName: '방2',
     studentName: '학생 2',
     subject: '과목2',
@@ -49,9 +48,9 @@ const EditRoom = () => {
     fetchCurrentRoom();
   }, []);
 
-  const handleUpdate = async (roomInfo: RoomInfo) => {
-    const status = await patchRoomInfo(roomInfo, paramsId);
-    navigate('/user/roomlist');
+  const handleUpdate = async () => {
+    const status = await patchRoomInfo(paramsId, currentRoom);
+    if (status === 200) navigate('/user/roomlist');
   };
 
   return <RoomEditor currentRoom={currentRoom} onSubmit={handleUpdate} />;
