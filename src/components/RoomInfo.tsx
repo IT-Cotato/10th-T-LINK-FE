@@ -4,9 +4,9 @@ import { SimpleRoomInfo } from '../models/room.model';
 import { useNavigate } from 'react-router-dom';
 import student_boy from '../assets/images/student_boy.png';
 import student_girl from '../assets/images/student_girl.png';
-import ProfileModal from './ProfileModal';
+import ProfileModal from './Modal/ProfileModal';
 import { useEffect, useState } from 'react';
-import StudentEditModal from './StudentEditModal';
+import StudentEditModal from './Modal/StudentEditModal';
 
 type RoomProps = {
   room: SimpleRoomInfo;

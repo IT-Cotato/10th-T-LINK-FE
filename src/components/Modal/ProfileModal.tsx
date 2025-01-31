@@ -1,7 +1,7 @@
-import student from '../assets/images/student_boy.png';
-import DefaultProfile from '../assets/images/profile.svg?react';
+import student from '../../assets/images/student_boy.png';
+import DefaultProfile from '../../assets/images/profile.svg?react';
 import { useEffect, useState } from 'react';
-import { getProfileModal } from '../api/roomList.api';
+import { getProfileModal } from '../../api/roomList.api';
 
 type ModalProps = {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;

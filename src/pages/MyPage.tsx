@@ -5,7 +5,8 @@ import DefaultProfile from '../assets/images/profile.svg?react';
 import { FaAngleRight } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import Modal, { MODAL_TYPE } from '../components/Modal';
+import Modal from '../components/Modal/Modal';
+import LogoutModal, { MODAL_TYPE } from '../components/Modal/LogoutModal';
 
 const MyPage = () => {
   const nav = useNavigate();
@@ -77,7 +78,11 @@ const MyPage = () => {
         >
           로그아웃
         </div>
-        {modalOpen && <Modal setModalOpen={setModalOpen} type={MODAL_TYPE.LOGOUT} />}
+        {modalOpen && (
+          <Modal>
+            <LogoutModal setModalOpen={setModalOpen} type={MODAL_TYPE.LOGOUT} />
+          </Modal>
+        )}
       </div>
     </div>
   );
