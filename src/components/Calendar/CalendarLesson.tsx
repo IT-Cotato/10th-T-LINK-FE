@@ -1,5 +1,5 @@
-import user_blue from '../assets/images/user_blue.png';
-import vector from '../assets/images/vector_gray.png';
+import user_blue from '../../assets/images/user_blue.png';
+import vector from '../../assets/images/vector_gray.png';
 
 type LessonProps = {
   subjectAndRoom: string;

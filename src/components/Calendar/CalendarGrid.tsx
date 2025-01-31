@@ -1,9 +1,9 @@
-import { LessonDaysList } from '../utils/LessonDaysList';
+import { LessonDaysList } from '../../utils/LessonDaysList';
 import { FaUserLarge } from 'react-icons/fa6';
-import depositdot from '../assets/images/depositdot.png';
-import { hasLesson, hasDeposit } from '../utils/CalendarUtils';
-import { Cal, Clicked } from '../models/calendar.model';
-import { groupDatesByWeek } from '../utils/CalendarUtils';
+import depositdot from '../../assets/images/depositdot.png';
+import { hasLesson, hasDeposit } from '../../utils/CalendarUtils';
+import { Cal, Clicked } from '../../models/calendar.model';
+import { groupDatesByWeek } from '../../utils/CalendarUtils';
 
 type GridProps = {
   date: Date;

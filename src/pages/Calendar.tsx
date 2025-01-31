@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import CalendarInfo from '../components/CalendarInfo';
+import CalendarInfo from '../components/Calendar/CalendarInfo';
 import { Clicked } from '../models/calendar.model';
 import { hasLesson, hasDeposit } from '../utils/CalendarUtils';
-import DateHandler from '../components/DateHandler';
-import CalendarGrid from '../components/CalendarGrid';
+import DateHandler from '../components/Calendar/DateHandler';
+import CalendarGrid from '../components/Calendar/CalendarGrid';
 
 const mockData = [
   {
