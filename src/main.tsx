@@ -4,10 +4,10 @@ import './index.css';
 import App from './App.tsx';
 import React from 'react';
 
-if (process.env.NODE_ENV === 'development') {
-  const { worker } = await import('./mocks/browser');
-  worker.start();
-}
+// if (process.env.NODE_ENV === 'development') {
+//   const { worker } = await import('./mocks/browser');
+//   worker.start();
+// }
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
