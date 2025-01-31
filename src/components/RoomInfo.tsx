@@ -10,17 +10,17 @@ import StudentEditModal from './StudentEditModal';
 
 type RoomProps = {
   room: SimpleRoomInfo;
+  roleInfo: string;
   handleDelete: (roomId: number) => void;
 };
 
-const RoomInfo = ({ room, handleDelete }: RoomProps) => {
-  const roleInfo = 'student';
+const RoomInfo = ({ room, roleInfo, handleDelete }: RoomProps) => {
   const [profileOpen, setProfileOpen] = useState(false);
   const [StudentEditOpen, setStudentEditOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleEdit = () => {
-    if (roleInfo === 'student') setStudentEditOpen(true);
+    if (roleInfo === 'student' || 'parent') setStudentEditOpen(true);
     else if (roleInfo === 'teacher') navigate(`${room.roomId}/edit`);
   };
 
