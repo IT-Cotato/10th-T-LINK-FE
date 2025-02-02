@@ -1,61 +1,55 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { GoArrowLeft } from 'react-icons/go';
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
+
+// 뒤로 가기 없는 페이지들
+const ROUTE_TITLES: { [key: string]: string } = {
+  '/user/mypage': '내 정보',
+  '/user/calendar': '달력',
+  '/user/roomlist': '과외방',
+};
+
+// 뒤로 가기 존재
+const HEADER_CONFIG = [
+  { path: '/materials', title: '강의 자료함' },
+  { path: '/homework', title: '주차별 숙제' },
+  { path: '/diary', title: '상담일지' },
+  { path: '/mypage/terms', title: '이용약관' },
+  { path: '/user/', title: '과외방 상세', startsWith: true },
+];
+
+// 회원가입 관련 페이지들
+const SIGNUP_PATHS = ['/signup', '/formbasic', '/formtel'];
 
 const Header = () => {
   const navigate = useNavigate();
   const location = useLocation().pathname;
 
-  const [left, setLeft] = useState(false);
-  const [title, setTitle] = useState('');
-  const [border, setBorder] = useState(true);
+  const { title, left } = useMemo(() => {
+    // 뒤로 가기 없음
+    if (ROUTE_TITLES[location]) {
+      return { title: ROUTE_TITLES[location], left: false };
+    }
 
-  useEffect(() => {
-    if (location.includes('/materials')) {
-      setTitle('강의 자료함');
-      setLeft(true);
-    } else if (location.includes('/homework')) {
-      setTitle('주차별 숙제');
-      setLeft(true);
-    } else if (location.includes('/diary')) {
-      setTitle('상담일지');
-      setLeft(true);
-    } else if (location.startsWith('/user/roomlist/')) {
-      setTitle('과외방 상세');
-      setLeft(true);
-    } else {
-      switch (location) {
-        case '/user/mypage':
-          setTitle('내 정보');
-          setLeft(false);
-          break;
-        case '/user/calendar':
-          setTitle('달력');
-          setLeft(false);
-          break;
-        case '/user/roomlist':
-          setTitle('과외방');
-          setLeft(false);
-          break;
-        case '/user/mypage/terms':
-          setTitle('이용약관');
-          setLeft(true);
-          break;
-        case '/signup':
-        case '/formbasic':
-        case '/formtel':
-          setLeft(true);
-          setBorder(false);
-          break;
-        default:
-          setTitle('');
-          break;
+    // 뒤로 가기 있음
+    for (const { path, title, startsWith } of HEADER_CONFIG) {
+      if (startsWith ? location.startsWith(path) : location.includes(path)) {
+        return { title, left: true };
       }
     }
+
+    // 회원가입 관련 페이지
+    if (SIGNUP_PATHS.includes(location)) {
+      return { title: '', left: true };
+    }
+
+    return { title: '', left: false };
   }, [location]);
 
   return (
-    <div className={`flex items-center py-2 px-1.5 ${border ? 'border-b-2' : 'border-0'} border-b-gray-100`}>
+    <div
+      className={`flex items-center py-2 px-1.5 ${SIGNUP_PATHS.includes(location) ? 'border-b-2' : 'border-0'} border-b-gray-100`}
+    >
       <div
         className={`flex w-11 h-11 justify-center items-center ${left ? 'cursor-pointer' : ''} `}
         onClick={() => {
