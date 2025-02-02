@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import RoomInfo from '../../components/RoomInfo';
 import { useEffect, useState } from 'react';
 import { getRoomList, deleteRoom } from '../../api/roomList.api';
@@ -81,11 +81,12 @@ const RoomList = () => {
       </div>
       <div className="flex justify-end py-8">
         {roleInfo === 'teacher' && (
-          <button onClick={() => navigate('createroom')} className="text-white px-4 bg-black">
+          <button onClick={() => navigate('/user/createroom')} className="text-white px-4 bg-black">
             + 과외방 개설
           </button>
         )}
       </div>
+      <Outlet />
     </div>
   );
 };
