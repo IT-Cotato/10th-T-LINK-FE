@@ -13,7 +13,7 @@ const ShareCode = () => {
   useEffect(() => {
     const roomId = location.state.roomId;
     console.log(roomId);
-    setCode(`http://localhost:5173/user/roomlist/${roomId}/invite`);
+    setCode(`http://localhost:5173/user/roomlist/invite/${roomId}`);
   }, []);
 
   const handleCopy = async (code: string) => {

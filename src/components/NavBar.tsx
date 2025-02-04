@@ -16,8 +16,13 @@ const NavBar = () => {
 
   useEffect(() => {
     const pathname = location.pathname.split('/');
-    setCurrentMenu(pathname[2]);
+    if (pathname[2] === 'calendar' || pathname[2] === 'mypage') {
+      setCurrentMenu(pathname[2]);
+    } else {
+      setCurrentMenu('roomlist');
+    }
   }, [location]);
+  console.log(currentMenu);
 
   const menus = [
     {

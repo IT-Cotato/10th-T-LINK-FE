@@ -57,35 +57,30 @@ export const router = createBrowserRouter([
     children: [
       {
         path: 'roomlist',
-        children: [
-          { index: true, element: <RoomList /> },
-          { path: 'createroom', element: <CreateRoom /> },
-          { path: 'sharecode', element: <ShareCode /> },
-          {
-            path: ':roomId',
-            children: [
-              { index: true, element: <RoomDetail /> },
-              { path: 'edit', element: <EditRoom /> },
-              { path: 'materials', element: <Materials /> }, // 강의 자료함
-              { path: 'materials/create', element: <CreateMaterials /> }, // 강의 자료 업로드
-              { path: 'materials/:materialId', element: <MaterialDetail /> }, // 강의 자료 상세
-              { path: 'homework', element: <Homework /> }, // 숙제방
-              { path: 'homework/create', element: <CreateHomework /> }, // 숙제 업로드
-              { path: 'homework/:homeworkId', element: <HomeworkDetail /> }, // 숙제 상세
-              { path: 'stats', element: <Statistics /> },
-              { path: 'diary', element: <CounselingDiary /> }, // 상담 일지
-              { path: 'diary/create', element: <CreateCounseling /> }, // 상담 일지 업로드
-              { path: 'diary/:counselingId', element: <CounselingDetail /> }, // 상담 일지 상세
-              { path: 'payment', element: <Payment /> },
-              { path: 'invite', element: <Invite /> },
-            ],
-          },
-        ],
+        element: <RoomList />,
+        children: [{ path: 'invite/:roomId', element: <Invite /> }],
       },
       {
-        path: 'calendar',
-        element: <Calendar />,
+        path: ':roomId',
+        children: [
+          { index: true, element: <RoomDetail /> },
+          { path: 'edit', element: <EditRoom /> },
+          { path: 'materials', element: <Materials /> }, // 강의 자료함
+          { path: 'materials/create', element: <CreateMaterials /> }, // 강의 자료 업로드
+          { path: 'materials/:materialId', element: <MaterialDetail /> }, // 강의 자료 상세
+          { path: 'homework', element: <Homework /> }, // 숙제방
+          { path: 'homework/create', element: <CreateHomework /> }, // 숙제 업로드
+          { path: 'homework/:homeworkId', element: <HomeworkDetail /> }, // 숙제 상세
+          { path: 'stats', element: <Statistics /> },
+          { path: 'diary', element: <CounselingDiary /> }, // 상담 일지
+          { path: 'diary/create', element: <CreateCounseling /> }, // 상담 일지 업로드
+          { path: 'diary/:counselingId', element: <CounselingDetail /> }, // 상담 일지 상세
+          { path: 'payment', element: <Payment /> },
+        ],
       },
+      { path: 'createroom', element: <CreateRoom /> },
+      { path: 'sharecode', element: <ShareCode /> },
+      { path: 'calendar', element: <Calendar /> },
       { path: 'mypage', element: <MyPage /> },
     ],
   },

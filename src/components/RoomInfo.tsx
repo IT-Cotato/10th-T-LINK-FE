@@ -48,7 +48,10 @@ const RoomInfo = ({ room, roleInfo, handleDelete }: RoomProps) => {
           <img className="w-9 h-9" src={student_girl} />
         )}
       </div>
-      <div className="flex flex-1 flex-col text-gray-900 cursor-pointer" onClick={() => navigate(`${room.roomId}`)}>
+      <div
+        className="flex flex-1 flex-col text-gray-900 cursor-pointer"
+        onClick={() => navigate(`/user/${room.roomId}`)}
+      >
         <h1 className="text-body1 font-bold leading-9">
           [{room.subject}] {room.roomName}
         </h1>
