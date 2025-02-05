@@ -21,8 +21,8 @@ const RoomInfo = ({ room, roleInfo, handleDelete }: RoomProps) => {
   const navigate = useNavigate();
 
   const handleEdit = () => {
-    if (roleInfo === 'student' || 'parent') setStudentEditOpen(true);
-    else if (roleInfo === 'teacher') navigate(`${room.roomId}/edit`);
+    if (roleInfo === 'STUDENT' || 'PARENT') setStudentEditOpen(true);
+    else if (roleInfo === 'TEACHER') navigate(`${room.roomId}/edit`);
   };
 
   return (

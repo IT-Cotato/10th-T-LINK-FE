@@ -42,8 +42,9 @@ const EditRoom = () => {
 
   useEffect(() => {
     const fetchCurrentRoom = async () => {
-      const currentRoom = await getCurrentRoomInfo(paramsId);
-      setCurrentRoom(currentRoom);
+      const res = await getCurrentRoomInfo(paramsId);
+      console.log(res);
+      //setCurrentRoom(res.data);
     };
     fetchCurrentRoom();
   }, []);
