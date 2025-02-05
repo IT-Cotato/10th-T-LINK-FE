@@ -32,33 +32,30 @@ instance.interceptors.response.use(
     return response;
   },
   async (error) => {
-    // 토큰 만료 시
-    const msg = error.response.data.message; // 백엔드에서 토큰 만료됐다고 알려주는 msg
     const refreshToken = localStorage.getItem('refreshToken');
+
+    // 메세지에 상관없이 코드가 401이면 모두 토큰 재발급
     if (error.response.status === 401) {
       try {
-        if (refreshToken) {
-          const res = await axios.post(
-            '/api/auth/kakao/reissue',
-            {},
-            {
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${refreshToken}`,
-              },
-            },
-          );
-          if (res.status == 200) {
-            localStorage.setItem('accessToken', res.data.accessToken);
-            localStorage.setItem('refreshToken', res.data.refreshToken);
+        const res = await axios.get('/api/auth/kakao/reissue', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${refreshToken}`,
+          },
+        });
+        if (res.status == 200) {
+          const { accessToken, refreshToken } = res.data.data;
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
 
-            const decoded = jwtDecode(res.data.accessToken) as JwtPayload & { role: string };
-            localStorage.setItem('roleInfo', decoded.role);
-          }
-          // 새 토큰으로 헤더 업데이트 후 재요청
-          error.config.headers.Authorization = `Bearer ${res.headers.Authorization}`;
-          return axios(error.config);
+          const decoded = jwtDecode(accessToken) as JwtPayload & { role: string };
+          localStorage.setItem('roleInfo', decoded.role);
+          console.log(res.data.message);
         }
+
+        // 새 토큰으로 헤더 업데이트 후 재요청
+        error.config.headers.Authorization = `Bearer ${res.data.data.accessToken}`;
+        return axios(error.config);
       } catch (refreshErr) {
         console.log('Token 갱신 실패: ', refreshErr);
 
