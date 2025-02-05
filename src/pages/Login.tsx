@@ -1,9 +1,7 @@
-import { useNavigate } from 'react-router-dom';
 import KakaoLoginButton from '../components/KakaoLoginButton';
 import logingate from '../assets/images/logingate.png';
 
 const Login = () => {
-  const navigate = useNavigate();
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex flex-col items-start px-4 py-6 text-heading6 font-bold leading-10 text-gray-900">

@@ -1,6 +1,13 @@
 export interface UserInfo {
-  role: string;
+  role: '선생님' | '학생' | '부모' | '';
   username: string;
   phoneNumber: string;
-  gender: string;
+  gender: '남' | '여' | '';
+  backgroundColor: string;
+}
+
+export interface UserCode {
+  provider: 'KAKAO';
+  redirectUrl: 'http://localhost:5173/api/auth/kakao/callback';
+  code: string;
 }

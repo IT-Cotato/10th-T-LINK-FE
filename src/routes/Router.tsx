@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
     path: 'login',
     element: <Login />,
   },
-  { path: 'oauth', element: <KakaoOauth /> },
+  { path: 'api/auth/kakao/callback', element: <KakaoOauth /> },
   {
     path: 'signup',
     element: <Signup />,

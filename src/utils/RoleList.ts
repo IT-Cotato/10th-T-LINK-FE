@@ -27,7 +27,7 @@ export const RoleList: Role[] = [
   },
   {
     id: 2,
-    title: '학부모',
+    title: '부모',
     description: '선생님과 소통하고 입금해요.',
     src: mom,
     role: 'parent',

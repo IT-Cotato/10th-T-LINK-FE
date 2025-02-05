@@ -1,7 +1,5 @@
-import instance from '../../api/axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { postUserInfo } from '../../api/auth.api';
 
 import Header from '../../components/Header';
 import RoleSelectionButton from '../../components/RoleSelectionButton';
@@ -14,8 +12,11 @@ const Signup = () => {
     if (!role) return;
 
     console.log(`선택한 역할: ${role}`);
-    localStorage.setItem('roleInfo', role);
-    navigate('/formbasic');
+    navigate('/formbasic', {
+      state: {
+        role: role,
+      },
+    });
   };
 
   return (
@@ -30,8 +31,8 @@ const Signup = () => {
           <RoleSelectionButton
             key={item.id}
             role={item}
-            onSelect={() => setRole(item.role)}
-            isSelected={role === item.role}
+            onSelect={() => setRole(item.title)}
+            isSelected={role === item.title}
           />
         ))}
       </div>

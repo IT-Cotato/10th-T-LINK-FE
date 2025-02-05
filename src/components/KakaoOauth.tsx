@@ -1,41 +1,57 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postAuthCode } from '../api/auth.api';
+import { UserCode } from '../models/user.model';
 
 const KakaoOauth = () => {
   const navigate = useNavigate();
   const [isProcessed, setIsProcessed] = useState(false);
-  const code = new URL(window.location.href).searchParams.get('code');
-  console.log(code);
+  const [code, setCode] = useState<UserCode | null>(null);
+
+  useEffect(() => {
+    const authCode = new URL(window.location.href).searchParams.get('code');
+    if (authCode) {
+      setCode({
+        provider: 'KAKAO',
+        redirectUrl: 'http://localhost:5173/api/auth/kakao/callback',
+        code: authCode,
+      });
+    } else {
+      console.error('No authorization code found in URL.');
+    }
+  }, []);
 
   const handleAuth = async () => {
     if (!code) return;
-
-    const { accessToken, refreshToken, status } = await postAuthCode(code);
-
-    if (accessToken) {
-      localStorage.setItem('accesstoken', accessToken);
-    }
-    if (refreshToken) {
+    try {
+      const res = await postAuthCode(code);
+      console.log('API 응답:', res.data);
+      const accessToken = res.data.data.accessToken;
+      const refreshToken = res.data.data.refreshToken;
+      const isOnboarding = res.data.data.isOnboarding;
+      localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
-    }
 
-    if (status === 'existing') {
-      // 이미 회원인 경우 로그인 완료 -> 메인페이지로 이동
-      // navigate('/');
-    } else if (status === 'new') {
-      // 신규 회원인 경우 -> 회원가입 페이지로 이동
-      // navigate('/signup');
+      if (!isOnboarding) {
+        navigate('/user/roomlist');
+      } else {
+        navigate('/signup');
+      }
+
+      setIsProcessed(true);
+    } catch (error) {
+      console.error('Authorization failed:', error);
+    } finally {
+      setIsProcessed(true);
     }
-    setIsProcessed(true);
   };
 
   useEffect(() => {
-    if (isProcessed) return; // 이미 처리한 경우 return
+    if (isProcessed || !code) return; // 이미 처리했거나 code가 없는 경우 return
     handleAuth();
-  }, [isProcessed]);
+  }, [isProcessed, code]);
 
-  return <div>회원인지 확인 중입니다.</div>;
+  return <div>회원 확인 중입니다. 잠시만 기다려주세요...</div>;
 };
 
 export default KakaoOauth;

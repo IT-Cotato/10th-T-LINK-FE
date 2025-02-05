@@ -13,14 +13,15 @@ const FormTel = () => {
     username: '',
     phoneNumber: '',
     gender: '',
+    backgroundColor: '#C15A5A',
   });
 
   useEffect(() => {
-    const roleInfo = localStorage.getItem('roleInfo');
+    const role = location.state?.role;
     const username = location.state?.username;
     const gender = location.state?.gender;
 
-    if (roleInfo) setUserInput({ ...userInput, role: roleInfo, username: username, gender: gender });
+    if (role) setUserInput({ ...userInput, role: role, username: username, gender: gender });
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,9 +30,19 @@ const FormTel = () => {
   console.log(userInput);
 
   const handleStart = async () => {
-    // const status = await postUserInfo(userInput);
-    // console.log(status);
-    navigate('/signupcomplete');
+    try {
+      const res = await postUserInfo(userInput);
+      console.log('Authorization successful:', res.data);
+
+      const accessToken = res.data.data.accessToken;
+      const refreshToken = res.data.data.refreshToken;
+      localStorage.setItem('accesstoken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+    } catch (error) {
+      console.error('Authorization failed:', error);
+    } finally {
+      // navigate('/signupcomplete');
+    }
   };
 
   return (

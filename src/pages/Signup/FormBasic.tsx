@@ -1,25 +1,33 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 
 const FormBasic = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [genders, setGenders] = useState([
     {
       id: 0,
-      type: '남성',
+      type: '남',
       isClicked: false,
     },
     {
       id: 1,
-      type: '여성',
+      type: '여',
       isClicked: false,
     },
   ]);
+
+  const [role, setRole] = useState([]);
   const [basicInput, setBasicInput] = useState({
     username: '',
     gender: '',
   });
+
+  useEffect(() => {
+    setRole(location.state?.role);
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBasicInput({ ...basicInput, [e.target.id]: e.target.value });
@@ -28,6 +36,7 @@ const FormBasic = () => {
   const handleStart = async () => {
     navigate('/formtel', {
       state: {
+        role: role,
         username: basicInput.username,
         gender: basicInput.gender,
       },
