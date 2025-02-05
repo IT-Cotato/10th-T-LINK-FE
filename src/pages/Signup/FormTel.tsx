@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { postUserInfo } from '../../api/auth.api';
 import Header from '../../components/Header';
 import { UserInfo } from '../../models/user.model';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 const FormTel = () => {
   const navigate = useNavigate();
@@ -32,16 +33,25 @@ const FormTel = () => {
   const handleStart = async () => {
     try {
       const res = await postUserInfo(userInput);
-      console.log('Authorization successful:', res.data);
+      if (res.status == 200) {
+        const accessToken = res.data.data.accessToken;
+        const refreshToken = res.data.data.refreshToken;
 
-      const accessToken = res.data.data.accessToken;
-      const refreshToken = res.data.data.refreshToken;
-      localStorage.setItem('accesstoken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
-    } catch (error) {
-      console.error('Authorization failed:', error);
+        localStorage.setItem('accesstoken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+
+        const decoded = jwtDecode(accessToken) as JwtPayload & { role: string };
+        localStorage.setItem('roleInfo', decoded.role);
+        console.log(res.data.message);
+      }
+    } catch (err: any) {
+      if (err.response.status === 400 || err.response.status === 401 || err.response.status === 404) {
+        console.log('오류:', err.response.data.error);
+      } else {
+        console.log(err);
+      }
     } finally {
-      // navigate('/signupcomplete');
+      navigate('/signupcomplete');
     }
   };
 

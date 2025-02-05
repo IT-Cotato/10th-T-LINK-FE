@@ -1,8 +1,8 @@
 export interface UserInfo {
-  role: '선생님' | '학생' | '부모' | '';
+  role: '선생님' | '학생' | '학부모' | '';
   username: string;
   phoneNumber: string;
-  gender: '남' | '여' | '';
+  gender: '남성' | '여성' | '';
   backgroundColor: string;
 }
 

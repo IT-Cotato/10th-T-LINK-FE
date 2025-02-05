@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postAuthCode } from '../api/auth.api';
 import { UserCode } from '../models/user.model';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 const KakaoOauth = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const KakaoOauth = () => {
         code: authCode,
       });
     } else {
-      console.error('No authorization code found in URL.');
+      console.error('인가코드가 존재하지 않습니다.');
     }
   }, []);
 
@@ -25,24 +26,29 @@ const KakaoOauth = () => {
     if (!code) return;
     try {
       const res = await postAuthCode(code);
-      console.log('API 응답:', res.data);
-      const accessToken = res.data.data.accessToken;
-      const refreshToken = res.data.data.refreshToken;
-      const isOnboarding = res.data.data.isOnboarding;
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
+      if (res.status == 200) {
+        const { accessToken, refreshToken, isOnboarding } = res.data.data;
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
 
-      if (!isOnboarding) {
-        navigate('/user/roomlist');
-      } else {
-        navigate('/signup');
+        const decoded = jwtDecode(accessToken) as JwtPayload & { role: string };
+        localStorage.setItem('roleInfo', decoded.role);
+        console.log(res.data.message);
+
+        if (!isOnboarding) {
+          navigate('/user/roomlist');
+        } else {
+          navigate('/signup');
+        }
+
+        setIsProcessed(true);
       }
-
-      setIsProcessed(true);
-    } catch (error) {
-      console.error('Authorization failed:', error);
-    } finally {
-      setIsProcessed(true);
+    } catch (err: any) {
+      if (err.response.status === 400 || err.response.status === 500) {
+        console.log('오류:', err.response.data.error);
+      } else {
+        console.log(err);
+      }
     }
   };
 

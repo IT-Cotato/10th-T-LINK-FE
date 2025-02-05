@@ -55,7 +55,7 @@ const RoomList = () => {
   const [rooms, setRooms] = useState<SimpleRoomInfo[]>(mockData);
 
   const fetchRooms = async () => {
-    const rooms = await getRoomList();
+    //const rooms = await getRoomList();
     setRooms(rooms);
   };
 
@@ -76,7 +76,7 @@ const RoomList = () => {
     <div className="flex flex-col">
       <div>
         {rooms.map((room) => (
-          <RoomInfo roleInfo={roleInfo} room={room} handleDelete={handleDelete} />
+          <RoomInfo key={room.roomId} roleInfo={roleInfo} room={room} handleDelete={handleDelete} />
         ))}
       </div>
       <div className="flex justify-end py-8">

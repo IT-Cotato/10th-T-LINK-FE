@@ -49,13 +49,19 @@ const LogoutModal = ({ setModalOpen, type }: LogoutModalProps) => {
     // 로그아웃 로직
     try {
       const res = await postLogout();
-      console.log(res);
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-    } catch (e) {
-      console.error(e);
-    } finally {
-      navigate('/');
+      if (res.status == 200) {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('roleInfo');
+        console.log(res.data.message);
+        navigate('/');
+      }
+    } catch (err: any) {
+      if (err.response.status === 401 || err.response.status === 404) {
+        console.log('오류:', err.response.data.error);
+      } else {
+        console.log(err);
+      }
     }
   };
 

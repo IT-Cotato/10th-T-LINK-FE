@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import Header from '../../components/Header';
 import RoleSelectionButton from '../../components/RoleSelectionButton';
 import { RoleList } from '../../utils/RoleList';

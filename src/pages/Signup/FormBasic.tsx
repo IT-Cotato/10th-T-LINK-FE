@@ -9,12 +9,12 @@ const FormBasic = () => {
   const [genders, setGenders] = useState([
     {
       id: 0,
-      type: '남',
+      type: '남성',
       isClicked: false,
     },
     {
       id: 1,
-      type: '여',
+      type: '여성',
       isClicked: false,
     },
   ]);
