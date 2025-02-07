@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { postUserInfo } from '../../api/auth.api';
 import Header from '../../components/Header';
 import { UserInfo } from '../../models/user.model';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 const FormTel = () => {
   const navigate = useNavigate();
@@ -13,14 +14,15 @@ const FormTel = () => {
     username: '',
     phoneNumber: '',
     gender: '',
+    backgroundColor: '#C15A5A',
   });
 
   useEffect(() => {
-    const roleInfo = localStorage.getItem('roleInfo');
+    const role = location.state?.role;
     const username = location.state?.username;
     const gender = location.state?.gender;
 
-    if (roleInfo) setUserInput({ ...userInput, role: roleInfo, username: username, gender: gender });
+    if (role) setUserInput({ ...userInput, role: role, username: username, gender: gender });
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,9 +31,28 @@ const FormTel = () => {
   console.log(userInput);
 
   const handleStart = async () => {
-    // const status = await postUserInfo(userInput);
-    // console.log(status);
-    navigate('/signupcomplete');
+    try {
+      const res = await postUserInfo(userInput);
+      if (res.status == 200) {
+        const accessToken = res.data.data.accessToken;
+        const refreshToken = res.data.data.refreshToken;
+
+        localStorage.setItem('accesstoken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+
+        const decoded = jwtDecode(accessToken) as JwtPayload & { role: string };
+        localStorage.setItem('roleInfo', decoded.role);
+        console.log(res.data.message);
+      }
+    } catch (err: any) {
+      if (err.response.status === 400 || err.response.status === 401 || err.response.status === 404) {
+        console.log('오류:', err.response.data.error);
+      } else {
+        console.log(err);
+      }
+    } finally {
+      navigate('/signupcomplete');
+    }
   };
 
   return (

@@ -1,41 +1,63 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postAuthCode } from '../api/auth.api';
+import { UserCode } from '../models/user.model';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 
 const KakaoOauth = () => {
   const navigate = useNavigate();
   const [isProcessed, setIsProcessed] = useState(false);
-  const code = new URL(window.location.href).searchParams.get('code');
-  console.log(code);
+  const [code, setCode] = useState<UserCode | null>(null);
+
+  useEffect(() => {
+    const authCode = new URL(window.location.href).searchParams.get('code');
+    if (authCode) {
+      setCode({
+        provider: 'KAKAO',
+        redirectUrl: 'http://localhost:5173/api/auth/kakao/callback',
+        code: authCode,
+      });
+    } else {
+      console.error('인가코드가 존재하지 않습니다.');
+    }
+  }, []);
 
   const handleAuth = async () => {
     if (!code) return;
+    try {
+      const res = await postAuthCode(code);
+      if (res.status == 200) {
+        const { accessToken, refreshToken, isOnboarding } = res.data.data;
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
 
-    const { accessToken, refreshToken, status } = await postAuthCode(code);
+        const decoded = jwtDecode(accessToken) as JwtPayload & { role: string };
+        localStorage.setItem('roleInfo', decoded.role);
+        console.log(res.data.message);
 
-    if (accessToken) {
-      localStorage.setItem('accesstoken', accessToken);
-    }
-    if (refreshToken) {
-      localStorage.setItem('refreshToken', refreshToken);
-    }
+        if (!isOnboarding) {
+          navigate('/user/roomlist');
+        } else {
+          navigate('/signup');
+        }
 
-    if (status === 'existing') {
-      // 이미 회원인 경우 로그인 완료 -> 메인페이지로 이동
-      // navigate('/');
-    } else if (status === 'new') {
-      // 신규 회원인 경우 -> 회원가입 페이지로 이동
-      // navigate('/signup');
+        setIsProcessed(true);
+      }
+    } catch (err: any) {
+      if (err.response.status === 400 || err.response.status === 500) {
+        console.log('오류:', err.response.data.error);
+      } else {
+        console.log(err);
+      }
     }
-    setIsProcessed(true);
   };
 
   useEffect(() => {
-    if (isProcessed) return; // 이미 처리한 경우 return
+    if (isProcessed || !code) return; // 이미 처리했거나 code가 없는 경우 return
     handleAuth();
-  }, [isProcessed]);
+  }, [isProcessed, code]);
 
-  return <div>회원인지 확인 중입니다.</div>;
+  return <div>회원 확인 중입니다. 잠시만 기다려주세요...</div>;
 };
 
 export default KakaoOauth;

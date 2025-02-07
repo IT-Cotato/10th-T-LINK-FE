@@ -33,7 +33,6 @@ const mockData = [
 ];
 
 const Calendar = () => {
-  const roleInfo = 'student';
   const [date, setDate] = useState(new Date());
   const [clickDate, setClickDate] = useState<Clicked>({
     date: date,
@@ -42,6 +41,12 @@ const Calendar = () => {
     roomname: hasDeposit(date, mockData),
     subjectAndRoom: hasLesson(date, mockData),
   });
+  const [roleInfo, setRoleInfo] = useState('');
+
+  useEffect(() => {
+    const role = localStorage.getItem('roleInfo');
+    setRoleInfo(role || '');
+  }, []);
 
   /* useEffect(() => {
     const fetchCalendar = async () => {

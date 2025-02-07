@@ -20,7 +20,7 @@ const mockData = [
     ],
     student: {
       studentId: 32,
-      gender: '남',
+      gender: '남성',
       backgroundColor: '#000957',
     },
   },
@@ -42,24 +42,25 @@ const mockData = [
     ],
     student: {
       studentId: 45,
-      gender: '여',
+      gender: '여성',
       backgroundColor: '#ffffff',
     },
   },
 ];
 
 const RoomList = () => {
-  // const roleInfo = localStorage.getItem('roleInfo');
-  const roleInfo = 'teacher';
   const navigate = useNavigate();
   const [rooms, setRooms] = useState<SimpleRoomInfo[]>(mockData);
+  const [roleInfo, setRoleInfo] = useState('');
 
   const fetchRooms = async () => {
-    const rooms = await getRoomList();
+    //const rooms = await getRoomList();
     setRooms(rooms);
   };
 
   useEffect(() => {
+    const role = localStorage.getItem('roleInfo');
+    setRoleInfo(role || '');
     fetchRooms();
   }, []);
 
@@ -76,11 +77,11 @@ const RoomList = () => {
     <div className="flex flex-col">
       <div>
         {rooms.map((room) => (
-          <RoomInfo roleInfo={roleInfo} room={room} handleDelete={handleDelete} />
+          <RoomInfo key={room.roomId} roleInfo={roleInfo} room={room} handleDelete={handleDelete} />
         ))}
       </div>
       <div className="flex justify-end py-8">
-        {roleInfo === 'teacher' && (
+        {roleInfo === 'TEACHER' && (
           <button onClick={() => navigate('/user/createroom')} className="text-white px-4 bg-black">
             + 과외방 개설
           </button>

@@ -6,7 +6,7 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const isAuthenticated = true;
+  const isAuthenticated = !!localStorage.getItem('accessToken');
   return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
 };
 

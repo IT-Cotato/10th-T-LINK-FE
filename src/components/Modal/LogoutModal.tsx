@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { postLogout } from '../../api/auth.api';
+import { useNavigate } from 'react-router-dom';
 
 interface LogoutModalProps {
   setModalOpen: (value: boolean) => void;
@@ -17,6 +19,7 @@ export const MODAL_TYPE = {
 } as const;
 
 const LogoutModal = ({ setModalOpen, type }: LogoutModalProps) => {
+  const navigate = useNavigate();
   const DEFAULT_TYPE = {
     text: '',
     buttonText: '',
@@ -42,9 +45,24 @@ const LogoutModal = ({ setModalOpen, type }: LogoutModalProps) => {
     }
   }, []);
 
-  const handleLogOut = () => {
+  const handleLogOut = async () => {
     // 로그아웃 로직
-    console.log('로그아웃');
+    try {
+      const res = await postLogout();
+      if (res.status == 200) {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('roleInfo');
+        console.log(res.data.message);
+        navigate('/');
+      }
+    } catch (err: any) {
+      if (err.response.status === 401 || err.response.status === 404) {
+        console.log('오류:', err.response.data.error);
+      } else {
+        console.log(err);
+      }
+    }
   };
 
   const handleQuit = () => {

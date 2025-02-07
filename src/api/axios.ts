@@ -1,4 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
+import { jwtDecode, JwtPayload } from 'jwt-decode';
+
 const baseURL = import.meta.env.VITE_BASE_URL;
 
 const instance: AxiosInstance = axios.create({
@@ -25,37 +27,42 @@ instance.interceptors.request.use(
 );
 
 instance.interceptors.response.use(
+  // status가 2xx-> 그럼 다른 코드에서 굳이 코드가 200인지 확인 안해도 되나?
   (response) => {
     return response;
   },
   async (error) => {
-    // 토큰 만료 시
-    const msg = error.response.data.message; // 백엔드에서 토큰 만료됐다고 알려주는 msg
     const refreshToken = localStorage.getItem('refreshToken');
-    if (error.response.status === 401 && msg === '사용자의 로그인 검증을 실패했습니다.') {
-      try {
-        if (refreshToken) {
-          const res = await axios.post(
-            '/api/auth/kakao/token',
-            { refreshToken },
-            {
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            },
-          );
-          localStorage.setItem('accessToken', res.headers.Authorization); // 백에서 header/body 중 어디로 주는 지 확인 후 수정
 
-          // 새 토큰으로 헤더 업데이트 후 재요청
-          error.config.headers.Authorization = `Bearer ${res.headers.Authorization}`;
-          return axios(error.config);
+    // 메세지에 상관없이 코드가 401이면 모두 토큰 재발급
+    if (error.response.status === 401) {
+      try {
+        const res = await axios.get('/api/auth/kakao/reissue', {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${refreshToken}`,
+          },
+        });
+        if (res.status == 200) {
+          const { accessToken, refreshToken } = res.data.data;
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('refreshToken', refreshToken);
+
+          const decoded = jwtDecode(accessToken) as JwtPayload & { role: string };
+          localStorage.setItem('roleInfo', decoded.role);
+          console.log(res.data.message);
         }
+
+        // 새 토큰으로 헤더 업데이트 후 재요청
+        error.config.headers.Authorization = `Bearer ${res.data.data.accessToken}`;
+        return axios(error.config);
       } catch (refreshErr) {
         console.log('Token 갱신 실패: ', refreshErr);
 
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('roleInfo');
+
         window.location.href = '/login';
       }
     }
