@@ -26,8 +26,8 @@ export interface RoomInfo {
   studentName: string;
   subject: string;
   lessonDays: SimpleLessonDay[];
-  studentPermissions: SimplePermission;
-  parentPermissions: SimplePermission;
+  studentPermission: SimplePermission;
+  parentPermission: SimplePermission;
 }
 
 export interface SimpleRoomInfo {
@@ -49,8 +49,8 @@ export interface Room {
   studentName: string;
   subject: string;
   lessonDays: SimpleLessonDay[];
-  studentPermissions: SimplePermission;
-  parentPermissions: SimplePermission;
+  studentPermission: SimplePermission;
+  parentPermission: SimplePermission;
 }
 
 export type OnSubmit = (room: RoomInfo) => void;

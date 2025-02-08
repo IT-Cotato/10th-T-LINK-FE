@@ -11,9 +11,20 @@ const ShareCode = () => {
   const [toast, setToast] = useState(false);
 
   useEffect(() => {
-    const roomId = location.state.roomId;
-    console.log(roomId);
-    setCode(`http://localhost:5173/user/roomlist/invite/${roomId}`);
+    const fetchShareCode = async () => {
+      const roomId = location.state.roomId;
+
+      try {
+        const res = await getShareCode(roomId);
+        console.log(res);
+        const shareCode = res.data.shareCode;
+        setCode(`http://localhost:5173/user/roomlist/invite/${roomId}/${shareCode}`);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchShareCode();
   }, []);
 
   const handleCopy = async (code: string) => {

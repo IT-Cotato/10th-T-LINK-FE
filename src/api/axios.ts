@@ -37,7 +37,7 @@ instance.interceptors.response.use(
     // 메세지에 상관없이 코드가 401이면 모두 토큰 재발급
     if (error.response.status === 401) {
       try {
-        const res = await axios.get('/api/auth/kakao/reissue', {
+        const res = await axios.get(`${baseURL}/api/auth/kakao/reissue`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${refreshToken}`,

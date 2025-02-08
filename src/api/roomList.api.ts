@@ -16,7 +16,7 @@ export const getProfileModal = async (userId: number) => {
 // 과외방 생성
 export const postRoomInfo = async (roomInfo: RoomInfo) => {
   const res = await instance.post('/api/v1/rooms', roomInfo);
-  return res.data.roomId;
+  return res;
 };
 
 // 선생님이 과외방 수정 시 과외방 정보 출력
@@ -49,8 +49,14 @@ export const getRoomDetail = async (roomId: number) => {
   return res.status;
 };
 
-// 공유 링크 조회
+// 공유 코드 조회
 export const getShareCode = async (roomId: number) => {
   const res = await instance.get(`/api/v1/rooms/${roomId}/shareCode`);
-  return res.data.shareCode;
+  return res;
+};
+
+// 과외방 입장(공유코드로 입장)
+export const postShareCode = async (shareCode: string) => {
+  const res = await instance.get(`/api/v1/rooms/code/${shareCode}`);
+  return res;
 };

@@ -22,14 +22,14 @@ const EditRoom = () => {
         lessonDay: '일',
       },
     ],
-    studentPermissions: {
+    studentPermission: {
       lecture_file: false,
       homework: false,
       gradeStatistic: false,
       counselingLog: false,
       deposit: false,
     },
-    parentPermissions: {
+    parentPermission: {
       lecture_file: false,
       homework: false,
       gradeStatistic: false,
