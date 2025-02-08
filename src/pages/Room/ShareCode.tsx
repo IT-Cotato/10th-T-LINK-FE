@@ -46,7 +46,7 @@ const ShareCode = () => {
         <h1>과외방 링크</h1>
         <h1>학생에게 참여링크를 공유 해주세요</h1>
         <button onClick={() => handleCopy(code)}>링크 복사 버튼</button>
-        {toast && <Toast setToast={setToast} />}
+        {toast && <Toast setToast={setToast} title="클립보드에 복사되었습니다" />}
         <button onClick={() => handleSubmit()} className="text-white bg-black">
           완료
         </button>

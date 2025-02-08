@@ -40,7 +40,7 @@ export const patchRoomName = async (roomId: number, roomName: string) => {
 // 과외방 삭제
 export const deleteRoom = async (roomId: number) => {
   const res = await instance.delete(`/api/v1/rooms/${roomId}`);
-  return res.status;
+  return res;
 };
 
 // 과외방 상세

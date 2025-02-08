@@ -13,13 +13,13 @@ const EditRoom = () => {
     subject: '과목2',
     lessonDays: [
       {
-        lessonDay: '금',
+        lessonDay: '금요일',
       },
       {
-        lessonDay: '토',
+        lessonDay: '토요일',
       },
       {
-        lessonDay: '일',
+        lessonDay: '일요일',
       },
     ],
     studentPermission: {

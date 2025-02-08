@@ -8,7 +8,7 @@ interface ButtonProps {
 const Button = ({ text, onClick }: ButtonProps) => {
   return (
     <div
-      className="flex bottom-6 right-[14px] absolute rounded-full bg-gray-950 py-[10px] px-4 gap-1 items-center"
+      className="flex bottom-24 right-[14px] absolute rounded-full bg-gray-950 py-[10px] px-4 gap-1 items-center"
       onClick={onClick}
     >
       <Add />

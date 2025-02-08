@@ -5,6 +5,7 @@ import { getRoomList, deleteRoom } from '../../api/roomList.api';
 import { SimpleRoomInfo } from '../../models/room.model';
 import { IoSearch } from 'react-icons/io5';
 import SubjectTag from '../../components/SubjectTag';
+import Button from '../../components/Button';
 
 const mockData: SimpleRoomInfo[] = [
   {
@@ -41,7 +42,7 @@ const RoomList = () => {
 
   useEffect(() => {
     const role = localStorage.getItem('roleInfo');
-    setRoleInfo(role || '');
+    setRoleInfo(role || 'TEACHER');
 
     fetchRooms();
 
@@ -63,15 +64,6 @@ const RoomList = () => {
     });
     console.log(tags);
   }, []);
-
-  /* const handleDelete = async (roomId: number) => {
-    try {
-      const status = await deleteRoom(roomId);
-    } catch (error) {
-      console.error('Failed to delete room:', error);
-    }
-  };
-  */
 
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -135,11 +127,7 @@ const RoomList = () => {
 
       {/* 과외방 개설 */}
       <div className="flex justify-end py-8">
-        {roleInfo === 'TEACHER' && (
-          <button onClick={() => navigate('/user/createroom')} className="text-white px-4 bg-black">
-            + 과외방 개설
-          </button>
-        )}
+        {roleInfo === 'TEACHER' && <Button text="과외방 개설" onClick={() => navigate('/user/createroom')} />}
       </div>
       <Outlet />
     </div>
