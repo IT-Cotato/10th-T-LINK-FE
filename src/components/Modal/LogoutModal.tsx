@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { postLogout } from '../../api/auth.api';
+import { deleteUser, postLogout } from '../../api/auth.api';
 import { useNavigate } from 'react-router-dom';
 
 interface LogoutModalProps {
@@ -65,9 +65,24 @@ const LogoutModal = ({ setModalOpen, type }: LogoutModalProps) => {
     }
   };
 
-  const handleQuit = () => {
-    // 회원 탈퇴 로직
-    console.log('탈퇴');
+  const handleQuit = async () => {
+    try {
+      const res = await deleteUser();
+
+      if (res.status == 200) {
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('roleInfo');
+        console.log(res.data.message);
+        navigate('/');
+      }
+    } catch (err: any) {
+      if (err.response.status === 401 || err.response.status === 404) {
+        console.log('오류:', err.response.data.error);
+      } else {
+        console.log(err);
+      }
+    }
   };
 
   return (
