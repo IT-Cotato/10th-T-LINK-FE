@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import Calendar from '../assets/images/calendarGray.svg?react';
 import Search from '../assets/images/Search.svg?react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import './SearchBar.css';
-import { formatDate } from '../utils/formatDate';
+import Modal from './Modal/Modal';
+import DatePicker from './DatePicker';
 
 interface SearchBarProps {
   value: string;
@@ -13,21 +12,6 @@ interface SearchBarProps {
 
 const SearchBar = ({ value, setValue }: SearchBarProps) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
-
-  const handleDateChange = (date: Date | null) => {
-    setStartDate(date);
-    if (date) {
-      setValue(formatDate(date));
-    }
-    setTimeout(() => {
-      setShowDatePicker(false);
-    }, 100);
-  };
-
-  const chooseDate = () => {
-    setShowDatePicker(!showDatePicker);
-  };
 
   return (
     <div className="flex items-center bg-gray-100 p-2 rounded-lg gap-2">
@@ -39,18 +23,12 @@ const SearchBar = ({ value, setValue }: SearchBarProps) => {
         onChange={(e) => setValue(e.target.value)}
       />
 
-      <Calendar onClick={chooseDate} className="cursor-pointer" />
+      <Calendar onClick={() => setShowDatePicker(true)} className="cursor-pointer" />
 
       {showDatePicker && (
-        <div className="absolute top-16 right-4">
-          <DatePicker
-            selected={startDate}
-            onChange={handleDateChange}
-            popperClassName="custom-datepicker"
-            inline
-            highlightDates={[]}
-          />
-        </div>
+        <Modal onClose={() => setShowDatePicker(false)}>
+          <DatePicker setValue={setValue} onClose={() => setShowDatePicker(false)} />
+        </Modal>
       )}
 
       <Search />
