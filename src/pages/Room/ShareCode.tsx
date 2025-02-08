@@ -2,55 +2,22 @@ import { useEffect, useState } from 'react';
 import { getShareCode } from '../../api/roomList.api';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Toast from '../../components/Toast';
+import Modal from '../../components/Modal/Modal';
+import ShareLinkModal from '../../components/Modal/ShareLinkModal';
 
 const ShareCode = () => {
   const location = useLocation();
-  const navigation = useNavigate();
+  const roomId = location.state.roomId;
 
-  const [code, setCode] = useState('');
-  const [toast, setToast] = useState(false);
-
-  useEffect(() => {
-    const fetchShareCode = async () => {
-      const roomId = location.state.roomId;
-
-      try {
-        const res = await getShareCode(roomId);
-        console.log(res);
-        const shareCode = res.data.shareCode;
-        setCode(`http://localhost:5173/user/roomlist/invite/${roomId}/${shareCode}`);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    fetchShareCode();
-  }, []);
-
-  const handleCopy = async (code: string) => {
-    try {
-      await navigator.clipboard.writeText(code);
-      setToast(true);
-    } catch (e) {
-      alert('failed');
-    }
-  };
-
-  const handleSubmit = () => {
-    navigation('/user/roomlist');
-  };
+  const [modalOpen, setModalOpen] = useState(true);
 
   return (
     <div className="flex py-5 flex-col h-full justify-center items-center ">
-      <div className="flex flex-col items-center border-2 p-5">
-        <h1>과외방 링크</h1>
-        <h1>학생에게 참여링크를 공유 해주세요</h1>
-        <button onClick={() => handleCopy(code)}>링크 복사 버튼</button>
-        {toast && <Toast setToast={setToast} title="클립보드에 복사되었습니다" />}
-        <button onClick={() => handleSubmit()} className="text-white bg-black">
-          완료
-        </button>
-      </div>
+      {modalOpen && (
+        <Modal onClose={() => setModalOpen(false)}>
+          <ShareLinkModal setModalOpen={setModalOpen} roomId={roomId} />
+        </Modal>
+      )}
     </div>
   );
 };
