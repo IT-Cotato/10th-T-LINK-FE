@@ -14,7 +14,7 @@ const mockData: SimpleRoomInfo[] = [
     studentName: '홍길동',
     subject: '수학',
     lessonDays: [{ lessonDay: '월요일' }, { lessonDay: '수요일' }],
-    student: { studentId: 32, gender: '남성', backgroundColor: '#000957' },
+    student: { studentId: 32, gender: '남성', backgroundColor: '' },
   },
   {
     roomId: 2,
@@ -22,7 +22,7 @@ const mockData: SimpleRoomInfo[] = [
     studentName: '김영희',
     subject: '영어',
     lessonDays: [{ lessonDay: '금요일' }, { lessonDay: '토요일' }, { lessonDay: '일요일' }],
-    student: { studentId: 45, gender: '여성', backgroundColor: '#ffffff' },
+    student: { studentId: 45, gender: '여성', backgroundColor: '' },
   },
 ];
 

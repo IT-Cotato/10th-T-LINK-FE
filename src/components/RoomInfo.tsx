@@ -1,4 +1,3 @@
-import { CiEdit } from 'react-icons/ci';
 import { FaAngleRight } from 'react-icons/fa6';
 import edit from '../assets/images/edit.png';
 
@@ -25,6 +24,11 @@ const RoomInfo = ({ room, roleInfo }: RoomProps) => {
     if (roleInfo === 'TEACHER') navigate(`/user/${room.roomId}/edit`);
     else if (roleInfo === 'STUDENT' || 'PARENT') setStudentEditOpen(true);
   };
+  useEffect(() => {
+    if (room.roomId % 3 == 0) room.student.backgroundColor = '#E1F5D6';
+    else if (room.roomId % 3 == 1) room.student.backgroundColor = '#FFF6CC';
+    else if (room.roomId % 3 == 2) room.student.backgroundColor = '#FFE5E5';
+  });
 
   return (
     <div className="flex items-center p-4">
@@ -48,7 +52,7 @@ const RoomInfo = ({ room, roleInfo }: RoomProps) => {
           onClick={() => setProfileOpen(true)}
           style={{ backgroundColor: room.student.backgroundColor }}
         >
-          {room.student.gender === '남' ? (
+          {room.student.gender === '남성' ? (
             <img className="w-9 h-9" src={student_boy} />
           ) : (
             <img className="w-9 h-9" src={student_girl} />
