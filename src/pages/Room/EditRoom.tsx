@@ -22,19 +22,19 @@ const EditRoom = () => {
         lessonDay: '일',
       },
     ],
-    studentPermissions: {
-      lecture_file: false,
-      homework: false,
-      gradeStatistic: false,
+    studentPermission: {
+      lecture_file: true,
+      homework: true,
+      gradeStatistic: true,
       counselingLog: false,
       deposit: false,
     },
-    parentPermissions: {
+    parentPermission: {
       lecture_file: false,
       homework: false,
       gradeStatistic: false,
-      counselingLog: false,
-      deposit: false,
+      counselingLog: true,
+      deposit: true,
     },
   });
   const params = useParams<{ roomId: string }>();

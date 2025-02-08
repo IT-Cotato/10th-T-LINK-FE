@@ -1,6 +1,6 @@
 import { Permission } from '../models/room.model';
 
-export const StudentPermissions: Permission[] = [
+export const StudentPermission: Permission[] = [
   { id: 0, type: 'lecture_file', title: '강의 자료함' }, //true
   { id: 1, type: 'homework', title: '주차별 숙제' }, //true
   { id: 2, type: 'gradeStatistic', title: '성적 통계' }, //true
@@ -8,7 +8,7 @@ export const StudentPermissions: Permission[] = [
   { id: 4, type: 'deposit', title: '입금' },
 ];
 
-export const ParentPermissions: Permission[] = [
+export const ParentPermission: Permission[] = [
   { id: 5, type: 'lecture_file', title: '강의 자료함' },
   { id: 6, type: 'homework', title: '주차별 숙제' },
   { id: 7, type: 'gradeStatistic', title: '성적 통계' },

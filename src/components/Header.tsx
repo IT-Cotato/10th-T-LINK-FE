@@ -15,6 +15,7 @@ const HEADER_CONFIG = [
   { path: '/homework', title: '주차별 숙제' },
   { path: '/diary', title: '상담일지' },
   { path: '/mypage/terms', title: '이용약관' },
+  { path: '/user/createroom', title: '과외방 개설하기' },
   { path: '/user/', title: '과외방 상세', startsWith: true },
 ];
 

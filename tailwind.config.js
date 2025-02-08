@@ -78,6 +78,7 @@ export default {
         sub2_100: '#042363',
 
         kakao: '#FEE500',
+        alert: '#BC0A21',
       },
     },
   },

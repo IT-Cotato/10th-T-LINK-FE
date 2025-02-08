@@ -8,8 +8,8 @@ type ToggleProps = {
 
 const PermissionToggle = ({ permission, handleToggleCheck, isChecked }: ToggleProps) => {
   return (
-    <div className="flex">
-      {permission.title}
+    <div className="flex w-full justify-between font-normal text-base leading-7">
+      <h1 className={`${isChecked ? 'text-gray-900' : 'text-gray-500'}`}>{permission.title}</h1>
       <input
         id={`permission-${permission.id}`}
         type="checkbox"
@@ -19,7 +19,7 @@ const PermissionToggle = ({ permission, handleToggleCheck, isChecked }: TogglePr
       />
       <label
         htmlFor={`permission-${permission.id}`}
-        className={`relative block w-10 h-6 bg-gray-100 rounded-lg cursor-pointer transition ${isChecked ? 'bg-green-400' : 'bg-gray-200'}
+        className={`relative block w-10 h-6 bg-gray-100 rounded-full cursor-pointer transition ${isChecked ? 'bg-primary_700' : 'bg-gray-300'}
           before:content-[''] 
           before:absolute before:top-0.5 before:left-0.5 
           before:w-5 before:h-5 before:bg-white before:rounded-full before:transition 

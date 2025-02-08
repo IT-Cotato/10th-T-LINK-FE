@@ -58,7 +58,7 @@ export const router = createBrowserRouter([
       {
         path: 'roomlist',
         element: <RoomList />,
-        children: [{ path: 'invite/:roomId', element: <Invite /> }],
+        children: [{ path: 'invite/:roomId/:shareCode', element: <Invite /> }],
       },
       {
         path: ':roomId',

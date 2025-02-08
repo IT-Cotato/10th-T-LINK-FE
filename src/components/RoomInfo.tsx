@@ -1,5 +1,7 @@
-import { MdDeleteOutline } from 'react-icons/md';
 import { CiEdit } from 'react-icons/ci';
+import { FaAngleRight } from 'react-icons/fa6';
+import edit from '../assets/images/edit.png';
+
 import { SimpleRoomInfo } from '../models/room.model';
 import { useNavigate } from 'react-router-dom';
 import student_boy from '../assets/images/student_boy.png';
@@ -12,23 +14,26 @@ import Modal from './Modal/Modal';
 type RoomProps = {
   room: SimpleRoomInfo;
   roleInfo: string;
-  handleDelete: (roomId: number) => void;
 };
 
-const RoomInfo = ({ room, roleInfo, handleDelete }: RoomProps) => {
+const RoomInfo = ({ room, roleInfo }: RoomProps) => {
   const [profileOpen, setProfileOpen] = useState(false);
   const [StudentEditOpen, setStudentEditOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleEdit = () => {
-    if (roleInfo === 'STUDENT' || 'PARENT') setStudentEditOpen(true);
-    else if (roleInfo === 'TEACHER') navigate(`${room.roomId}/edit`);
+    if (roleInfo === 'TEACHER') navigate(`/user/${room.roomId}/edit`);
+    else if (roleInfo === 'STUDENT' || 'PARENT') setStudentEditOpen(true);
   };
 
   return (
-    <div className="flex items-center py-2.5 gap-4 px-4">
+    <div className="flex items-center p-4">
       {profileOpen && (
-        <Modal onClose={() => setProfileOpen(false)}>
+        <Modal
+          onClose={() => {
+            setProfileOpen(false);
+          }}
+        >
           <ProfileModal setModalOpen={setProfileOpen} id={room.student.studentId} />
         </Modal>
       )}
@@ -37,34 +42,47 @@ const RoomInfo = ({ room, roleInfo, handleDelete }: RoomProps) => {
           <StudentEditModal setModalOpen={setStudentEditOpen} id={room.roomId} />
         </Modal>
       )}
-      <div
-        className="flex items-center p-1.5 cursor-pointer"
-        onClick={() => setProfileOpen(true)}
-        style={{ backgroundColor: room.student.backgroundColor }}
-      >
-        {room.student.gender === '남' ? (
-          <img className="w-9 h-9" src={student_boy} />
-        ) : (
-          <img className="w-9 h-9" src={student_girl} />
-        )}
-      </div>
-      <div
-        className="flex flex-1 flex-col text-gray-900 cursor-pointer"
-        onClick={() => navigate(`/user/${room.roomId}`)}
-      >
-        <h1 className="text-body1 font-bold leading-9">
-          [{room.subject}] {room.roomName}
-        </h1>
-        <div className="flex gap-3">
-          <h3 className="text-body4 font-regular leading-6 gap-4">{room.studentName}</h3>
-          <h3> {room.lessonDays.map((lessonDay) => `#${lessonDay.lessonDay}요일`)}</h3>
+      <div className="gap-4 flex flex-1 items-center">
+        <div
+          className="flex items-center p-3 rounded-2xl cursor-pointer"
+          onClick={() => setProfileOpen(true)}
+          style={{ backgroundColor: room.student.backgroundColor }}
+        >
+          {room.student.gender === '남' ? (
+            <img className="w-9 h-9" src={student_boy} />
+          ) : (
+            <img className="w-9 h-9" src={student_girl} />
+          )}
+        </div>
+        <div className="flex flex-col text-gray-900 cursor-pointer" onClick={() => navigate(`/user/${room.roomId}`)}>
+          <h1 className="text-base font-semibold leading-7">{room.roomName}</h1>
+          <div className="flex gap-1.5 text-body4 leading-7 font-medium">
+            <div className="flex">
+              <h3 className="text-gray-500">#</h3>
+              <h3 className="text-primary_700 ">{room.subject}</h3>
+            </div>
+            {room.lessonDays.map((lessonDay, idx) => (
+              <div className="flex" key={idx}>
+                <h3 className="text-gray-500">#</h3>
+                <h3 className="text-primary_700">{lessonDay.lessonDay}</h3>
+              </div>
+            ))}
+          </div>
+          <div className="flex gap-1 text-sm">
+            <h3>{room.studentName}</h3>
+            {roleInfo === 'TEACHER' ? (
+              <h3 className="text-gray-500">학생</h3>
+            ) : (
+              <h3 className="text-gray-500">선생님</h3>
+            )}
+          </div>
         </div>
       </div>
-      <div className="cursor-pointer" onClick={handleEdit}>
-        <CiEdit size={20} />
-      </div>
-      <div className="cursor-pointer" onClick={() => handleDelete(room.roomId)}>
-        {roleInfo === 'teacher' && <MdDeleteOutline size={20} />}
+      <div className="flex gap-3 items-center cursor-pointer">
+        <div onClick={handleEdit}>
+          <img src={edit} className="w-7 h-7" />
+        </div>
+        <FaAngleRight size={20} color="#C6C4C1" onClick={() => navigate(`/user/${room.roomId}`)} />
       </div>
     </div>
   );
