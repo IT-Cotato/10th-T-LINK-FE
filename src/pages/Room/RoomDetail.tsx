@@ -41,7 +41,7 @@ const RoomDetail = () => {
       // const data = await getRoomDetail(roomId!);
       // setRoomDetail(response.data.data);
     } catch (error) {
-      console.log('방 정보 가젿오기 실패', error);
+      console.log('방 정보 가젿w오기 실패', error);
     }
   };
 

@@ -22,7 +22,6 @@ const NavBar = () => {
       setCurrentMenu('roomlist');
     }
   }, [location]);
-  console.log(currentMenu);
 
   const menus = [
     {
