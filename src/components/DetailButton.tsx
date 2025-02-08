@@ -1,7 +1,11 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import 강의자료함 from '/강의자료함.png';
 import { useEffect, useState } from 'react';
 import Toast from './Toast';
+import clsx from 'clsx';
+import MaterialIcon from '../assets/images/RoomDetail/materials.svg?react';
+import HomeworklIcon from '../assets/images/RoomDetail/homework.svg?react';
+import StatisticsIcon from '../assets/images/RoomDetail/statistics.svg?react';
+import CounselingIcon from '../assets/images/RoomDetail/counseling.svg?react';
 
 interface DetailButtonProps {
   type: string;
@@ -12,72 +16,55 @@ interface DetailButtonProps {
 const DetailButton = ({ type, nextDepositDate, isPermission }: DetailButtonProps) => {
   let title = '';
   let description = '';
-
-  const [code, setCode] = useState('');
-  const [toast, setToast] = useState(false);
-  const { roomId } = useParams();
+  let icon = <MaterialIcon />;
+  let bg = 'gray-300';
 
   const nav = useNavigate();
 
   switch (type) {
     case 'materials':
       title = '강의 자료함';
-      description = '강의 자료를 확인하세요';
+      description = '필요한 강의 자료를 한곳에!';
+      icon = <MaterialIcon />;
+      bg = 'second_5';
       break;
     case 'homework':
-      title = '주차별 숙제';
-      description = '이번주 숙제를 확인하세요';
+      title = '숙제';
+      description = '숙제를 한눈에 확인해요.';
+      icon = <HomeworklIcon />;
+      bg = 'primary_50';
       break;
     case 'stats':
       title = '성적 통계';
-      description = '성적을 확인하세요';
+      description = '성적을 쉽게 확인해보세요!';
+      icon = <StatisticsIcon />;
+      bg = 'primary_50';
       break;
     case 'diary':
       title = '상담 일지';
-      description = '상담 기록을 확인하세요';
-      break;
-    case 'payment':
-      title = '입금';
-      description = `다음 입금일은 ${nextDepositDate}입니다.`;
-      break;
-    case 'sharecode':
-      title = '학생 초대하기';
-      description = '초대링크를 공유해주세요';
+      description = '상담 내용을 모아보아요.';
+      icon = <CounselingIcon />;
+      bg = 'second_5';
       break;
   }
 
-  const isVisible = type !== 'payment' && type !== 'sharecode';
-
-  useEffect(() => {
-    setCode(`http://localhost:5173/user/roomlist/${roomId}/invite`);
-  }, [roomId]);
-
   const handleClick = async () => {
-    if (type === 'sharecode') {
-      try {
-        await navigator.clipboard.writeText(code);
-        setToast(true);
-      } catch (e) {
-        alert('초대 코드 복사에 실패했습니다.');
-      }
-    } else if (isPermission) {
-      nav(type);
-    }
+    if (isPermission) nav(type);
+    else return;
   };
 
   return (
     <div
-      className={`p-4 rounded-[20px] flex-col items-start flex gap-6 cursor-pointer ${
-        isPermission ? 'bg-slate-200 cursor-pointer' : 'bg-gray-300 opacity-50 cursor-not-allowed'
-      }`}
+      className={clsx(
+        'py-4 px-3 rounded-[12px] flex-col items-start flex gap-5',
+        isPermission ? `bg-${bg} cursor-pointer` : 'bg-gray-300 opacity-50 cursor-not-allowed',
+      )}
       onClick={handleClick}
     >
-      {toast && <Toast setToast={setToast} />}
-
-      {isVisible && <img src={강의자료함} className="h-[80px] w-[80px]" alt="강의자료함" />}
+      <div className="w-[60px] h-[60px] bg-white rounded-full p-3">{icon}</div>
       <div className="m-0">
-        <h3 className="text-[18px] font-bold">{title}</h3>
-        <p className="text-[13px]">{description}</p>
+        <h3 className="text-[18px] font-semibold leading-8 tracking-[-0.18px]">{title}</h3>
+        <p className="text-[13px] font-normal text-gray-600 leading-[22px]">{description}</p>
       </div>
     </div>
   );
