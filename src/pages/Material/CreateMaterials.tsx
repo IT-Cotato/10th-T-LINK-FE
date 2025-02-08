@@ -2,6 +2,8 @@ import { ChangeEvent, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useParams } from 'react-router-dom';
 import { uploadLectureFile } from '../../api/materials.api';
+import AddIcon from '../../assets/images/File_dock_add.svg?react';
+import LongButton from '../../components/LongButton';
 
 const CreateMaterials = () => {
   const { roomId } = useParams<{ roomId: string }>();
@@ -28,7 +30,7 @@ const CreateMaterials = () => {
     setFileList([...fileList, ...fileArray]);
   };
 
-  const handleDesc = (event: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleDesc = (event: ChangeEvent<HTMLInputElement>) => {
     setDesc(event.target.value);
   };
 
@@ -65,29 +67,41 @@ const CreateMaterials = () => {
   };
 
   return (
-    <div className="px-4">
-      <div>
-        <textarea
-          className="p-2 w-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 resize-none"
-          placeholder="강의 자료에 대해 설명 해주세요"
-          onChange={handleDesc}
-        ></textarea>
+    <div className="px-4 flex flex-col h-full">
+      {/* 설명 */}
+      <div className="py-4">
+        <p className="text-heading6 font-bold leading-10 text-gray-900">업로드 할 자료의 정보를 입력하세요.</p>
+        <p className="text-body3 font-normal leading-7 tracking-[-0.048px] text-gray-600">언제든지 수정할 수 있어요!</p>
       </div>
-      <div
-        className={`border-2 py-10 flex items-center justify-center cursor-pointer ${
-          isActive ? 'border-primary_500 bg-primary_50' : 'border-gray-400'
-        }`}
-      >
-        <label
-          onDragEnter={handleDragStart}
-          onDragLeave={handleDragEnd}
-          onDrop={handleDrop}
-          onDragOver={(e) => e.preventDefault()}
-          className="w-full flex items-center justify-center"
+      {/* 파일첨부 */}
+      <div className="py-4 gap-6 flex flex-col">
+        <div className="flex flex-col gap-[6px]">
+          <p className="text-gray-900 font-medium text-body4 leading-[26px]">자료명</p>
+          <input
+            placeholder="자료명을 입력해주세요"
+            className="py-2 px-3 border-gray-300 border-[1px] focus:outline-none focus:outline-2 focus:outline-gray-500 rounded-md text-body3"
+            onChange={handleDesc}
+          ></input>
+        </div>
+        <div
+          className={`border-[1px] h-[200px] border-dashed rounded-lg py-10 flex flex-col items-center justify-center cursor-pointer ${
+            isActive ? 'border-primary_500 bg-primary_50' : 'border-[#D4D4D8] bg-[#FAFAFA]'
+          }`}
         >
-          <input type="file" className="hidden" multiple onChange={handleFileChange} />
-          <p>클릭 혹은 파일을 이곳에 드롭하세요.</p>
-        </label>
+          <label
+            onDragEnter={handleDragStart}
+            onDragLeave={handleDragEnd}
+            onDrop={handleDrop}
+            onDragOver={(e) => e.preventDefault()}
+            className="w-full flex items-center justify-center"
+          >
+            <input type="file" className="hidden" multiple onChange={handleFileChange} />
+            <div className="justify-center items-center flex flex-col gap-1">
+              <AddIcon className="p-2 w-12 h-12 bg-gray-100 rounded-full" />
+              <p className="text-gray-500 text-[12px] leading-[22px]">파일 첨부하기</p>
+            </div>
+          </label>
+        </div>
       </div>
       {fileList.length > 0 && (
         <div className="mt-4 text-center text-gray-700">
@@ -104,9 +118,9 @@ const CreateMaterials = () => {
           </ul>
         </div>
       )}
-      <button onClick={handleSubmit} className="border bg-slate-200">
-        업로드
-      </button>
+      <div className="py-6 mt-auto">
+        <LongButton enable={!!(fileList.length > 0 && desc.length > 0)} onClick={handleSubmit} text="업로드 하기" />
+      </div>
     </div>
   );
 };

@@ -35,7 +35,7 @@ export const patchLectureFile = async (roomId: string, lectureFileBoxId: string,
 };
 
 // 강의 자료 파일 전체 다운로드
-export const getAllLectureFile = async (roomId: string, lectureFileBoxId: string) => {
+export const getAllLectureFile = async (roomId: string, lectureFileBoxId: number) => {
   const response = await instance.get(`/api/v1/rooms/${roomId}/lectureFileBoxes/${lectureFileBoxId}/download`);
   return response.data;
 };
