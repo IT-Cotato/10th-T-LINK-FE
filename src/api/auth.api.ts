@@ -43,3 +43,17 @@ export const postLogout = async () => {
   );
   return res;
 };
+
+// 탈퇴
+export const deleteUser = async () => {
+  const accessToken = localStorage.getItem('accessToken');
+
+  const res = await axios.delete(`${baseURL}/api/v1/user`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  return res;
+};

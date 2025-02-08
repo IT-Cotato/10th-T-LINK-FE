@@ -37,7 +37,7 @@ const FormTel = () => {
         const accessToken = res.data.data.accessToken;
         const refreshToken = res.data.data.refreshToken;
 
-        localStorage.setItem('accesstoken', accessToken);
+        localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
 
         const decoded = jwtDecode(accessToken) as JwtPayload & { role: string };
