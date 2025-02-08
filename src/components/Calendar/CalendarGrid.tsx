@@ -46,7 +46,7 @@ const CalendarGrid = ({ date, data, handleDayClick, clickDate }: GridProps) => {
               <button
                 key={j}
                 onClick={() => handleDayClick(day)}
-                className={`flex flex-col gap-0.5 items-center py-1.5 px-2.5 text-base leading-7      
+                className={`flex flex-col gap-0.5 items-center py-1.5 px-2.5 text-base leading-7 min-h-[4.0625rem]      
                   ${day?.getTime() === clickDate.date?.getTime() ? 'bg-primary_100 rounded-full text-primary_800 font-semibold' : ''}
                   ${isToday(day) ? 'border-2 border-primary_600 rounded-[100px]' : ''}`}
               >

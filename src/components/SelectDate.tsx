@@ -12,7 +12,7 @@ const SelectDate = ({ lessonDayItem, isClicked, handleDaysClick }: LessonDayProp
       className={`px-3 py-1 rounded-full text-sm leading-7 ${isClicked ? 'bg-primary_700 text-white' : 'bg-gray-50 text-gray-500'}`}
       onClick={() => handleDaysClick(lessonDayItem.lessonDay)} // lessonDay만 전달
     >
-      {lessonDayItem.lessonDay}
+      {lessonDayItem.lessonDay}요일
     </button>
   );
 };
