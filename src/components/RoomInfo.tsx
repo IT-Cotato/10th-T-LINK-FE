@@ -1,4 +1,3 @@
-import { CiEdit } from 'react-icons/ci';
 import { FaAngleRight } from 'react-icons/fa6';
 import edit from '../assets/images/edit.png';
 
@@ -25,6 +24,11 @@ const RoomInfo = ({ room, roleInfo }: RoomProps) => {
     if (roleInfo === 'TEACHER') navigate(`/user/${room.roomId}/edit`);
     else if (roleInfo === 'STUDENT' || 'PARENT') setStudentEditOpen(true);
   };
+  useEffect(() => {
+    if (room.roomId % 3 == 0) room.oponent.backgroundColor = '#E1F5D6';
+    else if (room.roomId % 3 == 1) room.oponent.backgroundColor = '#FFF6CC';
+    else if (room.roomId % 3 == 2) room.oponent.backgroundColor = '#FFE5E5';
+  });
 
   return (
     <div className="flex items-center p-4">
@@ -34,7 +38,7 @@ const RoomInfo = ({ room, roleInfo }: RoomProps) => {
             setProfileOpen(false);
           }}
         >
-          <ProfileModal setModalOpen={setProfileOpen} id={room.student.studentId} />
+          <ProfileModal setModalOpen={setProfileOpen} id={room.oponent.id} />
         </Modal>
       )}
       {StudentEditOpen && (
@@ -46,9 +50,9 @@ const RoomInfo = ({ room, roleInfo }: RoomProps) => {
         <div
           className="flex items-center p-3 rounded-2xl cursor-pointer"
           onClick={() => setProfileOpen(true)}
-          style={{ backgroundColor: room.student.backgroundColor }}
+          style={{ backgroundColor: room.oponent.backgroundColor }}
         >
-          {room.student.gender === '남' ? (
+          {room.oponent.gender === '남성' ? (
             <img className="w-9 h-9" src={student_boy} />
           ) : (
             <img className="w-9 h-9" src={student_girl} />
@@ -69,7 +73,7 @@ const RoomInfo = ({ room, roleInfo }: RoomProps) => {
             ))}
           </div>
           <div className="flex gap-1 text-sm">
-            <h3>{room.studentName}</h3>
+            <h3>{room.oponent.name}</h3>
             {roleInfo === 'TEACHER' ? (
               <h3 className="text-gray-500">학생</h3>
             ) : (

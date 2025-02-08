@@ -33,11 +33,11 @@ export interface RoomInfo {
 export interface SimpleRoomInfo {
   roomId: number;
   roomName: string;
-  studentName: string;
   subject: string;
   lessonDays: SimpleLessonDay[];
-  student: {
-    studentId: number;
+  oponent: {
+    id: number;
+    name: string;
     gender: string;
     backgroundColor: string;
   };
