@@ -48,7 +48,7 @@ const Header = () => {
 
   return (
     <div
-      className={`flex items-center py-2 px-1.5 ${SIGNUP_PATHS.includes(location) ? 'border-b-2' : 'border-0'} border-b-gray-100`}
+      className={`flex items-center py-2 px-1.5 ${SIGNUP_PATHS.includes(location) ? 'border-0' : 'border-b-2'} border-b-gray-100`}
     >
       <div
         className={`flex w-11 h-11 justify-center items-center ${left ? 'cursor-pointer' : ''} `}
