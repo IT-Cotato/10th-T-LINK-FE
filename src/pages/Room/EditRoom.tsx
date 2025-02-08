@@ -23,9 +23,9 @@ const EditRoom = () => {
       },
     ],
     studentPermission: {
-      lecture_file: false,
-      homework: false,
-      gradeStatistic: false,
+      lecture_file: true,
+      homework: true,
+      gradeStatistic: true,
       counselingLog: false,
       deposit: false,
     },
@@ -33,8 +33,8 @@ const EditRoom = () => {
       lecture_file: false,
       homework: false,
       gradeStatistic: false,
-      counselingLog: false,
-      deposit: false,
+      counselingLog: true,
+      deposit: true,
     },
   });
   const params = useParams<{ roomId: string }>();

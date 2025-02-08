@@ -8,14 +8,12 @@ type LessonDayProps = {
 
 const SelectDate = ({ lessonDayItem, isClicked, handleDaysClick }: LessonDayProps) => {
   return (
-    <div>
-      <button
-        className={`px-4 text-white ${isClicked ? 'bg-black' : 'bg-gray-300'}`}
-        onClick={() => handleDaysClick(lessonDayItem.lessonDay)} // lessonDay만 전달
-      >
-        {lessonDayItem.lessonDay}
-      </button>
-    </div>
+    <button
+      className={`px-3 py-1 rounded-full text-sm leading-7 ${isClicked ? 'bg-primary_700 text-white' : 'bg-gray-50 text-gray-500'}`}
+      onClick={() => handleDaysClick(lessonDayItem.lessonDay)} // lessonDay만 전달
+    >
+      {lessonDayItem.lessonDay}
+    </button>
   );
 };
 export default SelectDate;

@@ -64,7 +64,7 @@ const RoomInfo = ({ room, roleInfo }: RoomProps) => {
             {room.lessonDays.map((lessonDay, idx) => (
               <div className="flex" key={idx}>
                 <h3 className="text-gray-500">#</h3>
-                <h3 className="text-primary_700">{lessonDay.lessonDay}요일</h3>
+                <h3 className="text-primary_700">{lessonDay.lessonDay}</h3>
               </div>
             ))}
           </div>
