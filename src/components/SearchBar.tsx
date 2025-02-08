@@ -42,7 +42,7 @@ const SearchBar = ({ value, setValue }: SearchBarProps) => {
       <Calendar onClick={chooseDate} className="cursor-pointer" />
 
       {showDatePicker && (
-        <div className="absolute top-32 right-4">
+        <div className="absolute top-16 right-4">
           <DatePicker
             selected={startDate}
             onChange={handleDateChange}
