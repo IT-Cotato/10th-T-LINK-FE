@@ -50,9 +50,9 @@ export const router = createBrowserRouter([
   {
     path: 'user',
     element: (
-      <>
+      <ProtectedRoute>
         <Layout />
-      </>
+      </ProtectedRoute>
     ),
     children: [
       {
