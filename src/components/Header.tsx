@@ -25,31 +25,29 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation().pathname;
 
-  const { title, left } = useMemo(() => {
+  const { title, left, hasBorder } = useMemo(() => {
     // 뒤로 가기 없음
     if (ROUTE_TITLES[location]) {
-      return { title: ROUTE_TITLES[location], left: false };
+      return { title: ROUTE_TITLES[location], left: false, hasBorder: false };
     }
 
     // 뒤로 가기 있음
     for (const { path, title, startsWith } of HEADER_CONFIG) {
       if (startsWith ? location.startsWith(path) : location.includes(path)) {
-        return { title, left: true };
+        return { title, left: true, hasBorder: true };
       }
     }
 
     // 회원가입 관련 페이지
     if (SIGNUP_PATHS.includes(location)) {
-      return { title: '', left: true };
+      return { title: '', left: true, hasBorder: true };
     }
 
-    return { title: '', left: false };
+    return { title: '', left: false, hasBorder: false };
   }, [location]);
 
   return (
-    <div
-      className={`flex items-center py-2 px-1.5 ${SIGNUP_PATHS.includes(location) ? 'border-b-2' : 'border-0'} border-b-gray-100`}
-    >
+    <div className={`flex items-center py-2 px-1.5 ${hasBorder ? 'border-b-2' : 'border-0'} border-b-gray-100`}>
       <div
         className={`flex w-11 h-11 justify-center items-center ${left ? 'cursor-pointer' : ''} `}
         onClick={() => {
