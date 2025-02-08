@@ -11,18 +11,16 @@ const mockData: SimpleRoomInfo[] = [
   {
     roomId: 1,
     roomName: '방이름',
-    studentName: '홍길동',
     subject: '수학',
     lessonDays: [{ lessonDay: '월요일' }, { lessonDay: '수요일' }],
-    student: { studentId: 32, gender: '남성', backgroundColor: '' },
+    oponent: { id: 32, name: '김철수', gender: '남성', backgroundColor: '' },
   },
   {
     roomId: 2,
     roomName: '방이름2',
-    studentName: '김영희',
     subject: '영어',
     lessonDays: [{ lessonDay: '금요일' }, { lessonDay: '토요일' }, { lessonDay: '일요일' }],
-    student: { studentId: 45, gender: '여성', backgroundColor: '' },
+    oponent: { id: 45, name: '김영희', gender: '여성', backgroundColor: '' },
   },
 ];
 
@@ -72,7 +70,7 @@ const RoomList = () => {
     const filtered = rooms.filter(
       (room) =>
         room.roomName.includes(value) ||
-        room.studentName.includes(value) ||
+        room.oponent.name.includes(value) ||
         room.subject.includes(value) ||
         room.lessonDays.find((day) => day.lessonDay.includes(value)),
     );
