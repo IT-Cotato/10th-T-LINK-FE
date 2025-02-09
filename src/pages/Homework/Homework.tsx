@@ -62,7 +62,6 @@ const Homework = () => {
             title={homework.homeworkName}
             id={homework.homeworkId}
             deadline={homework.deadline}
-            name="홍길동"
             isPassed={homework.passed}
             dDay={homework.dDay}
           />
@@ -75,7 +74,6 @@ const Homework = () => {
             title={homework.homeworkName}
             id={homework.homeworkId}
             deadline={homework.deadline}
-            name="홍길동"
             isPassed={homework.passed}
           />
         ))}

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { uploadLectureFile } from '../../api/materials.api';
 import LongButton from '../../components/LongButton';
 import AddFile from '../../components/AddFile';
+import Input from '../../components/Room/Input';
 
 const CreateMaterials = () => {
   const { roomId } = useParams<{ roomId: string }>();
@@ -54,14 +55,7 @@ const CreateMaterials = () => {
       </div>
       {/* 파일첨부 */}
       <div className="py-4 gap-6 flex flex-col">
-        <div className="flex flex-col gap-[6px]">
-          <p className="text-gray-900 font-medium text-body4 leading-[26px]">자료명</p>
-          <input
-            placeholder="자료명을 입력해주세요"
-            className="py-2 px-3 border-gray-300 border-[1px] focus:outline-none focus:outline-2 focus:outline-gray-500 rounded-md text-body3"
-            onChange={handleDesc}
-          ></input>
-        </div>
+        <Input setDesc={setDesc} name="자료명" placeholder="자료명을 입력해주세요" desc={desc} isAble={true} />
         <AddFile fileList={fileList} setFileList={setFileList} />
       </div>
 

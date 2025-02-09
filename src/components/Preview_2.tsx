@@ -7,13 +7,12 @@ interface PreviewProps {
   title: string;
   deadline: string;
   id: number;
-  name: string;
   onClick?: () => void;
   isPassed: boolean;
   dDay?: number;
 }
 
-const Preview_2 = ({ name, title, deadline, id, isPassed, dDay }: PreviewProps) => {
+const Preview_2 = ({ title, deadline, id, isPassed, dDay }: PreviewProps) => {
   const nav = useNavigate();
 
   return (
@@ -26,12 +25,7 @@ const Preview_2 = ({ name, title, deadline, id, isPassed, dDay }: PreviewProps) 
         <div className="tracking-[-0.048px]">
           <p className="text-body3 font-semibold leading-7 text-gray-900">{title}</p>
           <div className="flex gap-[6px] text-body4 leading-[25px] text-gray-500 items-center">
-            <div className="flex gap-[2px]">
-              <span className="text-gray-950">{name}</span>
-              <span>학생</span>
-            </div>
-            <div className="h-[12px] bg-gray-500 w-[1px]" />
-            <p>{deadline}</p>
+            <span>마감 날짜 {deadline}</span>
           </div>
         </div>
       </div>
