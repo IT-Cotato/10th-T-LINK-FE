@@ -55,7 +55,7 @@ const AddFile = ({ setFileList, fileList }: AddFileProps) => {
       </div>
       {fileList.length > 0 && (
         <div className="text-center text-gray-700">
-          <p>업로드된 파일 목록:</p>
+          <p>추가된 파일 목록:</p>
           <ul>
             {fileList.map((file, index) => (
               <li key={index} className="font-bold">
