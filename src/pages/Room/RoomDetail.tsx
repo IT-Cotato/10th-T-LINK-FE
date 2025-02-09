@@ -73,11 +73,15 @@ const RoomDetail = () => {
           </div>
           <div className="flex gap-[6px] text-body4 text-gray-500 items-center">
             <div className="flex gap-[2px]">
-              <span className="text-gray-950">{roomDetail.studentName}</span>
-              <span>학생</span>
+              {roomDetail.studentName ? (
+                <>
+                  <span className="text-gray-950">{roomDetail.studentName}</span>
+                  <span>학생</span>
+                </>
+              ) : (
+                <span>아직 학생이 참여하지 않았어요!</span>
+              )}
             </div>
-            <div className="h-[12px] bg-gray-500 w-[1px]" />
-            <p>25.02.04</p>
           </div>
         </div>
       </div>
