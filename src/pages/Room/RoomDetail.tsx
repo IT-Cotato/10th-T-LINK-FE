@@ -28,7 +28,7 @@ const RoomDetail = () => {
         lessonDays: [{ lessonDay: '월요일' }, { lessonDay: '수요일' }],
         nextDepositDate: '25.01.31',
         permission: {
-          lecture_file: true,
+          lectureFile: true,
           homework: true,
           gradeStatistic: false,
           counselingLog: true,
@@ -87,7 +87,7 @@ const RoomDetail = () => {
       </div>
       {/* 목록 */}
       <div className="grid grid-cols-2 gap-2 pb-6 px-4 border-b-2 border-gray-100">
-        <DetailButton type="materials" isPermission={roomDetail.permission.lecture_file} />
+        <DetailButton type="materials" isPermission={roomDetail.permission.lectureFile} />
         <DetailButton type="homework" isPermission={roomDetail.permission.homework} />
         <DetailButton type="stats" isPermission={roomDetail.permission.gradeStatistic} />
         <DetailButton type="diary" isPermission={roomDetail.permission.counselingLog} />

@@ -1,51 +1,43 @@
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import RoomInfo from '../../components/RoomInfo';
 import { useEffect, useState } from 'react';
-import { getRoomList, deleteRoom } from '../../api/roomList.api';
+import { getRoomList } from '../../api/roomList.api';
 import { SimpleRoomInfo } from '../../models/room.model';
 import { IoSearch } from 'react-icons/io5';
 import SubjectTag from '../../components/SubjectTag';
-
-const mockData: SimpleRoomInfo[] = [
-  {
-    roomId: 1,
-    roomName: '방이름',
-    studentName: '홍길동',
-    subject: '수학',
-    lessonDays: [{ lessonDay: '월요일' }, { lessonDay: '수요일' }],
-    student: { studentId: 32, gender: '남성', backgroundColor: '#000957' },
-  },
-  {
-    roomId: 2,
-    roomName: '방이름2',
-    studentName: '김영희',
-    subject: '영어',
-    lessonDays: [{ lessonDay: '금요일' }, { lessonDay: '토요일' }, { lessonDay: '일요일' }],
-    student: { studentId: 45, gender: '여성', backgroundColor: '#ffffff' },
-  },
-];
+import Button from '../../components/Button';
+import Toast from '../../components/Toast';
 
 const RoomList = () => {
   const navigate = useNavigate();
-  const [rooms, setRooms] = useState<SimpleRoomInfo[]>(mockData);
-  const [filteredRooms, setFilteredRooms] = useState<SimpleRoomInfo[]>(mockData);
+  const location = useLocation();
+  const [rooms, setRooms] = useState<SimpleRoomInfo[]>();
+  const [filteredRooms, setFilteredRooms] = useState<SimpleRoomInfo[]>();
   const [roleInfo, setRoleInfo] = useState('');
   const [search, setSearch] = useState('');
   const [tags, setTags] = useState([{ id: 0, title: '전체', isClicked: true }]);
+  const [toast, setToast] = useState(location.state?.toast || false);
 
   const fetchRooms = async () => {
-    // const rooms = await getRoomList();
-    setRooms(mockData);
-    setFilteredRooms(mockData);
+    try {
+      const res = await getRoomList();
+      const roomData = res.data.data.rooms;
+      setRooms(roomData);
+      setFilteredRooms(roomData);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
     const role = localStorage.getItem('roleInfo');
-    setRoleInfo(role || '');
+    setRoleInfo(role || 'TEACHER');
 
     fetchRooms();
+  }, []);
 
-    const subjectList = Array.from(new Set(mockData.map((item) => item.subject)));
+  useEffect(() => {
+    const subjectList = Array.from(new Set(rooms?.map((item) => item.subject)));
     const newTags = subjectList.map((subject, index) => ({
       id: index + 1,
       title: subject,
@@ -61,26 +53,15 @@ const RoomList = () => {
       }));
       return uniqueTags;
     });
-    console.log(tags);
-  }, []);
-
-  /* const handleDelete = async (roomId: number) => {
-    try {
-      const status = await deleteRoom(roomId);
-    } catch (error) {
-      console.error('Failed to delete room:', error);
-    }
-  };
-  */
+  }, [rooms]);
 
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
 
-    const filtered = rooms.filter(
+    const filtered = rooms?.filter(
       (room) =>
         room.roomName.includes(value) ||
-        room.studentName.includes(value) ||
         room.subject.includes(value) ||
         room.lessonDays.find((day) => day.lessonDay.includes(value)),
     );
@@ -99,7 +80,7 @@ const RoomList = () => {
     if (title === '전체') {
       setFilteredRooms(rooms);
     } else {
-      const filtered = rooms.filter((room) => room.subject === title);
+      const filtered = rooms?.filter((room) => room.subject === title);
       setFilteredRooms(filtered);
     }
   };
@@ -127,21 +108,13 @@ const RoomList = () => {
       </div>
 
       {/* 리스트 */}
-      <div>
-        {filteredRooms.map((room) => (
-          <RoomInfo key={room.roomId} roleInfo={roleInfo} room={room} />
-        ))}
-      </div>
+      <div>{filteredRooms?.map((room) => <RoomInfo key={room.roomId} roleInfo={roleInfo} room={room} />)}</div>
 
       {/* 과외방 개설 */}
       <div className="flex justify-end py-8">
-        {roleInfo === 'TEACHER' && (
-          <button onClick={() => navigate('/user/createroom')} className="text-white px-4 bg-black">
-            + 과외방 개설
-          </button>
-        )}
+        {roleInfo === 'TEACHER' && <Button text="과외방 개설" onClick={() => navigate('/user/createroom')} />}
       </div>
-      <Outlet />
+      {toast && <Toast setToast={setToast} title="과외방 삭제가 완료되었습니다." />}
     </div>
   );
 };

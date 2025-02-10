@@ -7,16 +7,14 @@ import { postRoomInfo } from '../../api/roomList.api';
 const CreateRoom = () => {
   const navigate = useNavigate();
   const [currentRoom, setCurrentRoom] = useState<Room | undefined>(undefined);
-  const roomId = 3;
 
   const handleCreate = async (roomInfo: RoomInfo) => {
     try {
       const res = await postRoomInfo(roomInfo);
-      console.log(res);
+      const roomId = res.data.data;
       navigate('/user/sharecode', { state: { roomId: roomId } });
     } catch (e) {
       console.log(e);
-      navigate('/user/sharecode', { state: { roomId: roomId } });
     }
   };
 

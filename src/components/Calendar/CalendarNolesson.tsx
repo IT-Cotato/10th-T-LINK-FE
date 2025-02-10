@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import student from '../../assets/images/student_girl.png';
 import { useEffect, useState } from 'react';
 import Toast from '../Toast';
+import { getShareCode } from '../../api/roomList.api';
 
 type Props = {
   isShareLink?: boolean;
@@ -18,7 +19,18 @@ const CalendarNolesson = ({ isShareLink }: Props) => {
   const [toast, setToast] = useState(false);
 
   useEffect(() => {
-    setCode(`http://localhost:5173/user/roomlist/${roomId}/invite`);
+    const fetchShareCode = async () => {
+      try {
+        const res = await getShareCode(Number(roomId));
+        const shareCode = res.data.data.shareCode;
+        setCode(`http://localhost:5173/user/roomlist/invite/${roomId}/${shareCode}`);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    if (isShareLink) {
+      fetchShareCode();
+    }
   }, [roomId]);
 
   const handleOnClick = async () => {
@@ -36,7 +48,7 @@ const CalendarNolesson = ({ isShareLink }: Props) => {
 
   return (
     <div className="flex p-4 bg-gray-50 rounded-xl items-center justify-between cursor-pointer" onClick={handleOnClick}>
-      {toast && <Toast setToast={setToast} />}
+      {toast && <Toast setToast={setToast} title="링크가 복사되었습니다." />}
       <div className="flex items-center gap-3">
         <div className="p-1.5 rounded-full bg-white">
           {isShareLink ? <img src={student} className="w-7 h-7" /> : <img src={wow} className="w-7 h-7" />}

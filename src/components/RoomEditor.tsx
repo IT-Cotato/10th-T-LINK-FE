@@ -1,43 +1,49 @@
 import SelectDate from '../components/SelectDate';
 import { useEffect, useState } from 'react';
-import { OnSubmit, SimpleLessonDay, SimplePermission, RoomInfo } from '../models/room.model';
+import { OnSubmit, SimpleLessonDay, SimplePermission, Room } from '../models/room.model';
 import { LessonDaysList } from '../utils/LessonDaysList';
 import { ParentPermission, StudentPermission } from '../utils/PermissionList';
 import PermissionToggle from './PermissionToggle';
+import LongButton from './LongButton';
 
 type EditProps = {
-  currentRoom: RoomInfo | undefined;
+  currentRoom: Room | undefined;
   onSubmit: OnSubmit;
 };
 
 const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
-  useEffect(() => {
-    if (currentRoom) {
-      setInput(currentRoom);
-    }
-  }, [currentRoom]);
-
-  const [input, setInput] = useState<RoomInfo>({
+  const [input, setInput] = useState<Room>({
+    roomId: 1,
     roomName: '',
     studentName: '',
     subject: '',
     lessonDays: [] as SimpleLessonDay[],
     studentPermission: {
-      lecture_file: true,
+      lectureFile: true,
       homework: true,
       gradeStatistic: true,
       counselingLog: false,
       deposit: false,
     },
     parentPermission: {
-      lecture_file: false,
+      lectureFile: false,
       homework: false,
       gradeStatistic: false,
       counselingLog: true,
       deposit: true,
     },
   });
-  console.log(input);
+  const [isEnable, setIsEnable] = useState(false);
+
+  useEffect(() => {
+    if (currentRoom) {
+      setInput(currentRoom);
+    }
+  }, [currentRoom]);
+
+  useEffect(() => {
+    handleEnable();
+  }, [input]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.placeholder.includes('방')) setInput((prev) => ({ ...prev, roomName: e.target.value }));
@@ -75,32 +81,38 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
     }
   };
 
+  const handleEnable = () => {
+    input.roomName && input.studentName && input.subject && input.lessonDays.length > 0
+      ? setIsEnable(true)
+      : setIsEnable(false);
+  };
+
   return (
     <div className="flex flex-col p-4 gap-6">
-      <div className="flex-col gap-1.5">
-        <h4 className="text-sm leading-6 font-medium">방 이름</h4>
+      <div className="flex-col leading-7">
+        <h4 className="text-sm font-medium mb-1.5">방 이름</h4>
         <input
-          className="px-3 py-2 border-2 border-gray-300 rounded-md w-full"
+          className="px-3 py-2 border-[1px] border-gray-300 rounded-md w-full text-base font-normal"
           placeholder="방이름을 입력해주세요"
           onChange={handleInputChange}
           value={input.roomName}
         />
       </div>
 
-      <div className="flex-col gap-1.5">
-        <h4 className="text-sm leading-6 font-medium">학생 이름</h4>
+      <div className="flex-col gap-1.5 leading-7">
+        <h4 className="text-sm font-medium mb-1.5">학생 이름</h4>
         <input
-          className="px-3 py-2 border-2 border-gray-300 rounded-md w-full"
+          className="px-3 py-2 border-[1px] border-gray-300 rounded-md w-full text-base font-normal"
           placeholder="학생 이름을 입력해주세요"
           onChange={handleInputChange}
           value={input.studentName}
         />
       </div>
 
-      <div className="flex-col gap-1.5">
-        <h4 className="text-sm leading-6 font-medium">과목명</h4>
+      <div className="flex-col gap-1.5 leading-7">
+        <h4 className="text-sm font-medium mb-1.5">과목명</h4>
         <input
-          className="px-3 py-2 border-2 border-gray-300 rounded-md w-full"
+          className="px-3 py-2 border-[1px] border-gray-300 rounded-md w-full text-base font-normal"
           placeholder="과목명을 입력해주세요"
           onChange={handleInputChange}
           value={input.subject}
@@ -108,11 +120,11 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
       </div>
 
       <div>
-        <h4 className="text-sm leading-6 font-medium">수업 요일</h4>
+        <h4 className="text-sm leading-7 font-medium mb-1.5">수업 요일</h4>
         <div className="flex flex-wrap gap-2">
           {LessonDaysList.map((lessonDayItem) => (
             <SelectDate
-              key={lessonDayItem.id}
+              key={lessonDayItem.lessonDayId}
               lessonDayItem={lessonDayItem}
               isClicked={input.lessonDays.find((day) => day.lessonDay === lessonDayItem.lessonDay) !== undefined}
               handleDaysClick={handleDaysClick}
@@ -122,7 +134,7 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
       </div>
 
       <div className="flex flex-col py-4 gap-4">
-        <div>
+        <div className="border-b-[1px] py-4">
           <h1 className="text-xl font-bold leading-9">학부모 권한설정</h1>
           <h2 className="text-alert font-normal leading-7">*학부모: [상담 일지, 입금] 필수 접근</h2>
         </div>
@@ -138,7 +150,7 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
       </div>
 
       <div className="flex flex-col py-4 gap-4">
-        <div>
+        <div className="border-b-[1px] py-4">
           <h1 className="text-xl font-bold leading-9">학생 권한설정</h1>
           <h2 className="text-alert font-normal leading-7">*학생: [강의자료함, 주차별 숙제, 성적 통계] 필수 접근</h2>
         </div>
@@ -152,7 +164,7 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
         ))}
       </div>
       <div className="py-6 w-full">
-        <button onClick={() => onSubmit(input)}>{currentRoom ? '수정 완료' : '생성하기'}</button>
+        <LongButton onClick={() => onSubmit(input)} text={currentRoom ? '수정 완료' : '생성하기'} enable={isEnable} />
       </div>
     </div>
   );

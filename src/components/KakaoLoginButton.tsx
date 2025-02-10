@@ -17,7 +17,7 @@ const KakaoLoginButton = () => {
       >
         <div className="flex justify-center items-center gap-2 px-6">
           <img className="w-4 h-4" alt="카카오 로그인" src={kakao_logo} />
-          <h3>카카오로 계속하기</h3>
+          <h3 className="text-[15px] font-semibold leading-[22px]">카카오로 계속하기</h3>
         </div>
       </button>
     </div>

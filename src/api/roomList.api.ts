@@ -1,10 +1,10 @@
 import instance from './axios';
-import { RoomInfo } from '../models/room.model';
+import { Room, RoomInfo } from '../models/room.model';
 
 // 과외방 전체 리스트 출력
 export const getRoomList = async () => {
   const res = await instance.get('/api/v1/rooms');
-  return res.data.rooms;
+  return res;
 };
 
 // 프로필 모달창 (프로픽 클릭 시)
@@ -26,7 +26,7 @@ export const getCurrentRoomInfo = async (roomId: number) => {
 };
 
 // 과외방 수정 - 선생님
-export const patchRoomInfo = async (roomId: number, roomInfo: RoomInfo) => {
+export const patchRoomInfo = async (roomId: number, roomInfo: Room) => {
   const res = await instance.patch(`/api/v1/rooms/${roomId}`, roomInfo);
   return res.status;
 };
@@ -40,7 +40,7 @@ export const patchRoomName = async (roomId: number, roomName: string) => {
 // 과외방 삭제
 export const deleteRoom = async (roomId: number) => {
   const res = await instance.delete(`/api/v1/rooms/${roomId}`);
-  return res.status;
+  return res;
 };
 
 // 과외방 상세
