@@ -1,12 +1,12 @@
 import RoomEditor from '../../components/RoomEditor';
 import { useState } from 'react';
-import { RoomInfo, RoomForEdit } from '../../models/room.model';
+import { RoomInfo, Room } from '../../models/room.model';
 import { useNavigate } from 'react-router-dom';
 import { postRoomInfo } from '../../api/roomList.api';
 
 const CreateRoom = () => {
   const navigate = useNavigate();
-  const [currentRoom, setCurrentRoom] = useState<RoomForEdit | undefined>(undefined);
+  const [currentRoom, setCurrentRoom] = useState<Room | undefined>(undefined);
 
   const handleCreate = async (roomInfo: RoomInfo) => {
     try {

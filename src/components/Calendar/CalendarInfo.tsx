@@ -10,7 +10,6 @@ type CalendarProps = {
 };
 
 const CalendarInfo = ({ clickDate, roleInfo }: CalendarProps) => {
-  console.log(clickDate);
   return (
     <div>
       <div className="flex text-base pt-4 pb-2">

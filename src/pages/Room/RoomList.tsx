@@ -34,7 +34,9 @@ const RoomList = () => {
     setRoleInfo(role || 'TEACHER');
 
     fetchRooms();
+  }, []);
 
+  useEffect(() => {
     const subjectList = Array.from(new Set(rooms?.map((item) => item.subject)));
     const newTags = subjectList.map((subject, index) => ({
       id: index + 1,
@@ -51,7 +53,7 @@ const RoomList = () => {
       }));
       return uniqueTags;
     });
-  }, []);
+  }, [rooms]);
 
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
