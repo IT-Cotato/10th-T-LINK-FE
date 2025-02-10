@@ -1,26 +1,21 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import RoomEditor from '../../components/RoomEditor';
-import { RoomInfo } from '../../models/room.model';
+import { RoomForEdit } from '../../models/room.model';
 import { getCurrentRoomInfo, patchRoomInfo } from '../../api/roomList.api';
 
 const EditRoom = () => {
   const navigate = useNavigate();
   // const [currentRoom, setCurrentRoom] = useState<RoomInfo>();
-  const [currentRoom, setCurrentRoom] = useState<RoomInfo>({
+  const [currentRoom, setCurrentRoom] = useState<RoomForEdit>({
+    roomId: 1,
     roomName: '방2',
     studentName: '학생 2',
     subject: '과목2',
     lessonDays: [
-      {
-        lessonDay: '금요일',
-      },
-      {
-        lessonDay: '토요일',
-      },
-      {
-        lessonDay: '일요일',
-      },
+      { lessonDayId: 9, lessonDay: '금' },
+      { lessonDayId: 10, lessonDay: '토' },
+      { lessonDayId: 11, lessonDay: '일' },
     ],
     studentPermission: {
       lecture_file: true,
@@ -43,15 +38,20 @@ const EditRoom = () => {
   useEffect(() => {
     const fetchCurrentRoom = async () => {
       const res = await getCurrentRoomInfo(paramsId);
-      console.log(res);
-      //setCurrentRoom(res.data);
+      console.log(res.data.data);
+      // setCurrentRoom(res.data);
     };
     fetchCurrentRoom();
   }, []);
 
   const handleUpdate = async () => {
-    const status = await patchRoomInfo(paramsId, currentRoom);
-    if (status === 200) navigate('/user/roomlist');
+    try {
+      const res = await patchRoomInfo(paramsId, currentRoom);
+      console.log(res);
+      navigate('/user/roomlist');
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return <RoomEditor currentRoom={currentRoom} onSubmit={handleUpdate} />;

@@ -1,5 +1,5 @@
 export interface LessonDay {
-  id: number;
+  lessonDayId: number;
   lessonDay: string;
 }
 
@@ -30,17 +30,18 @@ export interface RoomInfo {
   parentPermission: SimplePermission;
 }
 
+export interface Opponent {
+  id: number;
+  name: string;
+  gender: string;
+}
+
 export interface SimpleRoomInfo {
   roomId: number;
   roomName: string;
   subject: string;
   lessonDays: SimpleLessonDay[];
-  oponent: {
-    id: number;
-    name: string;
-    gender: string;
-    backgroundColor: string;
-  };
+  opponent: Opponent | null;
 }
 
 export interface Room {
@@ -49,6 +50,16 @@ export interface Room {
   studentName: string;
   subject: string;
   lessonDays: SimpleLessonDay[];
+  studentPermission: SimplePermission;
+  parentPermission: SimplePermission;
+}
+
+export interface RoomForEdit {
+  roomId: number;
+  roomName: string;
+  studentName: string;
+  subject: string;
+  lessonDays: LessonDay[];
   studentPermission: SimplePermission;
   parentPermission: SimplePermission;
 }

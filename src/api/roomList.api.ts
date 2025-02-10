@@ -4,7 +4,7 @@ import { RoomInfo } from '../models/room.model';
 // 과외방 전체 리스트 출력
 export const getRoomList = async () => {
   const res = await instance.get('/api/v1/rooms');
-  return res.data.rooms;
+  return res;
 };
 
 // 프로필 모달창 (프로픽 클릭 시)

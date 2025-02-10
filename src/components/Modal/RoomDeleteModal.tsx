@@ -13,21 +13,16 @@ const RoomDelteModal = ({ setModalOpen }: RoomDeleteProps) => {
 
   const navigate = useNavigate();
   const handleDelete = async (roomId: number) => {
-    /* try {
+    try {
       const res = await deleteRoom(roomId);
       console.log(res);
       if (res.status === 200) {
-        navigate('/user/roomlist');
+        setModalOpen(false);
+        navigate('/user/roomlist', { state: { toast: true } });
       }
     } catch (error) {
       console.error('Failed to delete room:', error);
-    }*/
-    setToast(true);
-
-    setTimeout(() => {
-      setModalOpen(false);
-      navigate('/user/roomlist');
-    }, 1000);
+    }
   };
   return (
     <>
@@ -51,7 +46,6 @@ const RoomDelteModal = ({ setModalOpen }: RoomDeleteProps) => {
           </button>
         </div>
       </div>
-      {toast && <Toast setToast={setToast} title="과외방 삭제가 완료되었습니다." />}
     </>
   );
 };
