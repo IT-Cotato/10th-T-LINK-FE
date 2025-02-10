@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react';
-import { getShareCode } from '../../api/roomList.api';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Toast from '../../components/Toast';
+import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import Modal from '../../components/Modal/Modal';
 import ShareLinkModal from '../../components/Modal/ShareLinkModal';
 

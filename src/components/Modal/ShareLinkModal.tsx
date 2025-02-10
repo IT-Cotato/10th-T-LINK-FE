@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { deleteRoom, getShareCode } from '../../api/roomList.api';
+import { useNavigate } from 'react-router-dom';
+import { getShareCode } from '../../api/roomList.api';
 import Toast from '../Toast';
 import link from '../../assets/images/link.png';
 
@@ -18,8 +18,7 @@ const ShareLinkModal = ({ setModalOpen, roomId }: ShareLinkProps) => {
     const fetchShareCode = async () => {
       try {
         const res = await getShareCode(roomId);
-        console.log(res);
-        const shareCode = res.data.shareCode;
+        const shareCode = res.data.data.shareCode;
         setCode(`http://localhost:5173/user/roomlist/invite/${roomId}/${shareCode}`);
       } catch (e) {
         console.log(e);

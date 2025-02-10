@@ -1,41 +1,32 @@
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import RoomInfo from '../../components/RoomInfo';
 import { useEffect, useState } from 'react';
-import { getRoomList, deleteRoom } from '../../api/roomList.api';
+import { getRoomList } from '../../api/roomList.api';
 import { SimpleRoomInfo } from '../../models/room.model';
 import { IoSearch } from 'react-icons/io5';
 import SubjectTag from '../../components/SubjectTag';
 import Button from '../../components/Button';
-
-const mockData: SimpleRoomInfo[] = [
-  {
-    roomId: 1,
-    roomName: '방이름',
-    subject: '수학',
-    lessonDays: [{ lessonDay: '월요일' }, { lessonDay: '수요일' }],
-    oponent: { id: 32, name: '김철수', gender: '남성', backgroundColor: '' },
-  },
-  {
-    roomId: 2,
-    roomName: '방이름2',
-    subject: '영어',
-    lessonDays: [{ lessonDay: '금요일' }, { lessonDay: '토요일' }, { lessonDay: '일요일' }],
-    oponent: { id: 45, name: '김영희', gender: '여성', backgroundColor: '' },
-  },
-];
+import Toast from '../../components/Toast';
 
 const RoomList = () => {
   const navigate = useNavigate();
-  const [rooms, setRooms] = useState<SimpleRoomInfo[]>(mockData);
-  const [filteredRooms, setFilteredRooms] = useState<SimpleRoomInfo[]>(mockData);
+  const location = useLocation();
+  const [rooms, setRooms] = useState<SimpleRoomInfo[]>();
+  const [filteredRooms, setFilteredRooms] = useState<SimpleRoomInfo[]>();
   const [roleInfo, setRoleInfo] = useState('');
   const [search, setSearch] = useState('');
   const [tags, setTags] = useState([{ id: 0, title: '전체', isClicked: true }]);
+  const [toast, setToast] = useState(location.state?.toast || false);
 
   const fetchRooms = async () => {
-    // const rooms = await getRoomList();
-    setRooms(mockData);
-    setFilteredRooms(mockData);
+    try {
+      const res = await getRoomList();
+      const roomData = res.data.data.rooms;
+      setRooms(roomData);
+      setFilteredRooms(roomData);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
@@ -44,7 +35,7 @@ const RoomList = () => {
 
     fetchRooms();
 
-    const subjectList = Array.from(new Set(mockData.map((item) => item.subject)));
+    const subjectList = Array.from(new Set(rooms?.map((item) => item.subject)));
     const newTags = subjectList.map((subject, index) => ({
       id: index + 1,
       title: subject,
@@ -60,17 +51,15 @@ const RoomList = () => {
       }));
       return uniqueTags;
     });
-    console.log(tags);
   }, []);
 
   const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
 
-    const filtered = rooms.filter(
+    const filtered = rooms?.filter(
       (room) =>
         room.roomName.includes(value) ||
-        room.oponent.name.includes(value) ||
         room.subject.includes(value) ||
         room.lessonDays.find((day) => day.lessonDay.includes(value)),
     );
@@ -89,7 +78,7 @@ const RoomList = () => {
     if (title === '전체') {
       setFilteredRooms(rooms);
     } else {
-      const filtered = rooms.filter((room) => room.subject === title);
+      const filtered = rooms?.filter((room) => room.subject === title);
       setFilteredRooms(filtered);
     }
   };
@@ -117,17 +106,13 @@ const RoomList = () => {
       </div>
 
       {/* 리스트 */}
-      <div>
-        {filteredRooms.map((room) => (
-          <RoomInfo key={room.roomId} roleInfo={roleInfo} room={room} />
-        ))}
-      </div>
+      <div>{filteredRooms?.map((room) => <RoomInfo key={room.roomId} roleInfo={roleInfo} room={room} />)}</div>
 
       {/* 과외방 개설 */}
       <div className="flex justify-end py-8">
         {roleInfo === 'TEACHER' && <Button text="과외방 개설" onClick={() => navigate('/user/createroom')} />}
       </div>
-      <Outlet />
+      {toast && <Toast setToast={setToast} title="과외방 삭제가 완료되었습니다." />}
     </div>
   );
 };

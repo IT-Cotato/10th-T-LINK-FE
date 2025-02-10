@@ -1,18 +1,19 @@
 import SelectDate from '../components/SelectDate';
 import { useEffect, useState } from 'react';
-import { OnSubmit, SimpleLessonDay, SimplePermission, RoomInfo } from '../models/room.model';
+import { OnSubmit, SimpleLessonDay, SimplePermission, RoomInfo, Room, RoomForEdit } from '../models/room.model';
 import { LessonDaysList } from '../utils/LessonDaysList';
 import { ParentPermission, StudentPermission } from '../utils/PermissionList';
 import PermissionToggle from './PermissionToggle';
 import LongButton from './LongButton';
 
 type EditProps = {
-  currentRoom: RoomInfo | undefined;
+  currentRoom: RoomForEdit | undefined;
   onSubmit: OnSubmit;
 };
 
 const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
-  const [input, setInput] = useState<RoomInfo>({
+  const [input, setInput] = useState({
+    roomId: 1,
     roomName: '',
     studentName: '',
     subject: '',
@@ -32,7 +33,6 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
       deposit: true,
     },
   });
-  console.log(input);
   const [isEnable, setIsEnable] = useState(false);
 
   useEffect(() => {
@@ -124,7 +124,7 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
         <div className="flex flex-wrap gap-2">
           {LessonDaysList.map((lessonDayItem) => (
             <SelectDate
-              key={lessonDayItem.id}
+              key={lessonDayItem.lessonDayId}
               lessonDayItem={lessonDayItem}
               isClicked={input.lessonDays.find((day) => day.lessonDay === lessonDayItem.lessonDay) !== undefined}
               handleDaysClick={handleDaysClick}

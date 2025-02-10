@@ -32,7 +32,7 @@ const CalendarGrid = ({ date, data, handleDayClick, clickDate }: GridProps) => {
       {/* 요일 */}
       <div className="flex w-full justify-between">
         {LessonDaysList.map((day) => (
-          <div className="py-2.5 px-4 text-gray-500 text-base leading-7" key={day.id}>
+          <div className="py-2.5 px-4 text-gray-500 text-base leading-7" key={day.lessonDayId}>
             {day.lessonDay}
           </div>
         ))}
