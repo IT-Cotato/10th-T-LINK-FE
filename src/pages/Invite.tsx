@@ -17,7 +17,7 @@ const Invite = () => {
     <div>
       {modalOpen && (
         <Modal onClose={() => setModalOpen(false)}>
-          <InviteModal setModalOpen={setModalOpen} id={InviteRoomId} />
+          <InviteModal />
         </Modal>
       )}
     </div>

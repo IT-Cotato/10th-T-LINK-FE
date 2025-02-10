@@ -1,32 +1,32 @@
 import SelectDate from '../components/SelectDate';
 import { useEffect, useState } from 'react';
-import { OnSubmit, SimpleLessonDay, SimplePermission, RoomInfo, Room, RoomForEdit } from '../models/room.model';
+import { OnSubmit, SimpleLessonDay, SimplePermission, Room } from '../models/room.model';
 import { LessonDaysList } from '../utils/LessonDaysList';
 import { ParentPermission, StudentPermission } from '../utils/PermissionList';
 import PermissionToggle from './PermissionToggle';
 import LongButton from './LongButton';
 
 type EditProps = {
-  currentRoom: RoomForEdit | undefined;
+  currentRoom: Room | undefined;
   onSubmit: OnSubmit;
 };
 
 const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
-  const [input, setInput] = useState({
+  const [input, setInput] = useState<Room>({
     roomId: 1,
     roomName: '',
     studentName: '',
     subject: '',
     lessonDays: [] as SimpleLessonDay[],
     studentPermission: {
-      lecture_file: true,
+      lectureFile: true,
       homework: true,
       gradeStatistic: true,
       counselingLog: false,
       deposit: false,
     },
     parentPermission: {
-      lecture_file: false,
+      lectureFile: false,
       homework: false,
       gradeStatistic: false,
       counselingLog: true,

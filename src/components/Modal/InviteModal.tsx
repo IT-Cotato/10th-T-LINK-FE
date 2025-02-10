@@ -1,12 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { postShareCode } from '../../api/roomList.api';
 
-type ModalProps = {
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  id: number;
-};
-
-const InviteModal = ({ setModalOpen, id }: ModalProps) => {
+const InviteModal = () => {
   const navigation = useNavigate();
   const { shareCode } = useParams();
 
@@ -23,19 +18,19 @@ const InviteModal = ({ setModalOpen, id }: ModalProps) => {
         console.log(e);
       }
     }
-
-    return (
-      <div className="flex flex-col py-5 w-1/3 min-w-[300px] h-1/5 bg-white rounded-[16px]">
-        <div className="flex flex-1 flex-col justify-center items-center">
-          oo님이 과외방으로 초대하셨습니다. <br /> 입장하시겠습니까?
-        </div>
-        <div className="flex justify-center gap-32 w-full">
-          <button onClick={handleAccept}>네</button>
-          <button onClick={() => navigation('/user/roomlist')}>아니요</button>
-        </div>
-      </div>
-    );
   };
+
+  return (
+    <div className="flex flex-col py-5 w-1/3 min-w-[300px] h-1/5 bg-white rounded-[16px]">
+      <div className="flex flex-1 flex-col justify-center items-center">
+        oo님이 과외방으로 초대하셨습니다. <br /> 입장하시겠습니까?
+      </div>
+      <div className="flex justify-center gap-32 w-full">
+        <button onClick={handleAccept}>네</button>
+        <button onClick={() => navigation('/user/roomlist')}>아니요</button>
+      </div>
+    </div>
+  );
 };
 
 export default InviteModal;

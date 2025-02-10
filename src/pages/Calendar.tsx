@@ -48,13 +48,18 @@ const Calendar = () => {
     setRoleInfo(role || '');
   }, []);
 
-  /* useEffect(() => {
+  useEffect(() => {
     const fetchCalendar = async () => {
-      const dateInfo = await getCalendar();
-      setClickDate(dateInfo);
+      try {
+        const dateInfo = await getCalendar();
+        console.log(dateInfo);
+        //setClickDate(dateInfo);
+      } catch (e) {
+        console.log(e);
+      }
     };
+    fetchCalendar();
   }, []);
-  */
 
   const handleDayClick = (day: Date | null) => {
     if (!day) return;

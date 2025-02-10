@@ -14,7 +14,7 @@ export interface Permission {
 }
 
 export interface SimplePermission {
-  lecture_file: boolean;
+  lectureFile: boolean;
   homework: boolean;
   gradeStatistic: boolean;
   counselingLog: boolean;
@@ -54,17 +54,7 @@ export interface Room {
   parentPermission: SimplePermission;
 }
 
-export interface RoomForEdit {
-  roomId: number;
-  roomName: string;
-  studentName: string;
-  subject: string;
-  lessonDays: LessonDay[];
-  studentPermission: SimplePermission;
-  parentPermission: SimplePermission;
-}
-
-export type OnSubmit = (room: RoomInfo) => void;
+export type OnSubmit = (room: Room) => void;
 
 export interface RoomDetails {
   roomId: number;

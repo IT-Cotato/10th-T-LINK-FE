@@ -28,8 +28,9 @@ const CalendarNolesson = ({ isShareLink }: Props) => {
         console.log(e);
       }
     };
-
-    fetchShareCode();
+    if (isShareLink) {
+      fetchShareCode();
+    }
   }, [roomId]);
 
   const handleOnClick = async () => {
