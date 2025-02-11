@@ -20,7 +20,7 @@ const CreateCounseling = () => {
 
   const [title, setTitle] = useState<string>(isEdit ? initialData.title : '');
   const [content, setContent] = useState<string>(isEdit ? initialData.content : '');
-  const [engagement, setEngagement] = useState<string>(isEdit ? initialData.engagement : 'upper');
+  const [engagement, setEngagement] = useState<string>(isEdit ? initialData.engagement : '상');
   const [homeworkSubmitted, setHomeworkSubmitted] = useState<boolean | null>(
     isEdit ? initialData.homeworkSubmitted : null,
   );
@@ -77,21 +77,21 @@ const CreateCounseling = () => {
           <p>참여도</p>
           <RiEmotionHappyLine
             onClick={() => {
-              setEngagement('upper');
+              setEngagement('상');
             }}
-            className={`${engagement == 'upper' ? 'fill-primary_500' : ''}`}
+            className={`${engagement == '상' ? 'fill-primary_500' : ''}`}
           />
           <RiEmotionNormalLine
             onClick={() => {
-              setEngagement('middle');
+              setEngagement('중');
             }}
-            className={`${engagement == 'middle' ? 'fill-primary_500' : ''}`}
+            className={`${engagement == '중' ? 'fill-primary_500' : ''}`}
           />
           <RiEmotionUnhappyLine
             onClick={() => {
-              setEngagement('lower');
+              setEngagement('하');
             }}
-            className={`${engagement == 'lower' ? 'fill-primary_500' : ''}`}
+            className={`${engagement == '하' ? 'fill-primary_500' : ''}`}
           />
         </div>
         <div className="flex items-center gap-1">
