@@ -45,7 +45,7 @@ const RoomInfo = ({ room, roleInfo }: RoomProps) => {
 
   return (
     <div className="flex items-center p-4">
-      {profileOpen && (
+      {profileOpen && room.opponent && (
         <Modal
           onClose={() => {
             setProfileOpen(false);
@@ -56,7 +56,7 @@ const RoomInfo = ({ room, roleInfo }: RoomProps) => {
       )}
       {StudentEditOpen && (
         <Modal onClose={() => setStudentEditOpen(false)}>
-          <StudentEditModal setModalOpen={setStudentEditOpen} id={room.roomId} />
+          <StudentEditModal setModalOpen={setStudentEditOpen} id={room.roomId} name={room.roomName} />
         </Modal>
       )}
       <div className="gap-4 flex flex-1 items-center">
@@ -74,12 +74,17 @@ const RoomInfo = ({ room, roleInfo }: RoomProps) => {
               <h3 className="text-gray-500">#</h3>
               <h3 className="text-primary_700 ">{room.subject}</h3>
             </div>
-            {room.lessonDays.map((lessonDay, idx) => (
-              <div className="flex" key={idx}>
-                <h3 className="text-gray-500">#</h3>
-                <h3 className="text-primary_700">{lessonDay.lessonDay}요일</h3>
-              </div>
-            ))}
+            {room.lessonDays
+              .sort((a, b) => {
+                const dayOrder = ['월', '화', '수', '목', '금', '토', '일'];
+                return dayOrder.indexOf(a.lessonDay) - dayOrder.indexOf(b.lessonDay);
+              })
+              .map((lessonDay, idx) => (
+                <div className="flex" key={idx}>
+                  <h3 className="text-gray-500">#</h3>
+                  <h3 className="text-primary_700">{lessonDay.lessonDay}요일</h3>
+                </div>
+              ))}
           </div>
           {room.opponent ? (
             <div className="flex gap-1 text-sm">

@@ -54,6 +54,10 @@ export interface Room {
   parentPermission: SimplePermission;
 }
 
+export interface RoomName {
+  roomName: string;
+}
+
 export type OnSubmit = (room: Room) => void;
 
 export interface RoomDetails {
