@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import instance from '../../api/axios';
+import { deleteLectureFile } from '../../api/materials.api';
 
 interface File {
   lectureFileId: number;
@@ -43,7 +44,7 @@ const MaterialDetail = () => {
 
   const handleDelete = async () => {
     try {
-      const response = await instance.delete(`/api/v1/rooms/${roomId}/lectureFiles/${materialId}`);
+      const response = await deleteLectureFile(roomId!, materialId!);
       if (response.status == 200) {
         console.log('강의자료가 삭제되었습니다.');
         nav(-1);

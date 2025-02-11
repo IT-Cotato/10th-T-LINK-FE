@@ -44,9 +44,9 @@ export const deleteRoom = async (roomId: number) => {
 };
 
 // 과외방 상세
-export const getRoomDetail = async (roomId: number) => {
+export const getRoomDetail = async (roomId: string) => {
   const res = await instance.get(`/api/v1/rooms/${roomId}`);
-  return res.status;
+  return res;
 };
 
 // 공유 코드 조회

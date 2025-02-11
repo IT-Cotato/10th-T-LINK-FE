@@ -1,6 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import Toast from './Toast';
+import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import MaterialIcon from '../assets/images/RoomDetail/materials.svg?react';
 import HomeworklIcon from '../assets/images/RoomDetail/homework.svg?react';
@@ -9,11 +7,10 @@ import CounselingIcon from '../assets/images/RoomDetail/counseling.svg?react';
 
 interface DetailButtonProps {
   type: string;
-  nextDepositDate?: string;
   isPermission: boolean;
 }
 
-const DetailButton = ({ type, nextDepositDate, isPermission }: DetailButtonProps) => {
+const DetailButton = ({ type, isPermission }: DetailButtonProps) => {
   let title = '';
   let description = '';
   let icon = <MaterialIcon />;
@@ -26,25 +23,25 @@ const DetailButton = ({ type, nextDepositDate, isPermission }: DetailButtonProps
       title = '강의 자료함';
       description = '필요한 강의 자료를 한곳에!';
       icon = <MaterialIcon />;
-      bg = 'second_5';
+      bg = 'bg-second_5';
       break;
     case 'homework':
       title = '숙제';
       description = '숙제를 한눈에 확인해요.';
       icon = <HomeworklIcon />;
-      bg = 'primary_50';
+      bg = 'bg-primary_50';
       break;
     case 'stats':
       title = '성적 통계';
       description = '성적을 쉽게 확인해보세요!';
       icon = <StatisticsIcon />;
-      bg = 'primary_50';
+      bg = 'bg-primary_50';
       break;
     case 'diary':
       title = '상담 일지';
       description = '상담 내용을 모아보아요.';
       icon = <CounselingIcon />;
-      bg = 'second_5';
+      bg = 'bg-second_5';
       break;
   }
 
@@ -57,7 +54,7 @@ const DetailButton = ({ type, nextDepositDate, isPermission }: DetailButtonProps
     <div
       className={clsx(
         'py-4 px-3 rounded-[12px] flex-col items-start flex gap-5',
-        isPermission ? `bg-${bg} cursor-pointer` : 'bg-gray-300 opacity-50 cursor-not-allowed',
+        isPermission ? `${bg} cursor-pointer` : 'bg-gray-300 opacity-50 cursor-not-allowed',
       )}
       onClick={handleClick}
     >
