@@ -45,7 +45,7 @@ const RoomInfo = ({ room, roleInfo }: RoomProps) => {
 
   return (
     <div className="flex items-center p-4">
-      {profileOpen && (
+      {profileOpen && room.opponent && (
         <Modal
           onClose={() => {
             setProfileOpen(false);
