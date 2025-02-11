@@ -1,30 +1,33 @@
 import { useEffect, useState } from 'react';
+import { getCurrentRoomInfo, patchRoomName } from '../../api/roomList.api';
 
 type ModalProps = {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   id: number;
+  name: string;
 };
 
-const StudentEditModal = ({ setModalOpen, id }: ModalProps) => {
-  const [roomName, setRoomName] = useState('방이름');
+const StudentEditModal = ({ setModalOpen, name, id }: ModalProps) => {
+  const [roomName, setRoomName] = useState(name);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRoomName(e.target.value);
   };
 
-  /*
-  useEffect(() => {
-    const fetchRoomName = async () => {
-      const currentRoomName = await getCurrentRoomInfo(paramsId);
-      setRoomName(currentRoomName);
-    };
-    fetchRoomName();
-  }, []);
-
   const handleUpdate = async () => {
-    const status = await patchRoomName(paramsId, roomName);
-    if (status===200) setModalOpen(false);
+    try {
+      console.log(roomName);
+      console.log(id);
+      const res = await patchRoomName(id, roomName);
+      console.log(res);
+    } catch (err: any) {
+      if (err.response.status === 400 || err.response.status === 500) {
+        console.log('오류:', err.response.data.error);
+      } else {
+        console.log(err);
+      }
+    }
   };
-  */
 
   return (
     <div
@@ -36,7 +39,7 @@ const StudentEditModal = ({ setModalOpen, id }: ModalProps) => {
       </div>
       <div className="flex justify-center gap-32 w-full">
         <button onClick={() => setModalOpen(false)}>취소</button>
-        <button>저장</button>
+        <button onClick={handleUpdate}>저장</button>
       </div>
     </div>
   );

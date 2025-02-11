@@ -56,7 +56,7 @@ const RoomInfo = ({ room, roleInfo }: RoomProps) => {
       )}
       {StudentEditOpen && (
         <Modal onClose={() => setStudentEditOpen(false)}>
-          <StudentEditModal setModalOpen={setStudentEditOpen} id={room.roomId} />
+          <StudentEditModal setModalOpen={setStudentEditOpen} id={room.roomId} name={room.roomName} />
         </Modal>
       )}
       <div className="gap-4 flex flex-1 items-center">

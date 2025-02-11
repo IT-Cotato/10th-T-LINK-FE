@@ -9,8 +9,8 @@ export const getRoomList = async () => {
 
 // 프로필 모달창 (프로픽 클릭 시)
 export const getProfileModal = async (userId: number) => {
-  const res = await instance.get(`/api/v1/users/${userId}/profile`);
-  return res.data;
+  const res = await instance.get(`/api/v1/user/${userId}/profile`);
+  return res;
 };
 
 // 과외방 생성
@@ -34,7 +34,7 @@ export const patchRoomInfo = async (roomId: number, roomInfo: Room) => {
 // 과외방 수정 - 학생
 export const patchRoomName = async (roomId: number, roomName: string) => {
   const res = await instance.patch(`/api/v1/rooms/${roomId}`, roomName);
-  return res.status;
+  return res;
 };
 
 // 과외방 삭제

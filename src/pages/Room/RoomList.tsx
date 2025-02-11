@@ -18,20 +18,20 @@ const RoomList = () => {
   const [tags, setTags] = useState([{ id: 0, title: '전체', isClicked: true }]);
   const [toast, setToast] = useState(location.state?.toast || false);
 
-  const fetchRooms = async () => {
-    try {
-      const res = await getRoomList();
-      const roomData = res.data.data.rooms;
-      setRooms(roomData);
-      setFilteredRooms(roomData);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   useEffect(() => {
     const role = localStorage.getItem('roleInfo');
     setRoleInfo(role || 'TEACHER');
+
+    const fetchRooms = async () => {
+      try {
+        const res = await getRoomList();
+        const roomData = res.data.data.rooms;
+        setRooms(roomData);
+        setFilteredRooms(roomData);
+      } catch (e) {
+        console.log(e);
+      }
+    };
 
     fetchRooms();
   }, []);

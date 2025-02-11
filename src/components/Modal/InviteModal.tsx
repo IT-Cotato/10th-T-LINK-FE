@@ -11,7 +11,7 @@ const InviteModal = () => {
     try {
       const res = await postShareCode(shareCode);
       console.log(res);
-      // navigation('/user/roomlist');
+      navigation('/user/roomlist');
     } catch (e: any) {
       if (e.response.status === 401 || e.response.status === 404) console.log('오류:', e.response.data);
       else {
