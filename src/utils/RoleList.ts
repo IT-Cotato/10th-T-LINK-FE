@@ -7,7 +7,7 @@ export interface Role {
   title: string;
   description: string;
   src: string;
-  role: 'STUDENT' | 'TEACHER' | 'PARENT';
+  type: 'STUDENT' | 'TEACHER' | 'PARENT';
 }
 
 export const RoleList: Role[] = [
@@ -16,20 +16,20 @@ export const RoleList: Role[] = [
     title: '학생',
     description: '선생님과 소통하고 과제를 제출해요.',
     src: boy,
-    role: 'STUDENT',
+    type: 'STUDENT',
   },
   {
     id: 1,
     title: '선생님',
     description: '학생, 학부모와 소통하고 수업해요.',
     src: teacher,
-    role: 'TEACHER',
+    type: 'TEACHER',
   },
   {
     id: 2,
     title: '부모',
     description: '선생님과 소통하고 입금해요.',
     src: mom,
-    role: 'PARENT',
+    type: 'PARENT',
   },
 ];
