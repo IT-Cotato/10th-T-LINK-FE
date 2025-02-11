@@ -1,5 +1,5 @@
 import instance from './axios';
-import { Room, RoomInfo } from '../models/room.model';
+import { Room, RoomInfo, RoomName } from '../models/room.model';
 
 // 과외방 전체 리스트 출력
 export const getRoomList = async () => {
@@ -32,7 +32,7 @@ export const patchRoomInfo = async (roomId: number, roomInfo: Room) => {
 };
 
 // 과외방 수정 - 학생
-export const patchRoomName = async (roomId: number, roomName: string) => {
+export const patchRoomName = async (roomId: number, roomName: RoomName) => {
   const res = await instance.patch(`/api/v1/rooms/${roomId}`, roomName);
   return res;
 };

@@ -22,12 +22,12 @@ const ProfileModal = ({ setModalOpen, id }: ModalProps) => {
       try {
         const res = await getProfileModal(id);
         const profileInfo = res.data.data;
-        console.log(profileInfo);
         setProfile(profileInfo);
       } catch (e) {
         console.log(e);
       }
     };
+
     fetchProfileInfo();
   }, []);
 

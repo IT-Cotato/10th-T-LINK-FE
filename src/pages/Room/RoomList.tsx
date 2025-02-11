@@ -20,7 +20,7 @@ const RoomList = () => {
 
   useEffect(() => {
     const role = localStorage.getItem('roleInfo');
-    setRoleInfo(role || 'TEACHER');
+    if (role) setRoleInfo(role);
 
     const fetchRooms = async () => {
       try {
@@ -28,6 +28,7 @@ const RoomList = () => {
         const roomData = res.data.data.rooms;
         setRooms(roomData);
         setFilteredRooms(roomData);
+        console.log(roomData);
       } catch (e) {
         console.log(e);
       }
