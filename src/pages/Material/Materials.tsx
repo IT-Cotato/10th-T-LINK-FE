@@ -4,6 +4,7 @@ import { LectureFileBox } from '../../models/materials.model';
 import SearchBar from '../../components/SearchBar';
 import Preview_1 from '../../components/Preview_1';
 import Button from '../../components/Button';
+import { getLectureFileBoxes, uploadLectureFile } from '../../api/materials.api';
 
 const Materials = () => {
   const nav = useNavigate();
@@ -14,16 +15,10 @@ const Materials = () => {
   useEffect(() => {
     const getMaterials = async () => {
       try {
-        // 확인용 mockData
-        const mockData = [
-          { lectureFileBoxId: 1, lectureFileBoxName: '강의 자료 설명', updatedAt: '2025.02.04' },
-          { lectureFileBoxId: 2, lectureFileBoxName: '이건 강의 자료야', updatedAt: '2024.05.05' },
-          { lectureFileBoxId: 3, lectureFileBoxName: '강의 자료자료', updatedAt: '2024.06.06' },
-        ];
-
-        setMaterialList(mockData);
-        // const response = await uploadLectureFile(roomId!);
-        // getLectureFileBoxes(data.lectureFileBoxes);
+        const response = await getLectureFileBoxes(roomId!);
+        if (response.status == 200) {
+          setMaterialList(response.data.lectureFileBoxes);
+        }
       } catch (error) {
         console.log('강의 자료 목록 조회 실패', error);
       }
@@ -34,7 +29,7 @@ const Materials = () => {
 
   const filteredMaterials = materialList.filter((material) => {
     if (search && search.length === 10 && search.includes('.')) {
-      return material.updatedAt.includes(search);
+      return material.updateAt.includes(search);
     }
 
     return material.lectureFileBoxName.toLowerCase().includes(search.toLowerCase());
@@ -48,7 +43,7 @@ const Materials = () => {
       {filteredMaterials.map((material) => (
         <Preview_1
           title={material.lectureFileBoxName}
-          updatedAt={material.updatedAt}
+          updatedAt={material.updateAt}
           type="materials"
           id={material.lectureFileBoxId}
           key={material.lectureFileBoxId}

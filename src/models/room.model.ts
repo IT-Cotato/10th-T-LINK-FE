@@ -14,7 +14,7 @@ export interface Permission {
 }
 
 export interface SimplePermission {
-  lectureFile: boolean;
+  lectureFiles: boolean;
   homework: boolean;
   gradeStatistic: boolean;
   counselingLog: boolean;
@@ -62,6 +62,6 @@ export interface RoomDetails {
   studentName: string;
   subject: string;
   lessonDays: SimpleLessonDay[];
-  nextDepositDate: string;
+  depositAt: string;
   permission: SimplePermission;
 }

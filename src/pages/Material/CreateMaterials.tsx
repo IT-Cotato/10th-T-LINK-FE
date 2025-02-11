@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { uploadLectureFile } from '../../api/materials.api';
 import LongButton from '../../components/LongButton';
 import AddFile from '../../components/AddFile';
@@ -10,11 +10,7 @@ const CreateMaterials = () => {
   const { roomId } = useParams<{ roomId: string }>();
   const [fileList, setFileList] = useState<File[]>([]); // 파일 이름 목록
   const [desc, setDesc] = useState<string>(''); // 강의 자료 설명
-
-  // 강의 자료 이름 설정
-  const handleDesc = (event: ChangeEvent<HTMLInputElement>) => {
-    setDesc(event.target.value);
-  };
+  const nav = useNavigate();
 
   // 강의 자료 설명 있는지 확인
   const validateForm = (): boolean => {
@@ -39,8 +35,10 @@ const CreateMaterials = () => {
 
     // api 호출
     try {
-      const data = await uploadLectureFile(roomId!, payload);
-      console.log('강의자료 업로드 성공');
+      const response = await uploadLectureFile(roomId!, payload);
+      if (response.status == 201) {
+        nav(-1);
+      }
     } catch (error) {
       console.log('강의 자료 업로드 실패', error);
     }

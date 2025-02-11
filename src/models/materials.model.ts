@@ -8,7 +8,7 @@ export interface SimpleLectureFileBox {
 export interface LectureFileBox {
   lectureFileBoxName: string;
   lectureFileBoxId: number;
-  updatedAt: string;
+  updateAt: string;
 }
 
 // 상세 조회에서 반환되는 데이터
