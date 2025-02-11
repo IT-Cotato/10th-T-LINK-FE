@@ -35,5 +35,5 @@ export interface HomeworkUpdateRequest {
   deadline: string;
   homeworkName?: string; // 선생님만 전달
   addHomeworkFiles: File[];
-  removeHomeworkFiles: { homeworkFileId: number }[];
+  removeHomeworkFiles: number[];
 }

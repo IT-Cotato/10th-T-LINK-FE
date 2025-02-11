@@ -17,27 +17,10 @@ const Homework = () => {
 
   const getHomeworkList = async () => {
     try {
-      const mockData = [
-        { homeworkId: 1, createdAt: '25.01.04', homeworkName: '숙제명숙제명', deadline: '25.02.26', passed: false },
-        { homeworkId: 4, createdAt: '25.01.04', homeworkName: '숙제명숙제명', deadline: '25.02.16', passed: false },
-        {
-          homeworkId: 2,
-          createdAt: '25.04.04',
-          homeworkName: '숙제를제발해오거라',
-          deadline: '25.01.08',
-          passed: true,
-        },
-        { homeworkId: 3, createdAt: '25.05.12', homeworkName: '숙제해', deadline: '25.02.04', passed: true },
-        { homeworkId: 3, createdAt: '25.05.12', homeworkName: '숙제해', deadline: '25.02.04', passed: true },
-        { homeworkId: 3, createdAt: '25.05.12', homeworkName: '숙제해', deadline: '25.02.04', passed: true },
-        { homeworkId: 3, createdAt: '25.05.12', homeworkName: '숙제해', deadline: '25.02.04', passed: true },
-        { homeworkId: 3, createdAt: '25.05.12', homeworkName: '숙제해', deadline: '25.02.04', passed: true },
-      ];
-
-      setHomeworkList(mockData);
-      // const data = await getHomework(roomId!);
-      // console.log('숙제 업로드 성공:', data);
-      // setHomeworkList(data);
+      const response = await getHomework(roomId!);
+      if (response.status == 200) {
+        setHomeworkList(response.data.homeworks);
+      }
     } catch (error) {
       console.log('숙제 목록 조회 실패', error);
     }
@@ -64,6 +47,7 @@ const Homework = () => {
             deadline={homework.deadline}
             isPassed={homework.passed}
             dDay={homework.dDay}
+            key={homework.homeworkId}
           />
         ))}
       </div>
@@ -75,6 +59,7 @@ const Homework = () => {
             id={homework.homeworkId}
             deadline={homework.deadline}
             isPassed={homework.passed}
+            key={homework.homeworkId}
           />
         ))}
       </div>

@@ -1,6 +1,6 @@
 export const CaculateDday = (deadline: string) => {
   const [year, month, day] = deadline.split('.').map(Number);
-  const deadlineDate = new Date(2000 + year, month - 1, day);
+  const deadlineDate = new Date(year, month - 1, day);
 
   const today = new Date();
 

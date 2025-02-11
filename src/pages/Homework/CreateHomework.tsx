@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { uploadHomework } from '../../api/homework.api';
 import LongButton from '../../components/LongButton';
 
@@ -10,6 +10,7 @@ import PickDate from '../../components/Room/PickDate';
 
 const CreateHomework = () => {
   const { roomId } = useParams<{ roomId: string }>();
+  const nav = useNavigate();
   const [fileList, setFileList] = useState<File[]>([]); // 파일 이름 목록
   const [deadline, setDeadline] = useState<string>(''); // 선택된 숙제 마감 날짜
   const [desc, setDesc] = useState<string>(''); // 숙제 설명
@@ -42,8 +43,10 @@ const CreateHomework = () => {
     };
 
     try {
-      const data = await uploadHomework(roomId!, payload);
-      console.log('숙제 업로드 성공:', data);
+      const response = await uploadHomework(roomId!, payload);
+      if (response.status == 201) {
+        nav(-1);
+      }
     } catch (error) {
       console.error(error);
     }
