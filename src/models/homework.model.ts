@@ -15,11 +15,13 @@ export interface Homeworks {
 }
 
 // 상세 조회에서 반환되는 데이터
-export interface LectureFileBoxDetail {
+export interface HomeworkFileBoxDetail {
   homeworkId: number;
   homeworkName: string;
-  teacherFiles: HomeworkFile[];
-  studentFiles: HomeworkFile[];
+  deadline: string;
+  teacherFiles?: HomeworkFile[];
+  studentFiles?: HomeworkFile[];
+  homeworkFiles?: HomeworkFile[]; // 수정을 위한 상세조회에서 반환되는 것(사용자가 올린 파일만 보임)
 }
 
 export interface HomeworkFile {
@@ -33,5 +35,5 @@ export interface HomeworkUpdateRequest {
   deadline: string;
   homeworkName?: string; // 선생님만 전달
   addHomeworkFiles: File[];
-  removeHomeworkFiles: { homeworkFileId: number }[];
+  removeHomeworkFiles: number[];
 }

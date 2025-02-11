@@ -9,8 +9,12 @@ export const createHomeworkFormData = (homework: HomeworkInfo): FormData => {
     formData.append('homeworkFiles', file);
   });
 
-  formData.append('description', homework.homeworkName);
+  formData.append('homeworkName', homework.homeworkName);
   formData.append('deadline', homework.deadline);
+
+  formData.forEach((value, key) => {
+    console.log(key, value);
+  });
 
   return formData;
 };

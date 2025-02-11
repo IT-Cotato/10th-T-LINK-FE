@@ -16,7 +16,7 @@ const ROUTE_TITLES: { [key: string]: string } = {
 // 뒤로 가기 존재
 const HEADER_CONFIG = [
   { path: '/materials', title: '강의 자료함' },
-  { path: '/homework', title: '주차별 숙제' },
+  { path: '/homework', title: '숙제' },
   { path: '/diary', title: '상담일지' },
   { path: '/mypage/terms', title: '이용약관' },
   { path: '/createroom', title: '과외방 개설하기' },

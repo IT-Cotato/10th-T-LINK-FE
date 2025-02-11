@@ -4,6 +4,7 @@ import { RiDownloadLine } from 'react-icons/ri';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getAllLectureFile } from '../api/materials.api';
+import { downloadFile } from '../utils/DownloadFiles';
 
 interface PreviewProps {
   type: string;
@@ -18,11 +19,16 @@ const Preview_1 = ({ type, title, updatedAt, id }: PreviewProps) => {
   let date = type == 'materials' ? `업로드 날짜 ${updatedAt}` : `상담 날짜 ${updatedAt}`;
   const { roomId } = useParams<{ roomId: string }>();
 
+  // 파일 다운로드
   const downloadFiles = async (e: React.MouseEvent<HTMLOrSVGElement>) => {
     e.stopPropagation();
     const response = await getAllLectureFile(roomId!, id!);
-    if (response.status == 200) {
-      console.log('다운로드 성공');
+    if (response.status === 200) {
+      const fileUrls = response.data.fileUrls;
+
+      fileUrls.forEach((fileUrl: string) => {
+        downloadFile(fileUrl); // 다운로드 함수 호출
+      });
     }
   };
 

@@ -29,6 +29,7 @@ import CounselingDetail from '../pages/Counseling/CounselingDetail';
 import UserPolicy from '../pages/UserPolicy';
 import ShareCode from '../pages/Room/ShareCode';
 import Invite from '../pages/Invite';
+import EditHomework from '../pages/Homework/EditHomework';
 
 export const router = createBrowserRouter([
   {
@@ -71,6 +72,7 @@ export const router = createBrowserRouter([
           { path: 'homework', element: <Homework /> }, // 숙제방
           { path: 'homework/create', element: <CreateHomework /> }, // 숙제 업로드
           { path: 'homework/:homeworkId', element: <HomeworkDetail /> }, // 숙제 상세
+          { path: 'homework/:homeworkId/edit', element: <EditHomework /> }, // 숙제 상세
           { path: 'stats', element: <Statistics /> },
           { path: 'diary', element: <CounselingDiary /> }, // 상담 일지
           { path: 'diary/create', element: <CreateCounseling /> }, // 상담 일지 업로드
