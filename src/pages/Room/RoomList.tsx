@@ -115,6 +115,7 @@ const RoomList = () => {
         {roleInfo === 'TEACHER' && <Button text="과외방 개설" onClick={() => navigate('/user/createroom')} />}
       </div>
       {toast && <Toast setToast={setToast} title="과외방 삭제가 완료되었습니다." />}
+      <Outlet />
     </div>
   );
 };

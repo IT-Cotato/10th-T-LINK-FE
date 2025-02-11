@@ -57,6 +57,6 @@ export const getShareCode = async (roomId: number) => {
 
 // 과외방 입장(공유코드로 입장)
 export const postShareCode = async (shareCode: string) => {
-  const res = await instance.get(`/api/v1/rooms/code/${shareCode}`);
+  const res = await instance.post(`/api/v1/rooms/code/${shareCode}`, {});
   return res;
 };

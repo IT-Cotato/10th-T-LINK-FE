@@ -3,7 +3,6 @@ export interface UserInfo {
   username: string;
   phoneNumber: string;
   gender: '남성' | '여성' | '';
-  backgroundColor: string;
 }
 
 export interface UserCode {

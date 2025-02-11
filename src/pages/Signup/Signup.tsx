@@ -30,8 +30,8 @@ const Signup = () => {
           <RoleSelectionButton
             key={item.id}
             role={item}
-            onSelect={() => setRole(item.title)}
-            isSelected={role === item.title}
+            onSelect={() => setRole(item.type)}
+            isSelected={role === item.type}
           />
         ))}
       </div>

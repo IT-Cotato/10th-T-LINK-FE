@@ -14,7 +14,6 @@ const FormTel = () => {
     username: '',
     phoneNumber: '',
     gender: '',
-    backgroundColor: '#C15A5A',
   });
 
   useEffect(() => {
