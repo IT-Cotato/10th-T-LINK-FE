@@ -11,6 +11,6 @@ export interface Clicked {
 export interface Cal {
   roomName: string;
   subject: string;
-  depositAt: number;
+  depositAt: number | null;
   lessonDays: SimpleLessonDay[];
 }
