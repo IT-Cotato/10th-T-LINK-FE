@@ -18,6 +18,7 @@ interface ChooseButtonProps {
   engagement?: string;
   homeworkSubmitted?: boolean | null;
   setHomeworkSubmitted?: (value: boolean) => void;
+  isAble: boolean;
 }
 
 const ChooseButton = ({
@@ -27,13 +28,14 @@ const ChooseButton = ({
   setHomeworkSubmitted,
   engagement,
   homeworkSubmitted,
+  isAble,
 }: ChooseButtonProps) => {
   const [selectedValue, setSelectedValue] = useState<string | boolean | null>(null);
 
   useEffect(() => {
     if (engagement) {
       setSelectedValue(engagement);
-    } else if (homeworkSubmitted) {
+    } else if (homeworkSubmitted == false || homeworkSubmitted == true) {
       setSelectedValue(homeworkSubmitted);
     }
   }, []);
@@ -51,6 +53,9 @@ const ChooseButton = ({
   const icons = type == 'engage' ? engage : homework;
 
   const handleChoose = (value: string | boolean) => {
+    if (!isAble) {
+      return;
+    }
     if (selectedValue == value && type == 'homework') {
       setSelectedValue(null);
       return;

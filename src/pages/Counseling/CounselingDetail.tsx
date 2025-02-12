@@ -30,10 +30,6 @@ const CounselingDetail = () => {
     }
   };
 
-  const handleModify = () => {
-    nav(`/user/roomlist/${roomId}/diary/create?isEdit=true`, { state: { counselingDetail } });
-  };
-
   // 삭제
   const handleDelete = async () => {
     try {
@@ -67,11 +63,12 @@ const CounselingDetail = () => {
         </p>
       </div>
       <div className="flex flex-col gap-6">
-        <ChooseButton text="학생 참여도" type="engage" engagement={counselingDetail.engagement} />
+        <ChooseButton text="학생 참여도" type="engage" engagement={counselingDetail.engagement} isAble={false} />
         <ChooseButton
           text="학생 과제 제출 여부"
           type="homework"
           homeworkSubmitted={counselingDetail.homeworkSubmitted}
+          isAble={false}
         />
         <TextArea
           name="*상담 내용"
