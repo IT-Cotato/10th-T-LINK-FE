@@ -1,20 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import instance from '../../api/axios';
-import { deleteLectureFile } from '../../api/materials.api';
-
-interface File {
-  lectureFileId: number;
-  originalName: string;
-  fileUrl: string;
-}
+import { getLectureFileDeatil } from '../../api/materials.api';
+import { LectureFileBoxDetail } from '../../models/materials.model';
+import Edit from '../../assets/images/RoomDetail/Edit.svg?react';
+import { downloadFile } from '../../utils/DownloadFiles';
 
 const MaterialDetail = () => {
   const nav = useNavigate();
   const { roomId, materialId } = useParams<{ roomId: string; materialId: string }>();
-  const [name, setName] = useState<string>('');
-  const [lectureFiles, setLectureFiles] = useState<File[]>([]);
+  const [lectureFiles, setLectureFiles] = useState<LectureFileBoxDetail>();
   const [loading, setLoading] = useState<boolean>(true);
+  const userRole = localStorage.getItem('roleInfo');
 
   useEffect(() => {
     getMaterialDetail();
@@ -23,18 +19,10 @@ const MaterialDetail = () => {
   const getMaterialDetail = async () => {
     setLoading(true);
     try {
-      // mock data
-      setName('쎈 2-1');
-      setLectureFiles([
-        {
-          lectureFileId: 1,
-          originalName: '쎈 2-1',
-          fileUrl: 'https://cyber.ewha.ac.kr/mod/resource/view.php?id=2294701',
-        },
-      ]);
-      //   const data = await getLectureFileDeatil(roomId!, materialId!)
-      //     setName(data.lectureFileBoxName);
-      //     setLectureFiles(data.lectureFiles || []);
+      const response = await getLectureFileDeatil(roomId!, materialId!);
+      if (response.status == 200) {
+        setLectureFiles(response.data);
+      }
     } catch (error) {
       console.log('강의 자료 페이지를 불러오는데 실패했습니다.', error);
     } finally {
@@ -42,39 +30,32 @@ const MaterialDetail = () => {
     }
   };
 
-  const handleDelete = async () => {
-    try {
-      const response = await deleteLectureFile(roomId!, materialId!);
-      if (response.status == 200) {
-        console.log('강의자료가 삭제되었습니다.');
-        nav(-1);
-      }
-    } catch (error) {
-      console.log('강의 자료 삭제 실패', error);
-    }
-  };
-
   if (loading) {
     return <div>로딩 중...</div>;
   }
 
+  if (!lectureFiles) {
+    return <div>정보를 불러오지 못했습니다</div>;
+  }
+
   return (
-    <div>
-      <h1>1주차 강의자료</h1>
-      <p>{name}</p>
-      <h2>강의 자료 파일들</h2>
-      <ul>
-        {lectureFiles.map((file) => (
-          <li>
-            <a href={file.fileUrl} target="_blank" rel="noopener noreferrer" className="underline">
-              {file.originalName}
-            </a>
-          </li>
-        ))}
-      </ul>
-      <button onClick={handleDelete} className="bg-primary_400">
-        삭제
-      </button>
+    <div className="flex flex-col">
+      <div className="py-4 px-4">
+        <div className="flex items-center justify-between">
+          <p className="text-heading6 font-bold leading-10 text-gray-900">{lectureFiles.lectureFileBoxName}</p>
+          {userRole == 'TEACHER' ? <Edit onClick={() => nav(`edit`)} /> : ''}
+        </div>
+        <p className="text-body4 font-normal leading-7 tracking-[-0.048px] text-gray-600">
+          업로드 날짜 {lectureFiles.updatedAt}
+        </p>
+      </div>
+      <div className="bg-gray-100 h-[100px] rounded-lg mt-2 mb-6 mx-4">
+        <ul>
+          {lectureFiles.lectureFiles.map((file) => (
+            <li onClick={() => downloadFile(file.fileUrl)}>{file.originalName}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
