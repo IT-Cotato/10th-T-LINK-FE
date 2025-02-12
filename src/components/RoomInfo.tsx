@@ -15,9 +15,10 @@ import Modal from './Modal/Modal';
 type RoomProps = {
   room: SimpleRoomInfo;
   roleInfo: string;
+  setWillUpdate: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const RoomInfo = ({ room, roleInfo }: RoomProps) => {
+const RoomInfo = ({ room, roleInfo, setWillUpdate }: RoomProps) => {
   const [profileOpen, setProfileOpen] = useState(false);
   const [StudentEditOpen, setStudentEditOpen] = useState(false);
   const navigate = useNavigate();
@@ -56,7 +57,12 @@ const RoomInfo = ({ room, roleInfo }: RoomProps) => {
       )}
       {StudentEditOpen && (
         <Modal onClose={() => setStudentEditOpen(false)}>
-          <StudentEditModal setModalOpen={setStudentEditOpen} id={room.roomId} name={room.roomName} />
+          <StudentEditModal
+            setModalOpen={setStudentEditOpen}
+            id={room.roomId}
+            name={room.roomName}
+            setWillUpdate={setWillUpdate}
+          />
         </Modal>
       )}
       <div className="gap-4 flex flex-1 items-center">
