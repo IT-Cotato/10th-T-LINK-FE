@@ -4,6 +4,7 @@ import { getLectureFileDeatil } from '../../api/materials.api';
 import { LectureFileBoxDetail } from '../../models/materials.model';
 import Edit from '../../assets/images/RoomDetail/Edit.svg?react';
 import { downloadFile } from '../../utils/DownloadFiles';
+import Loading from '../Loading';
 
 const MaterialDetail = () => {
   const nav = useNavigate();
@@ -31,7 +32,7 @@ const MaterialDetail = () => {
   };
 
   if (loading) {
-    return <div>로딩 중...</div>;
+    return <Loading text="데이터 로딩 중..." />;
   }
 
   if (!lectureFiles) {

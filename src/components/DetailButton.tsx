@@ -4,6 +4,9 @@ import MaterialIcon from '../assets/images/RoomDetail/materials.svg?react';
 import HomeworklIcon from '../assets/images/RoomDetail/homework.svg?react';
 import StatisticsIcon from '../assets/images/RoomDetail/statistics.svg?react';
 import CounselingIcon from '../assets/images/RoomDetail/counseling.svg?react';
+import Modal from './Modal/Modal';
+import { useState } from 'react';
+import AccessFail from './Modal/AccessFail';
 
 interface DetailButtonProps {
   type: string;
@@ -15,7 +18,7 @@ const DetailButton = ({ type, isPermission }: DetailButtonProps) => {
   let description = '';
   let icon = <MaterialIcon />;
   let bg = 'gray-300';
-
+  const [modalOpen, setModalOpen] = useState(false);
   const nav = useNavigate();
 
   switch (type) {
@@ -47,7 +50,7 @@ const DetailButton = ({ type, isPermission }: DetailButtonProps) => {
 
   const handleClick = async () => {
     if (isPermission) nav(type);
-    else return;
+    else setModalOpen(true);
   };
 
   return (
@@ -63,6 +66,11 @@ const DetailButton = ({ type, isPermission }: DetailButtonProps) => {
         <h3 className="text-[18px] font-semibold leading-8 tracking-[-0.18px]">{title}</h3>
         <p className="text-[13px] font-normal text-gray-600 leading-[22px]">{description}</p>
       </div>
+      {modalOpen && (
+        <Modal onClose={() => setModalOpen(false)}>
+          <AccessFail setModalOpen={setModalOpen} />
+        </Modal>
+      )}
     </div>
   );
 };

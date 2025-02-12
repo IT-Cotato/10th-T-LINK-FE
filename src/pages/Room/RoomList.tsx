@@ -7,6 +7,7 @@ import { IoSearch } from 'react-icons/io5';
 import SubjectTag from '../../components/SubjectTag';
 import Button from '../../components/Button';
 import Toast from '../../components/Toast';
+import Loading from '../Loading';
 
 const RoomList = () => {
   const navigate = useNavigate();

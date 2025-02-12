@@ -6,6 +6,7 @@ import Input from '../../components/Room/Input';
 import AddFile from '../../components/AddFile';
 import { downloadFile } from '../../utils/DownloadFiles';
 import LongButton from '../../components/LongButton';
+import Loading from '../Loading';
 
 const EditMaterial = () => {
   const { roomId, materialId } = useParams<{ roomId: string; materialId: string }>();
@@ -60,7 +61,7 @@ const EditMaterial = () => {
   };
 
   if (loading) {
-    return <div>로딩 중...</div>;
+    return <Loading text="데이터 로딩 중..." />;
   }
 
   return (
