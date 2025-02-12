@@ -30,6 +30,7 @@ import UserPolicy from '../pages/UserPolicy';
 import ShareCode from '../pages/Room/ShareCode';
 import Invite from '../pages/Invite';
 import EditHomework from '../pages/Homework/EditHomework';
+import EditCounseling from '../pages/Counseling/EditCounseling';
 
 export const router = createBrowserRouter([
   {
@@ -77,6 +78,7 @@ export const router = createBrowserRouter([
           { path: 'diary', element: <CounselingDiary /> }, // 상담 일지
           { path: 'diary/create', element: <CreateCounseling /> }, // 상담 일지 업로드
           { path: 'diary/:counselingId', element: <CounselingDetail /> }, // 상담 일지 상세
+          { path: 'diary/:counselingId/edit', element: <EditCounseling /> }, // 상담 일지 수정
           { path: 'payment', element: <Payment /> },
         ],
       },

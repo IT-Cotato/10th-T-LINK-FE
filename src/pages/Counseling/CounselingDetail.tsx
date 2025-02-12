@@ -4,12 +4,16 @@ import { RiEmotionHappyLine, RiEmotionNormalLine, RiEmotionUnhappyLine } from 'r
 import { useNavigate, useParams } from 'react-router-dom';
 import { CounselingLogDetail } from '../../models/counseling.model';
 import { deleteCounselingLog, getCounselingLogDetail } from '../../api/counseling.api';
+import Edit from '../../assets/images/RoomDetail/Edit.svg?react';
+import ChooseButton from '../../components/Room/ChooseButton';
+import TextArea from '../../components/Room/TextArea';
 
 const CounselingDetail = () => {
   const nav = useNavigate();
   const { roomId, counselingId } = useParams<{ roomId: string; counselingId: string }>();
   const [counselingDetail, setCounselingDetail] = useState<CounselingLogDetail>();
   const [isLoading, setIsLoading] = useState(true);
+  const userRole = localStorage.getItem('roleInfo');
 
   useEffect(() => {
     getCounselingDetail();
@@ -17,26 +21,13 @@ const CounselingDetail = () => {
 
   const getCounselingDetail = async () => {
     try {
-      const mockData = {
-        counselingLogId: 1,
-        title: '중간고사 피드백',
-        content: '중간고사를 넘 잘봣어요~',
-        engagement: 'upper',
-        homeworkSubmitted: null,
-        updatedAt: '2025.01.07',
-      };
-      setCounselingDetail(mockData);
-      //   const response = await getCounselingLogDetail(roomId!, counselingId!);
-      //   setCounselingDetail(response.data);
+      const response = await getCounselingLogDetail(roomId!, counselingId!);
+      setCounselingDetail(response.data);
     } catch (error) {
       console.log('상세 조회 실패');
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleModify = () => {
-    nav(`/user/roomlist/${roomId}/diary/create?isEdit=true`, { state: { counselingDetail } });
   };
 
   // 삭제
@@ -60,32 +51,31 @@ const CounselingDetail = () => {
     return <div>데이터를 불러오지 못했습니다.</div>;
   }
   return (
-    <div className="flex flex-col w-full h-full">
-      <div>
-        <div>{counselingDetail.title}</div>
-        <p>{counselingDetail.updatedAt}</p>
-      </div>
-      <div className="flex border border-black mx-3 flex-col my-5 h-full">
-        <div className="flex items-center gap-1">
-          <p>참여도</p>
-          <RiEmotionHappyLine className={`${counselingDetail.engagement == 'upper' ? 'fill-primary_500' : ''}`} />
-          <RiEmotionNormalLine className={`${counselingDetail.engagement == 'middle' ? 'fill-primary_500' : ''}`} />
-          <RiEmotionUnhappyLine className={`${counselingDetail.engagement == 'lower' ? 'fill-primary_500' : ''}`} />
+    <div className="px-4 flex flex-col h-full">
+      {/* 설명 */}
+      <div className="py-4">
+        <div className="flex items-center justify-between">
+          <p className="text-heading6 font-bold leading-10 text-gray-900">{counselingDetail.title}</p>
+          {userRole == 'TEACHER' ? <Edit onClick={() => nav(`edit`)} /> : ''}
         </div>
-        <div className="flex items-center gap-1">
-          <p>과제 제출 여부</p>
-          <FaRegCheckCircle className={`${counselingDetail.homeworkSubmitted ? 'fill-primary_500' : ''}`} />
-          <FaRegTimesCircle className={`${!counselingDetail.homeworkSubmitted ? 'fill-primary_500' : ''}`} />
-        </div>
-        <div className="mx-3 resize-none h-full my-6 border border-gray-300">{counselingDetail.content}</div>
+        <p className="text-body4 font-normal leading-7 tracking-[-0.048px] text-gray-600">
+          상담 날짜 {counselingDetail.updatedAt}
+        </p>
       </div>
-      <div className="flex justify-end">
-        <button className="bg-primary_400 w-20" onClick={handleModify}>
-          수정
-        </button>
-        <button className="bg-red-400 w-20" onClick={handleDelete}>
-          삭제
-        </button>
+      <div className="flex flex-col gap-6">
+        <ChooseButton text="학생 참여도" type="engage" engagement={counselingDetail.engagement} isAble={false} />
+        <ChooseButton
+          text="학생 과제 제출 여부"
+          type="homework"
+          homeworkSubmitted={counselingDetail.homeworkSubmitted}
+          isAble={false}
+        />
+        <TextArea
+          name="*상담 내용"
+          placeholder="상담 내용을 입력하세요"
+          isAble={false}
+          content={counselingDetail.content}
+        />
       </div>
     </div>
   );

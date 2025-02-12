@@ -11,7 +11,7 @@ import PickDate from '../../components/Room/PickDate';
 const CreateHomework = () => {
   const { roomId } = useParams<{ roomId: string }>();
   const nav = useNavigate();
-  const [fileList, setFileList] = useState<File[]>([]); // 파일 이름 목록
+  const [fileList, setFileList] = useState<File[]>([]); // 파일 목록
   const [deadline, setDeadline] = useState<string>(''); // 선택된 숙제 마감 날짜
   const [desc, setDesc] = useState<string>(''); // 숙제 설명
 
@@ -60,7 +60,7 @@ const CreateHomework = () => {
         <p className="text-body3 font-normal leading-7 tracking-[-0.048px] text-gray-600">언제든지 수정할 수 있어요!</p>
       </div>
       {/* 날짜 고르기 */}
-      <PickDate deadline={deadline} setDeadline={setDeadline} isAble={true} />
+      <PickDate deadline={deadline} setDeadline={setDeadline} isAble={true} text="숙제의 마감 날짜를 선택해주세요." />
       {/* 파일첨부 */}
       <div className="py-4 gap-6 flex flex-col">
         <Input setDesc={setDesc} desc={desc} name="숙제명" placeholder="숙제명을 입력해주세요" isAble={true} />
