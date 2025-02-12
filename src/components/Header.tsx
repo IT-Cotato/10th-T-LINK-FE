@@ -2,7 +2,6 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { GoArrowLeft } from 'react-icons/go';
 import { useMemo, useState } from 'react';
 import { FiTrash2 } from 'react-icons/fi';
-import { deleteRoom } from '../api/roomList.api';
 import Modal from './Modal/Modal';
 import RoomDelteModal from './Modal/RoomDeleteModal';
 

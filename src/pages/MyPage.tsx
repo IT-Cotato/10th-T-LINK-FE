@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import Modal from '../components/Modal/Modal';
 import LogoutModal, { MODAL_TYPE } from '../components/Modal/LogoutModal';
 import { getUserInfo } from '../api/mypage.api';
+import { formatPhoneNumber } from '../utils/FormatPhoneNumber';
 
 interface UserInfo {
   role: string;
@@ -38,15 +39,6 @@ const MyPage = () => {
     };
     getuserInfo();
   }, []);
-
-  // 전화번호 11자리에서 010-0000-0000 형식으로 변환
-  const formatPhoneNumber = (phoneNumber: string) => {
-    const cleanNumber = phoneNumber.replace(/[^0-9]/g, '');
-    if (cleanNumber.length === 11) {
-      return cleanNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-    }
-    return phoneNumber;
-  };
 
   const roleCard = [
     { role: 'TEACHER', name: '선생님', ment: '오늘도 화이팅하세요!', image: <img src={teacher} className="w-6 h-6" /> },

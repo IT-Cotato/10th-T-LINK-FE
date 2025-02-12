@@ -1,7 +1,6 @@
-import student from '../../assets/images/student_boy.png';
-import DefaultProfile from '../../assets/images/profile.svg?react';
 import { useEffect, useState } from 'react';
 import { getProfileModal } from '../../api/roomList.api';
+import { formatPhoneNumber } from '../../utils/FormatPhoneNumber';
 
 type ModalProps = {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -43,7 +42,9 @@ const ProfileModal = ({ setModalOpen, id }: ModalProps) => {
         <img src={profile.profileImageUrl} className="w-20 h-20 rounded-full" />
         <p className="text-[22px] font-bold leading-9 pt-6">{profile.username}</p>
         <p className="text-caption1 leading-[22px] text-gray-500">{profile.statusMessage}</p>
-        <p className="text-body3 tracking-[-0.048px] leading-7 text-gray-500">{profile.phoneNumber}</p>
+        <p className="text-body3 tracking-[-0.048px] leading-7 text-gray-500">
+          {formatPhoneNumber(profile.phoneNumber)}
+        </p>
       </div>
     </div>
   );

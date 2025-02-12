@@ -18,6 +18,7 @@ const RoomList = () => {
   const [search, setSearch] = useState('');
   const [tags, setTags] = useState([{ id: 0, title: '전체', isClicked: true }]);
   const [toast, setToast] = useState(location.state?.toast || false);
+  const [willUpdate, setWillUpdate] = useState(false);
 
   useEffect(() => {
     const role = localStorage.getItem('roleInfo');
@@ -29,14 +30,18 @@ const RoomList = () => {
         const roomData = res.data.data.rooms;
         setRooms(roomData);
         setFilteredRooms(roomData);
-        console.log(roomData);
       } catch (e) {
         console.log(e);
       }
     };
 
     fetchRooms();
-  }, []);
+
+    if (willUpdate) {
+      fetchRooms();
+      setWillUpdate(false);
+    }
+  }, [willUpdate]);
 
   useEffect(() => {
     const subjectList = Array.from(new Set(rooms?.map((item) => item.subject)));
@@ -110,7 +115,11 @@ const RoomList = () => {
       </div>
 
       {/* 리스트 */}
-      <div>{filteredRooms?.map((room) => <RoomInfo key={room.roomId} roleInfo={roleInfo} room={room} />)}</div>
+      <div>
+        {filteredRooms?.map((room) => (
+          <RoomInfo key={room.roomId} roleInfo={roleInfo} room={room} setWillUpdate={setWillUpdate} />
+        ))}
+      </div>
 
       {/* 과외방 개설 */}
       <div className="flex justify-end py-8">

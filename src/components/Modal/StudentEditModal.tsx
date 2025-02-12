@@ -6,9 +6,10 @@ type ModalProps = {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   id: number;
   name: string;
+  setWillUpdate: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const StudentEditModal = ({ setModalOpen, name, id }: ModalProps) => {
+const StudentEditModal = ({ setModalOpen, setWillUpdate, name, id }: ModalProps) => {
   const [roomName, setRoomName] = useState(name);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +20,6 @@ const StudentEditModal = ({ setModalOpen, name, id }: ModalProps) => {
     try {
       const roomData: RoomName = { roomName };
       const res = await patchRoomName(id, roomData);
-      console.log(res);
     } catch (err: any) {
       if (err.response?.status === 400 || err.response?.status === 500) {
         console.log('오류:', err.response.data.error);
@@ -28,6 +28,7 @@ const StudentEditModal = ({ setModalOpen, name, id }: ModalProps) => {
       }
     } finally {
       setModalOpen(false);
+      setWillUpdate(true);
     }
   };
 
