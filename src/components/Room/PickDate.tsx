@@ -8,9 +8,10 @@ interface PickDateProps {
   deadline: string;
   setDeadline: (value: string) => void;
   isAble: boolean;
+  text: string;
 }
 
-const PickDate = ({ deadline, setDeadline, isAble }: PickDateProps) => {
+const PickDate = ({ deadline, setDeadline, isAble, text }: PickDateProps) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const handleClick = () => {
@@ -26,7 +27,7 @@ const PickDate = ({ deadline, setDeadline, isAble }: PickDateProps) => {
         <input
           className="text-gray-400 text-body3 leading-7 tracking-[-0.048px] flex-1 bg-transparent pointer-events-none"
           value={deadline}
-          placeholder="숙제의 마감 날짜를 선택해주세요."
+          placeholder={text}
         ></input>
         <MdKeyboardArrowRight size={24} fill="#6A6966" />
       </div>

@@ -66,7 +66,7 @@ const EditHomework = () => {
   return (
     <div className="px-4 flex flex-col h-full">
       {/* 날짜 고르기 */}
-      <PickDate deadline={deadline} setDeadline={setDeadline} isAble={isAble} />
+      <PickDate deadline={deadline} setDeadline={setDeadline} isAble={isAble} text="숙제 마감 날짜를 선택하세요." />
       {/* 파일첨부 */}
       <div className="py-4 gap-6 flex flex-col">
         <Input
@@ -95,7 +95,7 @@ const EditHomework = () => {
       {/* 버튼 */}
       <div className="py-6 mt-auto">
         <LongButton
-          enable={!!((fileList.length > 0 || addList.length > 0) && description.length > 0 && deadline.length > 0)}
+          enable={!!(description.length > 0 && deadline.length > 0)}
           onClick={handleSubmit}
           text="수정 완료"
         />

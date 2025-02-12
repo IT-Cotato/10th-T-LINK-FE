@@ -2,7 +2,7 @@
 export interface CounselingLogs {
   counselingLogId: number;
   title: string;
-  updateAt: string;
+  updatedAt: string;
 }
 
 // 상담일지 업로드 && 수정

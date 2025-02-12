@@ -6,10 +6,16 @@ import { FaRegCheckCircle } from 'react-icons/fa';
 import { FaRegTimesCircle } from 'react-icons/fa';
 import { patchCounselingLog, postCounselingLogs } from '../../api/counseling.api';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import PickDate from '../../components/Room/PickDate';
+import Input from '../../components/Room/Input';
+import ChooseButton from '../../components/Room/ChooseButton';
+import TextArea from '../../components/Room/TextArea';
+import LongButton from '../../components/LongButton';
 
 const CreateCounseling = () => {
   const nav = useNavigate();
   const { roomId } = useParams<{ roomId: string }>();
+  const [deadline, setDeadline] = useState<string>(''); // 상담일지 작성 날짜
 
   const location = useLocation();
   const isEdit = new URLSearchParams(location.search).get('isEdit') === 'true';
@@ -20,7 +26,7 @@ const CreateCounseling = () => {
 
   const [title, setTitle] = useState<string>(isEdit ? initialData.title : '');
   const [content, setContent] = useState<string>(isEdit ? initialData.content : '');
-  const [engagement, setEngagement] = useState<string>(isEdit ? initialData.engagement : '상');
+  const [engagement, setEngagement] = useState<string>(isEdit ? initialData.engagement : '');
   const [homeworkSubmitted, setHomeworkSubmitted] = useState<boolean | null>(
     isEdit ? initialData.homeworkSubmitted : null,
   );
@@ -56,7 +62,7 @@ const CreateCounseling = () => {
         }
       } else {
         const response = await postCounselingLogs(roomId!, payload);
-        if (response.status == 200) {
+        if (response.status == 201) {
           console.log('상담일지 업로드 성공');
           nav(`/user/roomlist/${roomId}/diary`);
         }
@@ -67,59 +73,37 @@ const CreateCounseling = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full">
-      <div>
-        <input placeholder="상담 제목을 입력해주세요" onChange={(e) => setTitle(e.target.value)} value={title}></input>
-        <p>{isEdit ? initialData.updatedAt : todayFormatted}</p>
+    <div className="px-4 flex flex-col h-full">
+      {/* 설명 */}
+      <div className="py-4">
+        <p className="text-heading6 font-bold leading-10 text-gray-900">상담 정보를 입력하세요.</p>
+        <p className="text-body3 font-normal leading-7 tracking-[-0.048px] text-gray-600">언제든지 수정할 수 있어요!</p>
       </div>
-      <div className="flex border border-black mx-3 flex-col my-5 h-full">
-        <div className="flex items-center gap-1">
-          <p>참여도</p>
-          <RiEmotionHappyLine
-            onClick={() => {
-              setEngagement('상');
-            }}
-            className={`${engagement == '상' ? 'fill-primary_500' : ''}`}
-          />
-          <RiEmotionNormalLine
-            onClick={() => {
-              setEngagement('중');
-            }}
-            className={`${engagement == '중' ? 'fill-primary_500' : ''}`}
-          />
-          <RiEmotionUnhappyLine
-            onClick={() => {
-              setEngagement('하');
-            }}
-            className={`${engagement == '하' ? 'fill-primary_500' : ''}`}
-          />
-        </div>
-        <div className="flex items-center gap-1">
-          <p>과제 제출 여부</p>
-          <FaRegCheckCircle
-            onClick={() => {
-              setHomeworkSubmitted(true);
-            }}
-            className={`${homeworkSubmitted ? 'fill-primary_500' : ''}`}
-          />
-          <FaRegTimesCircle
-            onClick={() => {
-              setHomeworkSubmitted(false);
-            }}
-            className={`${!homeworkSubmitted ? 'fill-primary_500' : ''}`}
-          />
-        </div>
-        <textarea
-          className="mx-3 resize-none h-full my-6 border border-gray-300"
-          placeholder="상담내용"
-          onChange={(e) => setContent(e.target.value)}
-          value={content}
-        ></textarea>
+      <div className="flex flex-col gap-6">
+        {/* 날짜 고르기 */}
+        <PickDate deadline={deadline} setDeadline={setDeadline} isAble={true} text="업로드 날짜를 선택해주세요." />
+        <Input setDesc={setTitle} desc={title} name="제목" placeholder="상담일지명을 입력해주세요" isAble={true} />
+        <ChooseButton text="학생 참여도" type="engage" setEngagement={setEngagement} engagement={engagement} />
+        <ChooseButton
+          text="학생 과제 제출 여부"
+          type="homework"
+          homeworkSubmitted={homeworkSubmitted}
+          setHomeworkSubmitted={setHomeworkSubmitted}
+        />
+        <TextArea
+          name="*상담 내용"
+          placeholder="상담 내용을 입력하세요"
+          isAble={true}
+          content={content}
+          setContent={setContent}
+        />
       </div>
-      <div className="flex justify-end">
-        <button className="bg-primary_400 w-20" onClick={handleSubmit}>
-          {isEdit ? '수정 완료' : '생성 완료'}
-        </button>
+      <div className="py-6 mt-auto">
+        <LongButton
+          enable={!!(content.length > 0 && title.length > 0 && deadline.length > 0 && engagement)}
+          onClick={handleSubmit}
+          text="업로드 하기"
+        />
       </div>
     </div>
   );

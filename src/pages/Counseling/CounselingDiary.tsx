@@ -28,7 +28,7 @@ const CounselingDiary = () => {
 
   const filteredLogs = counselingList.filter((logs) => {
     if (search && search.length === 10 && search.includes('.')) {
-      return logs.updateAt.includes(search);
+      return logs.updatedAt.includes(search);
     }
 
     return logs.title.toLowerCase().includes(search.toLowerCase());
@@ -42,7 +42,7 @@ const CounselingDiary = () => {
       {filteredLogs.map((logs) => (
         <Preview_1
           title={logs.title}
-          updatedAt={logs.updateAt}
+          updatedAt={logs.updatedAt}
           type="counseling"
           id={logs.counselingLogId}
           key={logs.counselingLogId}
