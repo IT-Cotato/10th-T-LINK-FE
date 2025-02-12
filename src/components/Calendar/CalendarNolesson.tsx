@@ -18,23 +18,20 @@ const CalendarNolesson = ({ isShareLink }: Props) => {
   const [code, setCode] = useState('');
   const [toast, setToast] = useState(false);
 
-  useEffect(() => {
-    const fetchShareCode = async () => {
-      try {
-        const res = await getShareCode(Number(roomId));
-        const shareCode = res.data.data.shareCode;
-        setCode(`http://localhost:5173/user/roomlist/invite/${roomId}/${shareCode}`);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    if (isShareLink) {
-      fetchShareCode();
+  const fetchShareCode = async () => {
+    try {
+      const res = await getShareCode(Number(roomId));
+      const shareCode = res.data.data.shareCode;
+      setCode(`http://localhost:5173/user/roomlist/invite/${roomId}/${shareCode}`);
+    } catch (e) {
+      console.log(e);
     }
-  }, [roomId]);
+  };
 
   const handleOnClick = async () => {
     if (isShareLink) {
+      fetchShareCode();
+
       try {
         await navigator.clipboard.writeText(code);
         setToast(true);
