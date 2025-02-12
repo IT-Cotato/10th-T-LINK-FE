@@ -29,7 +29,6 @@ const RoomList = () => {
         const roomData = res.data.data.rooms;
         setRooms(roomData);
         setFilteredRooms(roomData);
-        console.log(roomData);
       } catch (e) {
         console.log(e);
       }

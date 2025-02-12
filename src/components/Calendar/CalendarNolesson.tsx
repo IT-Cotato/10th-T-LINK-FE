@@ -3,7 +3,7 @@ import vector from '../../assets/images/vector_gray.png';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router-dom';
 import student from '../../assets/images/student_girl.png';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Toast from '../Toast';
 import { getShareCode } from '../../api/roomList.api';
 
