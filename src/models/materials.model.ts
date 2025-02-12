@@ -16,22 +16,18 @@ export interface LectureFileBoxDetail {
   lectureFileBoxId: number;
   lectureFileBoxName: string;
   lectureFiles: LectureFile[];
+  updatedAt: string;
 }
 
 export interface LectureFile {
   lectureFileId: number;
   originalName: string;
-  filePath: string;
+  fileUrl: string;
 }
 
 // 수정 요청에 사용되는 데이터
 export interface UpdateLectureFileBox {
   lectureFileBoxName: string;
   addLectureFiles: File[];
-  removeLectureFiles: RemoveLectureFile[];
-}
-
-// 삭제할 파일 정보
-export interface RemoveLectureFile {
-  lectureFileId: number;
+  removeLectureFiles: number[];
 }

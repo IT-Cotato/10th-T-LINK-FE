@@ -6,6 +6,7 @@ import Edit from '../../assets/images/RoomDetail/Edit.svg?react';
 import CalendarDeposit from '../../components/Calendar/CalendarDeposit';
 import CalendarNolesson from '../../components/Calendar/CalendarNolesson';
 import { getRoomDetail } from '../../api/roomList.api';
+import Loading from '../Loading';
 
 const RoomDetail = () => {
   const { roomId } = useParams<{ roomId: string }>();
@@ -27,7 +28,7 @@ const RoomDetail = () => {
   const userRole = localStorage.getItem('roleInfo');
 
   if (!roomDetail) {
-    return <div>로딩 중...</div>;
+    return <Loading text="데이터 로딩 중..." />;
   }
 
   return (

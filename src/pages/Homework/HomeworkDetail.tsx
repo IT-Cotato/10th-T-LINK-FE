@@ -4,6 +4,7 @@ import { getHomeworkDeatil } from '../../api/homework.api';
 import { HomeworkFile, HomeworkFileBoxDetail } from '../../models/homework.model';
 import Edit from '../../assets/images/RoomDetail/Edit.svg?react';
 import { downloadFile } from '../../utils/DownloadFiles';
+import Loading from '../Loading';
 
 const HomeworkDetail = () => {
   const { roomId, homeworkId } = useParams<{ roomId: string; homeworkId: string }>();
@@ -32,23 +33,25 @@ const HomeworkDetail = () => {
   }, [roomId, homeworkId]);
 
   if (loading) {
-    return <div>로딩 중...</div>;
+    return <Loading text="데이터 로딩 중..." />;
+  }
+
+  if (!detail) {
+    return <Loading text="데이터 오류!" />;
   }
 
   return (
     <div className="flex flex-col">
       <div className="py-4 px-4">
         <div className="flex items-center justify-between">
-          <p className="text-heading6 font-bold leading-10 text-gray-900">{detail?.homeworkName}</p>
-          {userRole == 'TEACHER' ? <Edit onClick={() => nav(`edit`)} /> : ''}
+          <p className="text-heading6 font-bold leading-10 text-gray-900">{detail.homeworkName}</p>
+          <Edit onClick={() => nav(`edit`)} />
         </div>
-        <p className="text-body4 font-normal leading-7 tracking-[-0.048px] text-gray-600">
-          마감날짜 {detail?.deadline}
-        </p>
+        <p className="text-body4 font-normal leading-7 tracking-[-0.048px] text-gray-600">마감날짜 {detail.deadline}</p>
       </div>
       <div className="bg-gray-100 h-[100px] rounded-lg mt-2 mb-6 mx-4">
         <ul>
-          {detail?.teacherFiles?.map((file) => <li onClick={() => downloadFile(file.fileUrl)}>{file.originalName}</li>)}
+          {detail.teacherFiles?.map((file) => <li onClick={() => downloadFile(file.fileUrl)}>{file.originalName}</li>)}
         </ul>
       </div>
       <div className="py-4 px-4 border-t-2 border-gray-100">
@@ -57,9 +60,7 @@ const HomeworkDetail = () => {
       </div>
       <div className="bg-gray-100 h-[100px] rounded-lg mt-2 mb-6 mx-4">
         <ul>
-          {studentFiles.map((file) => (
-            <li onClick={() => downloadFile(file.fileUrl)}>{file.originalName}</li>
-          ))}
+          {detail.studentFiles?.map((file) => <li onClick={() => downloadFile(file.fileUrl)}>{file.originalName}</li>)}
         </ul>
       </div>
     </div>

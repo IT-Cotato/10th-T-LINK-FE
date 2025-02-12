@@ -16,7 +16,7 @@ export const getLectureFileBoxes = async (roomId: string) => {
 };
 
 // 강의 자료 상세 조회
-export const getLectureFileDeatil = async (roomId: string, lectureFileBoxId: string): Promise<LectureFileBoxDetail> => {
+export const getLectureFileDeatil = async (roomId: string, lectureFileBoxId: string) => {
   const response = await instance.get(`/api/v1/rooms/${roomId}/lectureFileBoxes/${lectureFileBoxId}`);
   return response.data;
 };

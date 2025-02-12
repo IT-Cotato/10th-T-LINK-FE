@@ -10,6 +10,7 @@ const Homework = () => {
   const { roomId } = useParams<{ roomId: string }>();
   const nav = useNavigate();
   const [homeworkList, setHomeworkList] = useState<Homeworks[]>([]);
+  const userRole = localStorage.getItem('roleInfo');
 
   useEffect(() => {
     getHomeworkList();
@@ -63,7 +64,7 @@ const Homework = () => {
           />
         ))}
       </div>
-      <Button text="숙제 업로드하기" onClick={() => nav('create')} />
+      {userRole == 'TEACHER' ? <Button text="숙제 업로드하기" onClick={() => nav('create')} /> : ''}
       <Outlet />
     </div>
   );

@@ -15,6 +15,8 @@ const CalendarDeposit = ({ roomname, nextDeopsit, isPermission }: DepositProps) 
     if (nextDeopsit && isPermission) nav('payment');
   };
 
+  console.log(nextDeopsit);
+
   return (
     <div
       className={`flex p-4 gap-3 bg-primary_100 items-center rounded-xl ${nextDeopsit && !isPermission ? 'bg-gray-300 opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
@@ -28,10 +30,12 @@ const CalendarDeposit = ({ roomname, nextDeopsit, isPermission }: DepositProps) 
       </div>
       <div>
         <div className="text-primary_800 text-base font-semibold leading-7">입금일</div>
-        {nextDeopsit ? (
-          <div className="text-sm leading-6 tracking-[-0.042px] text-gray-800">다음 입금일은 {nextDeopsit} 입니다.</div>
-        ) : (
+        {nextDeopsit == '0' ? (
+          <div className="text-sm leading-6 tracking-[-0.042px] text-gray-800">현재 과외 입금일이 존재하지 않아요.</div>
+        ) : nextDeopsit == null ? (
           <div className="text-sm leading-6 tracking-[-0.042px] text-gray-800">{roomname} 입금일 입니다.</div>
+        ) : (
+          <div className="text-sm leading-6 tracking-[-0.042px] text-gray-800">다음 입금일은 {nextDeopsit} 입니다.</div>
         )}
       </div>
     </div>

@@ -7,14 +7,12 @@ import TextArea from '../../components/Room/TextArea';
 import PickDate from '../../components/Room/PickDate';
 import ChooseButton from '../../components/Room/ChooseButton';
 import Input from '../../components/Room/Input';
+import Loading from '../Loading';
 
 const EditCounseling = () => {
   const nav = useNavigate();
   const { roomId, counselingId } = useParams<{ roomId: string; counselingId: string }>();
-  const [counselingDetail, setCounselingDetail] = useState<CounselingLogDetail>();
-
   const [deadline, setDeadline] = useState<string>(''); // 상담일지 작성 날짜
-
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const [engagement, setEngagement] = useState<string>('');
@@ -61,7 +59,7 @@ const EditCounseling = () => {
   };
 
   if (isLoading) {
-    return <div>로딩 중...</div>;
+    return <Loading text="데이터 로딩 중..." />;
   }
 
   return (

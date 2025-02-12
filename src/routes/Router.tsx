@@ -31,6 +31,7 @@ import ShareCode from '../pages/Room/ShareCode';
 import Invite from '../pages/Invite';
 import EditHomework from '../pages/Homework/EditHomework';
 import EditCounseling from '../pages/Counseling/EditCounseling';
+import EditMaterial from '../pages/Material/EditMaterial';
 
 export const router = createBrowserRouter([
   {
@@ -70,6 +71,7 @@ export const router = createBrowserRouter([
           { path: 'materials', element: <Materials /> }, // 강의 자료함
           { path: 'materials/create', element: <CreateMaterials /> }, // 강의 자료 업로드
           { path: 'materials/:materialId', element: <MaterialDetail /> }, // 강의 자료 상세
+          { path: 'materials/:materialId/edit', element: <EditMaterial /> }, // 강의 자료 상세
           { path: 'homework', element: <Homework /> }, // 숙제방
           { path: 'homework/create', element: <CreateHomework /> }, // 숙제 업로드
           { path: 'homework/:homeworkId', element: <HomeworkDetail /> }, // 숙제 상세

@@ -55,6 +55,7 @@ const EditHomework = () => {
     }
   };
   const isAble = userRole == 'TEACHER' ? true : false;
+  const text = userRole == 'TEACHER' ? '수정 완료' : '숙제 업로드 하기';
 
   // 기존 파일 삭제
   const handleFileDelete = (file: HomeworkFile, index: number) => {
@@ -94,11 +95,7 @@ const EditHomework = () => {
       </div>
       {/* 버튼 */}
       <div className="py-6 mt-auto">
-        <LongButton
-          enable={!!(description.length > 0 && deadline.length > 0)}
-          onClick={handleSubmit}
-          text="수정 완료"
-        />
+        <LongButton enable={!!(description.length > 0 && deadline.length > 0)} onClick={handleSubmit} text={text} />
       </div>
     </div>
   );

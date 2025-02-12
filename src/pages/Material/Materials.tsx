@@ -11,6 +11,7 @@ const Materials = () => {
   const { roomId } = useParams<{ roomId: string }>();
   const [materialList, setMaterialList] = useState<LectureFileBox[]>([]);
   const [search, setSearch] = useState('');
+  const userRole = localStorage.getItem('roleInfo');
 
   useEffect(() => {
     const getMaterials = async () => {
@@ -49,7 +50,7 @@ const Materials = () => {
           key={material.lectureFileBoxId}
         />
       ))}
-      <Button text="강의 자료 업로드" onClick={() => nav('create')} />
+      {userRole == 'TEACHER' ? <Button text="강의 자료 업로드" onClick={() => nav('create')} /> : ''}
       <Outlet />
     </div>
   );

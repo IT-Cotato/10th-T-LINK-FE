@@ -5,10 +5,12 @@ interface ModalProps {
 
 const Modal = ({ children, onClose }: ModalProps) => {
   const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
     if (e.target === e.currentTarget && onClose) {
       onClose();
     }
   };
+
   return (
     <>
       <div

@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react';
-import { FaRegCheckCircle, FaRegTimesCircle } from 'react-icons/fa';
-import { RiEmotionHappyLine, RiEmotionNormalLine, RiEmotionUnhappyLine } from 'react-icons/ri';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CounselingLogDetail } from '../../models/counseling.model';
 import { deleteCounselingLog, getCounselingLogDetail } from '../../api/counseling.api';
 import Edit from '../../assets/images/RoomDetail/Edit.svg?react';
 import ChooseButton from '../../components/Room/ChooseButton';
 import TextArea from '../../components/Room/TextArea';
+import Loading from '../Loading';
 
 const CounselingDetail = () => {
   const nav = useNavigate();
@@ -44,11 +43,11 @@ const CounselingDetail = () => {
   };
 
   if (isLoading) {
-    return <div>로딩 중...</div>;
+    return <Loading text="데이터 로딩 중..." />;
   }
 
   if (!counselingDetail) {
-    return <div>데이터를 불러오지 못했습니다.</div>;
+    return <Loading text="데이터 오류 발생!" />;
   }
   return (
     <div className="px-4 flex flex-col h-full">
