@@ -40,13 +40,7 @@ const CounselingDiary = () => {
         <SearchBar value={search} setValue={setSearch} />
       </div>
       {filteredLogs.map((logs) => (
-        <Preview_1
-          title={logs.title}
-          updatedAt={logs.updatedAt}
-          type="counseling"
-          id={logs.counselingLogId}
-          key={logs.counselingLogId}
-        />
+        <Preview_1 title={logs.title} updatedAt={logs.updatedAt} type="counseling" id={logs.id} key={logs.id} />
       ))}
       <Button text="상담 일지 업로드" onClick={() => nav('create')} />
       <Outlet />

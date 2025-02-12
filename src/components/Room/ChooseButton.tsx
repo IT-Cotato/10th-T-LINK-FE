@@ -9,7 +9,7 @@ import CheckActive from '../../assets/images/Counseling/Check_ring copy.svg?reac
 import No from '../../assets/images/Counseling/Close_round.svg?react';
 import NoActive from '../../assets/images/Counseling/Close_round copy.svg?react';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface ChooseButtonProps {
   text: string;
@@ -20,8 +20,23 @@ interface ChooseButtonProps {
   setHomeworkSubmitted?: (value: boolean) => void;
 }
 
-const ChooseButton = ({ text, type, setEngagement, setHomeworkSubmitted }: ChooseButtonProps) => {
+const ChooseButton = ({
+  text,
+  type,
+  setEngagement,
+  setHomeworkSubmitted,
+  engagement,
+  homeworkSubmitted,
+}: ChooseButtonProps) => {
   const [selectedValue, setSelectedValue] = useState<string | boolean | null>(null);
+
+  useEffect(() => {
+    if (engagement) {
+      setSelectedValue(engagement);
+    } else if (homeworkSubmitted) {
+      setSelectedValue(homeworkSubmitted);
+    }
+  }, []);
 
   const engage = [
     { icon: <Sad />, active: <SadActive />, value: '하' },

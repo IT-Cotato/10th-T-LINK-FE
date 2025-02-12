@@ -1,6 +1,6 @@
 // 상담일지 목록 조회 시 사용
 export interface CounselingLogs {
-  counselingLogId: number;
+  id: number;
   title: string;
   updatedAt: string;
 }
