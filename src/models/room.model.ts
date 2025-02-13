@@ -14,7 +14,7 @@ export interface Permission {
 }
 
 export interface SimplePermission {
-  lectureFiles: boolean;
+  lectureFile: boolean;
   homework: boolean;
   gradeStatistic: boolean;
   counselingLog: boolean;
