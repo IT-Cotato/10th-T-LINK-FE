@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getHomework } from '../../api/homework.api';
 import { Homeworks } from '../../models/homework.model';
 import Preview_2 from '../../components/Preview_2';
 import Button from '../../components/Button';
 import { CaculateDday } from '../../utils/CaculateDday';
+import Toast from '../../components/Toast';
 
 const Homework = () => {
   const { roomId } = useParams<{ roomId: string }>();
   const nav = useNavigate();
   const [homeworkList, setHomeworkList] = useState<Homeworks[]>([]);
   const userRole = localStorage.getItem('roleInfo');
+
+  const location = useLocation();
+  const [toast, setToast] = useState(location.state?.toast || false);
 
   useEffect(() => {
     getHomeworkList();
@@ -66,6 +70,7 @@ const Homework = () => {
       </div>
       {userRole == 'TEACHER' ? <Button text="숙제 업로드하기" onClick={() => nav('create')} /> : ''}
       <Outlet />
+      {toast && <Toast setToast={setToast} title="숙제 삭제가 완료되었습니다." />}
     </div>
   );
 };

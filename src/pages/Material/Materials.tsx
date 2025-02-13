@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { LectureFileBox } from '../../models/materials.model';
 import SearchBar from '../../components/SearchBar';
 import Preview_1 from '../../components/Preview_1';
 import Button from '../../components/Button';
 import { getLectureFileBoxes, uploadLectureFile } from '../../api/materials.api';
+import Toast from '../../components/Toast';
 
 const Materials = () => {
   const nav = useNavigate();
@@ -12,6 +13,9 @@ const Materials = () => {
   const [materialList, setMaterialList] = useState<LectureFileBox[]>([]);
   const [search, setSearch] = useState('');
   const userRole = localStorage.getItem('roleInfo');
+
+  const location = useLocation();
+  const [toast, setToast] = useState(location.state?.toast || false);
 
   useEffect(() => {
     const getMaterials = async () => {
@@ -52,6 +56,7 @@ const Materials = () => {
       ))}
       {userRole == 'TEACHER' ? <Button text="강의 자료 업로드" onClick={() => nav('create')} /> : ''}
       <Outlet />
+      {toast && <Toast setToast={setToast} title="강의 자료 삭제가 완료되었습니다." />}
     </div>
   );
 };

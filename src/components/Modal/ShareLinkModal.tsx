@@ -9,28 +9,26 @@ interface ShareLinkProps {
   roomId: number;
 }
 
-const ShareLinkModal = ({ setModalOpen, roomId }: ShareLinkProps) => {
+const ShareLinkModal = ({ roomId }: ShareLinkProps) => {
   const navigation = useNavigate();
   const [code, setCode] = useState('');
   const [toast, setToast] = useState(false);
 
-  useEffect(() => {
-    const fetchShareCode = async () => {
-      try {
-        const res = await getShareCode(roomId);
-        const shareCode = res.data.data.shareCode;
-        setCode(`http://localhost:5173/user/roomlist/invite/${roomId}/${shareCode}`);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    fetchShareCode();
-  }, []);
+  const fetchShareCode = async () => {
+    try {
+      const res = await getShareCode(roomId);
+      const shareCode = res.data.data.shareCode;
+      setCode(`http://localhost:5173/user/roomlist/invite/${roomId}/${shareCode}`);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const handleCopy = async (code: string) => {
     try {
-      await navigator.clipboard.writeText(code);
+      await fetchShareCode();
+      console.log(code);
+      navigator.clipboard.writeText(code);
       setToast(true);
     } catch (e) {
       alert('failed');

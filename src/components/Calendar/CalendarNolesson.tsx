@@ -33,6 +33,7 @@ const CalendarNolesson = ({ isShareLink }: Props) => {
       fetchShareCode();
 
       try {
+        console.log(code);
         await navigator.clipboard.writeText(code);
         setToast(true);
       } catch (e) {

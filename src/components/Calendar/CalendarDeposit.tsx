@@ -15,8 +15,6 @@ const CalendarDeposit = ({ roomname, nextDeopsit, isPermission }: DepositProps) 
     if (nextDeopsit && isPermission) nav('payment');
   };
 
-  console.log(nextDeopsit);
-
   return (
     <div
       className={`flex p-4 gap-3 bg-primary_100 items-center rounded-xl ${nextDeopsit && !isPermission ? 'bg-gray-300 opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}

@@ -3,7 +3,7 @@ import { GoArrowLeft } from 'react-icons/go';
 import { useMemo, useState } from 'react';
 import { FiTrash2 } from 'react-icons/fi';
 import Modal from './Modal/Modal';
-import RoomDelteModal from './Modal/RoomDeleteModal';
+import RoomDeleteModal from './Modal/RoomDeleteModal';
 
 // 뒤로 가기 없는 페이지들
 const ROUTE_TITLES: { [key: string]: string } = {
@@ -14,9 +14,6 @@ const ROUTE_TITLES: { [key: string]: string } = {
 
 // 뒤로 가기 존재
 const HEADER_CONFIG = [
-  { path: '/materials', title: '강의 자료함' },
-  { path: '/homework', title: '숙제' },
-  { path: '/diary', title: '상담일지' },
   { path: '/mypage/terms', title: '이용약관' },
   { path: '/createroom', title: '과외방 개설하기' },
   { path: '/edit', title: '과외방 정보 수정' },
@@ -30,17 +27,68 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation().pathname;
   const [modalOpen, setModalOpen] = useState(false);
+  const { roomId, homeworkId, materialId, counselingId } = useParams();
 
   const { title, left, hasBorder } = useMemo(() => {
     // 뒤로 가기 없음
     if (ROUTE_TITLES[location]) {
-      return { title: ROUTE_TITLES[location], left: false, hasBorder: false };
+      return { title: ROUTE_TITLES[location], left: '', hasBorder: false };
     }
 
     // 뒤로 가기 있음
     for (const { path, title, startsWith } of HEADER_CONFIG) {
       if (startsWith ? location.startsWith(path) : location.includes(path)) {
-        return { title, left: true, hasBorder: true };
+        // 과외방 상세 페이지일 때
+        if (location.includes('/user/')) {
+          if (location.endsWith(`/${roomId}`)) {
+            return { title: '과외방 상세', left: '/user/roomlist', hasBorder: false };
+          }
+        }
+
+        // 숙제 관련 경로
+        if (location.includes('/homework')) {
+          if (location.endsWith('/edit')) {
+            return { title: '숙제 정보 수정', left: true, hasBorder: false };
+          }
+          if (location.endsWith('/create')) {
+            return { title: '숙제 업로드', left: true, hasBorder: false };
+          }
+          if (homeworkId) {
+            return { title: '숙제 상세', left: true, hasBorder: false };
+          }
+          return { title: '숙제', left: `/user/${roomId}`, hasBorder: false };
+        }
+
+        // 강의 자료 관련 경로
+        if (location.includes('/materials')) {
+          if (location.endsWith('/edit')) {
+            return { title: '강의 자료 수정', left: true, hasBorder: false };
+          }
+          if (location.endsWith('/create')) {
+            return { title: '강의 자료 업로드', left: true, hasBorder: false };
+          }
+          if (materialId) {
+            return { title: '강의 자료 상세', left: true, hasBorder: false };
+          }
+          return { title: '강의 자료함', left: `/user/${roomId}`, hasBorder: false };
+        }
+
+        // 상담 일지 관련 경로
+        if (location.includes('/diary')) {
+          if (location.endsWith('/edit')) {
+            return { title: '상담 일지 수정', left: true, hasBorder: false };
+          }
+          if (location.endsWith('/create')) {
+            return { title: '상담 일지 업로드', left: true, hasBorder: false };
+          }
+
+          if (counselingId) {
+            return { title: '상담 일지 상세', left: true, hasBorder: false };
+          }
+          return { title: '상담 일지', left: `/user/${roomId}`, hasBorder: false };
+        }
+
+        return { title, left: true, hasBorder: false };
       }
     }
 
@@ -52,29 +100,50 @@ const Header = () => {
     return { title: '', left: false, hasBorder: false };
   }, [location]);
 
+  const { showBin, what } = useMemo(() => {
+    switch (title) {
+      case '과외방 정보 수정':
+        return { showBin: true, what: '해당 과외방을' };
+      case '강의 자료 상세':
+        return { showBin: true, what: '해당 자료를' };
+      case '숙제 상세':
+        return { showBin: true, what: '해당 숙제를' };
+      case '상담 일지 상세':
+        return { showBin: true, what: '해당 일지를' };
+      case '입금일 정보 수정':
+        return { showBin: true, what: '입금일 정보를' };
+      default:
+        return { showBin: false, what: '' };
+    }
+  }, [title]);
+
   return (
     <div className={`flex items-center py-2 px-1.5 ${hasBorder ? 'border-0' : 'border-b-2'} border-b-gray-100`}>
       <div
         className={`flex w-11 h-11 justify-center items-center ${left ? 'cursor-pointer' : ''} `}
         onClick={() => {
-          left ? navigate(-1) : '';
+          if (left) {
+            if (typeof left === 'string') {
+              navigate(left);
+            } else {
+              navigate(-1);
+            }
+          }
         }}
       >
         {left && <GoArrowLeft size={24} />}
       </div>
       <div className="flex-1 text-center font-semibold text-lg">{title}</div>
       <div className="flex w-11 h-11 items-center justify-center" onClick={() => {}}>
-        {title === '과외방 정보 수정' ? (
+        {showBin && (
           <button onClick={() => setModalOpen(true)}>
             <FiTrash2 size={22} />
           </button>
-        ) : (
-          ''
         )}
       </div>
       {modalOpen && (
         <Modal onClose={() => setModalOpen(false)}>
-          <RoomDelteModal setModalOpen={setModalOpen} />
+          <RoomDeleteModal setModalOpen={setModalOpen} what={what} />
         </Modal>
       )}
     </div>
