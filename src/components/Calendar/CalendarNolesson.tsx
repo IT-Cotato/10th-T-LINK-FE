@@ -14,27 +14,16 @@ type Props = {
 const CalendarNolesson = ({ isShareLink }: Props) => {
   const navigation = useNavigate();
   const { roomId } = useParams();
-
-  const [code, setCode] = useState('');
   const [toast, setToast] = useState(false);
-
-  const fetchShareCode = async () => {
-    try {
-      const res = await getShareCode(Number(roomId));
-      const shareCode = res.data.data.shareCode;
-      setCode(`http://localhost:5173/user/roomlist/invite/${roomId}/${shareCode}`);
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   const handleOnClick = async () => {
     if (isShareLink) {
-      fetchShareCode();
-
       try {
-        console.log(code);
-        await navigator.clipboard.writeText(code);
+        const res = await getShareCode(Number(roomId));
+        const shareCode = res.data.data.shareCode;
+        const link = `http://localhost:5173/user/roomlist/invite/${roomId}/${shareCode}`;
+        console.log(link);
+        await navigator.clipboard.writeText(link);
         setToast(true);
       } catch (e) {
         alert('초대 코드 복사에 실패했습니다.');
