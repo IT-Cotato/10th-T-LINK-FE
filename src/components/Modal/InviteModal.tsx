@@ -13,12 +13,12 @@ const InviteModal = () => {
       try {
         if (shareCode) {
           const res = await getTeacherName(shareCode);
-          //setTeacherName(res?.data?.teacherName);
-          console.log(res);
+          setTeacherName(res.data.data.teacherName);
+          console.log(teacherName);
         }
       } catch (e: any) {
-        if (e.response?.status === 401 || e.response?.status === 404) {
-          console.log('오류:', e.response.data);
+        if (e.response.status === 401 || e.response.status === 404) {
+          console.log('오류:', e.response.status);
         } else {
           console.log(e);
         }
@@ -38,6 +38,8 @@ const InviteModal = () => {
       navigation(`/user/${roomId}`);
     } catch (e: any) {
       if (e.response?.status === 401 || e.response?.status === 404) {
+        alert('입장할 수 없습니다.');
+        navigation(`/user/roomlist`);
         console.log('오류:', e.response.data);
       } else {
         console.log(e);
