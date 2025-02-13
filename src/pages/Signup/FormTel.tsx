@@ -27,7 +27,6 @@ const FormTel = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput({ ...userInput, [e.target.id]: e.target.value });
   };
-  console.log(userInput);
 
   const handleStart = async () => {
     try {

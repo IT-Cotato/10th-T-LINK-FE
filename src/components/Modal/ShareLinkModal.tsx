@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getShareCode } from '../../api/roomList.api';
 import Toast from '../Toast';
@@ -9,28 +9,18 @@ interface ShareLinkProps {
   roomId: number;
 }
 
-const ShareLinkModal = ({ setModalOpen, roomId }: ShareLinkProps) => {
+const ShareLinkModal = ({ roomId }: ShareLinkProps) => {
   const navigation = useNavigate();
-  const [code, setCode] = useState('');
   const [toast, setToast] = useState(false);
 
-  useEffect(() => {
-    const fetchShareCode = async () => {
-      try {
-        const res = await getShareCode(roomId);
-        const shareCode = res.data.data.shareCode;
-        setCode(`http://localhost:5173/user/roomlist/invite/${roomId}/${shareCode}`);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    fetchShareCode();
-  }, []);
-
-  const handleCopy = async (code: string) => {
+  const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(code);
+      const res = await getShareCode(roomId);
+      const shareCode = res.data.data.shareCode;
+      const link = `http://localhost:5173/user/roomlist/invite/${roomId}/${shareCode}`;
+      console.log(link);
+
+      navigator.clipboard.writeText(link);
       setToast(true);
     } catch (e) {
       alert('failed');
@@ -44,7 +34,7 @@ const ShareLinkModal = ({ setModalOpen, roomId }: ShareLinkProps) => {
           <p className="font-semibold text-lg leading-8">과외방 링크</p>
           <p className="font-normal text-sm leading-[22px] text-gray-600">학생에게 참여 링크를 공유해주세요.</p>
         </div>
-        <button className="flex flex-col items-center gap-1" onClick={() => handleCopy(code)}>
+        <button className="flex flex-col items-center gap-1" onClick={() => handleCopy()}>
           <div className="bg-gray-50 rounded-full p-2 ">
             <img src={link} className="w-8 h-8" />
           </div>

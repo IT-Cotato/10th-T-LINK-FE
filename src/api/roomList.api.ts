@@ -38,7 +38,7 @@ export const patchRoomName = async (roomId: number, roomName: RoomName) => {
 };
 
 // 과외방 삭제
-export const deleteRoom = async (roomId: number) => {
+export const deleteRoom = async (roomId: string) => {
   const res = await instance.delete(`/api/v1/rooms/${roomId}`);
   return res;
 };

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 const InviteModal = () => {
   const navigation = useNavigate();
-  const { shareCode } = useParams();
+  const { roomId, shareCode } = useParams();
   const roleInfo = localStorage.getItem('roleInfo');
   const [teacherName, setTeacherName] = useState('');
 
@@ -35,7 +35,7 @@ const InviteModal = () => {
     try {
       const res = await postShareCode(shareCode);
       console.log(res);
-      navigation('/user/roomlist');
+      navigation(`/user/${roomId}`);
     } catch (e: any) {
       if (e.response?.status === 401 || e.response?.status === 404) {
         console.log('오류:', e.response.data);

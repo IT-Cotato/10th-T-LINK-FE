@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { patchRoomName } from '../../api/roomList.api'; // getCurrentRoomInfo 제거
 import { RoomName } from '../../models/room.model';
 
