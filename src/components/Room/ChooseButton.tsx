@@ -1,7 +1,7 @@
 import Happy from '../../assets/images/Counseling/happy.svg?react';
 import HappyActive from '../../assets/images/Counseling/happy copy.svg?react';
-import Sad from '../../assets/images/Counseling/sad.svg?react';
-import SadActive from '../../assets/images/Counseling/sad copy.svg?react';
+import Sad from '../../assets/images/Counseling/Sad.svg?react';
+import SadActive from '../../assets/images/Counseling/Sad copy.svg?react';
 import Rofl from '../../assets/images/Counseling/Rofl.svg?react';
 import RoflActive from '../../assets/images/Counseling/Rofl copy.svg?react';
 import Check from '../../assets/images/Counseling/Check_ring.svg?react';
