@@ -7,6 +7,6 @@ export interface UserInfo {
 
 export interface UserCode {
   provider: 'KAKAO';
-  redirectUrl: 'http://localhost:5173/api/auth/kakao/callback';
+  redirectUrl: string;
   code: string;
 }
