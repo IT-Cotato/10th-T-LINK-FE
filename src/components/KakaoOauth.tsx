@@ -9,7 +9,7 @@ const KakaoOauth = () => {
   const navigate = useNavigate();
   const [isProcessed, setIsProcessed] = useState(false);
   const [code, setCode] = useState<UserCode | null>(null);
-  const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
+  const REDIRECT_URI = process.env.VITE_KAKAO_REDIRECT_URI || import.meta.env.VITE_KAKAO_REDIRECT_URI;
 
   useEffect(() => {
     const authCode = new URL(window.location.href).searchParams.get('code');
