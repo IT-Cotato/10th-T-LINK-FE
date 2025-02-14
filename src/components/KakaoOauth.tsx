@@ -9,13 +9,14 @@ const KakaoOauth = () => {
   const navigate = useNavigate();
   const [isProcessed, setIsProcessed] = useState(false);
   const [code, setCode] = useState<UserCode | null>(null);
+  const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
 
   useEffect(() => {
     const authCode = new URL(window.location.href).searchParams.get('code');
     if (authCode) {
       setCode({
         provider: 'KAKAO',
-        redirectUrl: 'http://localhost:5173/api/auth/kakao/callback',
+        redirectUrl: REDIRECT_URI,
         code: authCode,
       });
     } else {
