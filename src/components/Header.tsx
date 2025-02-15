@@ -24,6 +24,7 @@ const HEADER_CONFIG = [
 const SIGNUP_PATHS = ['/signup', '/formbasic', '/formtel'];
 
 const Header = () => {
+  const roleInfo = localStorage.getItem('roleInfo');
   const navigate = useNavigate();
   const location = useLocation().pathname;
   const [modalOpen, setModalOpen] = useState(false);
@@ -135,7 +136,7 @@ const Header = () => {
       </div>
       <div className="flex-1 text-center font-semibold text-lg">{title}</div>
       <div className="flex w-11 h-11 items-center justify-center" onClick={() => {}}>
-        {showBin && (
+        {showBin && roleInfo === 'TEACHER' && (
           <button onClick={() => setModalOpen(true)}>
             <FiTrash2 size={22} />
           </button>
