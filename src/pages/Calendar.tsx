@@ -14,7 +14,7 @@ const Calendar = () => {
     month: date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1,
     day: date.getDate(),
     roomname: false,
-    subjectAndRoom: false,
+    subjectAndRooms: false,
   });
   const [roleInfo, setRoleInfo] = useState('');
 
@@ -29,6 +29,7 @@ const Calendar = () => {
         const res = await getCalendar();
         const calInfo = res.data.data.roomInfo;
         setCalData(calInfo);
+        console.log(calInfo);
       } catch (e) {
         console.log(e);
       }
@@ -37,7 +38,7 @@ const Calendar = () => {
   }, []);
 
   useEffect(() => {
-    setClickDate({ ...clickDate, roomname: hasDeposit(date, calData), subjectAndRoom: hasLesson(date, calData) });
+    setClickDate({ ...clickDate, roomname: hasDeposit(date, calData), subjectAndRooms: hasLesson(date, calData) });
   }, [calData]);
 
   const handleDayClick = (day: Date | null) => {
@@ -48,7 +49,7 @@ const Calendar = () => {
       month: day.getMonth() + 1 < 10 ? '0' + (day.getMonth() + 1) : day.getMonth() + 1,
       day: day.getDate() < 10 ? '0' + day.getDate() : day.getDate(),
       roomname: hasDeposit(day, calData),
-      subjectAndRoom: hasLesson(day, calData),
+      subjectAndRooms: hasLesson(day, calData),
     });
   };
 

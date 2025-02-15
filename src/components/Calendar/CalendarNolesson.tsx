@@ -21,7 +21,7 @@ const CalendarNolesson = ({ isShareLink }: Props) => {
       try {
         const res = await getShareCode(Number(roomId));
         const shareCode = res.data.data.shareCode;
-        const link = `http://localhost:5173/user/roomlist/invite/${roomId}/${shareCode}`;
+        const link = `https://t-link.site/user/roomlist/invite/${roomId}/${shareCode}`;
         console.log(link);
         await navigator.clipboard.writeText(link);
         setToast(true);

@@ -16,7 +16,7 @@ const DatePicker = ({ setValue, onClose }: DatePickerProps) => {
     month: date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1,
     day: date.getDate(),
     roomname: false,
-    subjectAndRoom: false,
+    subjectAndRooms: false,
   });
 
   const handleDayClick = (day: Date | null) => {
@@ -27,7 +27,7 @@ const DatePicker = ({ setValue, onClose }: DatePickerProps) => {
       month: day.getMonth() + 1 < 10 ? '0' + (day.getMonth() + 1) : day.getMonth() + 1,
       day: day.getDate() < 10 ? '0' + day.getDate() : day.getDate(),
       roomname: false,
-      subjectAndRoom: false,
+      subjectAndRooms: false,
     });
   };
 

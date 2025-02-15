@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { patchRoomName } from '../../api/roomList.api'; // getCurrentRoomInfo 제거
 import { RoomName } from '../../models/room.model';
+import { IoClose } from 'react-icons/io5';
 
 type ModalProps = {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -34,21 +35,28 @@ const StudentEditModal = ({ setModalOpen, setWillUpdate, name, id }: ModalProps)
 
   return (
     <div
-      className="flex flex-col py-5 w-1/3 min-w-[300px] h-3/5 bg-primary_100 rounded-[16px]"
+      className="flex w-[320px] flex-col p-4 gap-6 bg-white rounded-[16px]"
       onClick={(e) => e.stopPropagation()} // 닫힘 방지
     >
-      <div className="flex flex-1 flex-col justify-center items-center">
-        {/* roomName 상태값을 input value로 설정 */}
-        <input value={roomName} onChange={handleChange} className="border border-gray-300 rounded-md p-2 w-4/5" />
+      <div className="flex items-center justify-between">
+        <div className="w-4" />
+        <h1 className="font-semibold text-lg leading-8">과외방 이름 수정하기</h1>
+        <IoClose size={20} onClick={() => setModalOpen(false)} />
       </div>
-      <div className="flex justify-center gap-4 w-full mt-4">
-        {/* 취소 버튼 */}
-        <button onClick={() => setModalOpen(false)} className="bg-gray-300 rounded-md px-4 py-2">
-          취소
+
+      <div className="flex flex-1 flex-col justify-center w-full gap-1.5">
+        {/* roomName 상태값을 input value로 설정 */}
+        <h1 className="font-medium text-sm leading-[26px]">과외방 이름</h1>
+        <input value={roomName} onChange={handleChange} className="border border-gray-300 rounded-md py-2 px-3" />
+      </div>
+      <div className="flex justify-center gap-4 w-full font-semibold text-base">
+        {/* 수정하기 버튼 */}
+        <button onClick={handleUpdate} className="w-full bg-primary_700 text-white rounded-[4px] py-3.5">
+          수정하기
         </button>
-        {/* 저장 버튼 */}
-        <button onClick={handleUpdate} className="bg-blue-500 text-white rounded-md px-4 py-2">
-          저장
+        {/* 취소 버튼 */}
+        <button onClick={() => setModalOpen(false)} className="w-full border border-gray-500 rounded-[4px] py-3.5">
+          취소
         </button>
       </div>
     </div>

@@ -4,8 +4,8 @@ export interface Clicked {
   date: Date | null;
   month: string | number;
   day: string | number;
-  roomname: string | false;
-  subjectAndRoom: string | false;
+  roomname: string[] | false;
+  subjectAndRooms: string[] | false;
 }
 
 export interface Cal {

@@ -8,16 +8,19 @@ export const hasLesson = (day: Date | null, calData: Cal[]) => {
   const dayOfWeek = LessonDaysList[day.getDay()].lessonDay;
 
   // 클릭한 날짜의 요일이 lessonDays에 있는 지 확인
-  const subjectAndRoom = calData.find((room) => room.lessonDays.some((lesson) => lesson.lessonDay === dayOfWeek));
-  return subjectAndRoom ? `[${subjectAndRoom.subject}] ${subjectAndRoom.roomName}` : false;
+  const subjectAndRooms = calData
+    .filter((room) => room.lessonDays.some((lesson) => lesson.lessonDay === dayOfWeek))
+    .map((room) => `[${room.subject}] ${room.roomName}`);
+
+  return subjectAndRooms.length > 0 ? subjectAndRooms : false;
 };
 
 export const hasDeposit = (day: Date | null, calData: Cal[]) => {
   if (!day) return false;
 
   // 입금 날짜랑 클릭한 날짜가 같은 지 확인
-  const room = calData.find((room) => room.depositAt === day.getDate());
-  return room ? room.roomName : false;
+  const rooms = calData.filter((room) => room.depositAt === day.getDate()).map((room) => room.roomName);
+  return rooms.length > 0 ? rooms : false;
 };
 
 // 한 주씩 weeks에 넣기
