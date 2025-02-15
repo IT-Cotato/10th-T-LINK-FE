@@ -23,7 +23,7 @@ const Layout = () => {
         <Header />
       </div>
       <main
-        className="flex-grow overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gray-300"
+        className="flex-grow overflow-y-auto scrollbar-hide"
         style={{
           marginTop: `${heights.header}px`,
           marginBottom: `${heights.navbar}px`,
