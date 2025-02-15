@@ -53,7 +53,9 @@ const MaterialDetail = () => {
       <div className="bg-gray-100 h-[100px] rounded-lg mt-2 mb-6 mx-4">
         <ul>
           {lectureFiles.lectureFiles.map((file) => (
-            <li onClick={() => downloadFile(file.fileUrl)}>{file.originalName}</li>
+            <li onClick={() => downloadFile(file.fileUrl)} key={file.lectureFileId}>
+              {file.originalName}
+            </li>
           ))}
         </ul>
       </div>

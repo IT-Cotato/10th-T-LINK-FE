@@ -55,7 +55,7 @@ const EditHomework = () => {
     }
   };
   const isAble = userRole == 'TEACHER' ? true : false;
-  const text = userRole == 'TEACHER' ? '수정 완료' : '숙제 업로드 하기';
+  const text = userRole == 'TEACHER' ? '수정 완료' : '숙제 제출하기';
 
   // 기존 파일 삭제
   const handleFileDelete = (file: HomeworkFile, index: number) => {
@@ -65,18 +65,24 @@ const EditHomework = () => {
   };
 
   return (
-    <div className="px-4 flex flex-col h-full">
-      {/* 날짜 고르기 */}
-      <PickDate deadline={deadline} setDeadline={setDeadline} isAble={isAble} text="숙제 마감 날짜를 선택하세요." />
+    <div className="px-4 flex flex-col h-full pt-4 gap-6">
+      <Input
+        setDesc={setDescription}
+        desc={description}
+        name="숙제명"
+        placeholder="숙제명을 입력해주세요"
+        isAble={isAble}
+      />
+      <div className="flex flex-col gap-[6px]">
+        {/* 날짜 고르기 */}
+        <div className="text-body4 leading-[26px] font-medium flex gap-1">
+          <span className="text-gray-900">숙제 마감 날짜</span>
+          <span className="text-primary_700">(필수)</span>
+        </div>
+        <PickDate deadline={deadline} setDeadline={setDeadline} isAble={isAble} text="숙제 마감 날짜를 선택하세요." />
+      </div>
       {/* 파일첨부 */}
       <div className="py-4 gap-6 flex flex-col">
-        <Input
-          setDesc={setDescription}
-          desc={description}
-          name="숙제명"
-          placeholder="숙제명을 입력해주세요"
-          isAble={isAble}
-        />
         {/* 파일 리스트 정하는 거: 생성에서는 전체였고 수정에서는 받아와서 이름을 비교해야하나? 이건 그냥 File[]임*/}
         <AddFile setFileList={setAddList} fileList={addList} />
       </div>
@@ -84,7 +90,7 @@ const EditHomework = () => {
         <p>기존 파일</p>
         <div>
           {fileList.map((file, index) => (
-            <div className="flex gap-2">
+            <div className="flex gap-2" key={file.homeworkFileId}>
               <li onClick={() => downloadFile(file.fileUrl)}>{file.originalName}</li>
               <button className="text-red-500" onClick={() => handleFileDelete(file, index)}>
                 삭제
