@@ -5,11 +5,10 @@ import { HomeworkFile, HomeworkFileBoxDetail } from '../../models/homework.model
 import Edit from '../../assets/images/RoomDetail/Edit.svg?react';
 import { downloadFile } from '../../utils/DownloadFiles';
 import Loading from '../Loading';
+import Button from '../../components/Button';
 
 const HomeworkDetail = () => {
   const { roomId, homeworkId } = useParams<{ roomId: string; homeworkId: string }>();
-  const [teacherFiles, setTeacherFiles] = useState<HomeworkFile[]>([]);
-  const [studentFiles, setStudentFiles] = useState<HomeworkFile[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [detail, setDetail] = useState<HomeworkFileBoxDetail | null>(null);
   const nav = useNavigate();
@@ -40,18 +39,24 @@ const HomeworkDetail = () => {
     return <Loading text="데이터 오류!" />;
   }
 
+  const text = (detail.studentFiles?.length ?? 0) > 0 ? '숙제 수정하기' : '숙제 제출하기';
+
   return (
     <div className="flex flex-col">
       <div className="py-4 px-4">
         <div className="flex items-center justify-between">
           <p className="text-heading6 font-bold leading-10 text-gray-900">{detail.homeworkName}</p>
-          <Edit onClick={() => nav(`edit`)} />
+          {userRole == 'TEACHER' ? <Edit onClick={() => nav(`edit`)} /> : ''}
         </div>
         <p className="text-body4 font-normal leading-7 tracking-[-0.048px] text-gray-600">마감날짜 {detail.deadline}</p>
       </div>
       <div className="bg-gray-100 h-[100px] rounded-lg mt-2 mb-6 mx-4">
         <ul>
-          {detail.teacherFiles?.map((file) => <li onClick={() => downloadFile(file.fileUrl)}>{file.originalName}</li>)}
+          {detail.teacherFiles?.map((file) => (
+            <li onClick={() => downloadFile(file.fileUrl)} key={file.homeworkFileId}>
+              {file.originalName}
+            </li>
+          ))}
         </ul>
       </div>
       <div className="py-4 px-4 border-t-2 border-gray-100">
@@ -60,9 +65,14 @@ const HomeworkDetail = () => {
       </div>
       <div className="bg-gray-100 h-[100px] rounded-lg mt-2 mb-6 mx-4">
         <ul>
-          {detail.studentFiles?.map((file) => <li onClick={() => downloadFile(file.fileUrl)}>{file.originalName}</li>)}
+          {detail.studentFiles?.map((file) => (
+            <li onClick={() => downloadFile(file.fileUrl)} key={file.homeworkFileId}>
+              {file.originalName}
+            </li>
+          ))}
         </ul>
       </div>
+      {userRole !== 'TEACHER' ? <Button text={text} onClick={() => nav('edit')} /> : ''}
     </div>
   );
 };

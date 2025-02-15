@@ -23,7 +23,10 @@ const AddFile = ({ setFileList, fileList }: AddFileProps) => {
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
-      const fileArray = Array.from(files);
+      const fileArray = Array.from(files).map((file) => {
+        const newName = file.name.normalize('NFC');
+        return new File([file], newName, { type: file.type });
+      });
       setFileList([...fileList, ...fileArray]);
     }
   };

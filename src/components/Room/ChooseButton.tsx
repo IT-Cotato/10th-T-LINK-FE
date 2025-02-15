@@ -41,13 +41,13 @@ const ChooseButton = ({
   }, []);
 
   const engage = [
-    { icon: <Sad />, active: <SadActive />, value: '하' },
-    { icon: <Happy />, active: <HappyActive />, value: '중' },
-    { icon: <Rofl />, active: <RoflActive />, value: '상' },
+    { icon: <Sad />, active: <SadActive />, value: '하', id: 1 },
+    { icon: <Happy />, active: <HappyActive />, value: '중', id: 2 },
+    { icon: <Rofl />, active: <RoflActive />, value: '상', id: 3 },
   ];
   const homework = [
-    { icon: <No />, active: <NoActive />, value: false },
-    { icon: <Check />, active: <CheckActive />, value: true },
+    { icon: <No />, active: <NoActive />, value: false, id: 4 },
+    { icon: <Check />, active: <CheckActive />, value: true, id: 5 },
   ];
 
   const icons = type == 'engage' ? engage : homework;
@@ -83,6 +83,7 @@ const ChooseButton = ({
           <div
             className={`w-10 h-10 rounded-full p-2 ${selectedValue == icon.value ? 'bg-primary_700' : 'bg-gray-100'}`}
             onClick={() => handleChoose(icon.value)}
+            key={icon.id}
           >
             {selectedValue == icon.value ? icon.active : icon.icon}
           </div>

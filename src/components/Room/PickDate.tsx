@@ -23,7 +23,7 @@ const PickDate = ({ deadline, setDeadline, isAble, text }: PickDateProps) => {
   return (
     <div>
       <div className="flex items-center bg-gray-100 p-2 rounded-lg gap-2" onClick={handleClick}>
-        <Calendar onClick={() => setShowDatePicker(true)} className="cursor-pointer" />
+        <Calendar onClick={handleClick} className="cursor-pointer" />
         <input
           className="text-gray-400 text-body3 leading-7 tracking-[-0.048px] flex-1 bg-transparent pointer-events-none"
           value={deadline}

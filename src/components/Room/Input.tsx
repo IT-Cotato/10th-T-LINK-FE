@@ -15,7 +15,10 @@ const Input = ({ name, placeholder, setDesc, desc, isAble }: InputProps) => {
 
   return (
     <div className="flex flex-col gap-[6px]">
-      <p className="text-gray-900 font-medium text-body4 leading-[26px]">{name}</p>
+      <div className="text-body4 leading-[26px] font-medium flex gap-1">
+        <span className="text-gray-900  ">{name}</span>
+        <span className="text-primary_700">(필수)</span>
+      </div>
       <input
         placeholder={placeholder}
         className="py-2 px-3 border-gray-300 border-[1px] focus:outline-none focus:outline-2 focus:outline-gray-500 rounded-md text-body3"
