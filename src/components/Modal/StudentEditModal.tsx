@@ -49,7 +49,7 @@ const StudentEditModal = ({ setModalOpen, setWillUpdate, name, id }: ModalProps)
         <h1 className="font-medium text-sm leading-[26px]">과외방 이름</h1>
         <input value={roomName} onChange={handleChange} className="border border-gray-300 rounded-md py-2 px-3" />
       </div>
-      <div className="flex justify-center gap-4 w-full mt-4">
+      <div className="flex justify-center gap-4 w-full font-semibold text-base">
         {/* 수정하기 버튼 */}
         <button onClick={handleUpdate} className="w-full bg-primary_700 text-white rounded-[4px] py-3.5">
           수정하기
