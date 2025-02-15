@@ -58,8 +58,14 @@ const CreateCounseling = () => {
         <p className="text-body3 font-normal leading-7 tracking-[-0.048px] text-gray-600">언제든지 수정할 수 있어요!</p>
       </div>
       <div className="flex flex-col gap-6 pt-4">
-        {/* 날짜 고르기 */}
-        <PickDate deadline={deadline} setDeadline={setDeadline} isAble={true} text="업로드 날짜를 선택해주세요." />
+        <div className="flex flex-col gap-[6px]">
+          <div className="text-body4 leading-[26px] font-medium flex gap-1">
+            <span className="text-gray-900">상담 날짜</span>
+            <span className="text-primary_700">(필수)</span>
+          </div>
+          {/* 날짜 고르기 */}
+          <PickDate deadline={deadline} setDeadline={setDeadline} isAble={true} text="날짜를 선택해주세요." />
+        </div>
         <Input setDesc={setTitle} desc={title} name="제목" placeholder="상담일지명을 입력해주세요" isAble={true} />
         <ChooseButton
           text="학생 참여도"
