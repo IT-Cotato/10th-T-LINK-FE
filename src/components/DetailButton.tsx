@@ -54,24 +54,26 @@ const DetailButton = ({ type, isPermission }: DetailButtonProps) => {
   };
 
   return (
-    <div
-      className={clsx(
-        'py-4 px-3 rounded-[12px] flex-col items-start flex gap-5',
-        isPermission ? `${bg} cursor-pointer` : 'bg-gray-300 opacity-50 cursor-not-allowed',
-      )}
-      onClick={handleClick}
-    >
-      <div className="w-[60px] h-[60px] bg-white rounded-full p-3">{icon}</div>
-      <div className="m-0">
-        <h3 className="text-[18px] font-semibold leading-8 tracking-[-0.18px]">{title}</h3>
-        <p className="text-[13px] font-normal text-gray-600 leading-[22px]">{description}</p>
+    <>
+      <div
+        className={clsx(
+          'py-4 px-3 rounded-[12px] flex-col items-start flex gap-5',
+          isPermission ? `${bg} cursor-pointer` : 'bg-gray-300 opacity-50 cursor-not-allowed',
+        )}
+        onClick={handleClick}
+      >
+        <div className="w-[60px] h-[60px] bg-white rounded-full p-3">{icon}</div>
+        <div className="m-0">
+          <h3 className="text-[18px] font-semibold leading-8 tracking-[-0.18px]">{title}</h3>
+          <p className="text-[13px] font-normal text-gray-600 leading-[22px]">{description}</p>
+        </div>
       </div>
       {modalOpen && (
         <Modal onClose={() => setModalOpen(false)}>
           <AccessFail setModalOpen={setModalOpen} />
         </Modal>
       )}
-    </div>
+    </>
   );
 };
 
