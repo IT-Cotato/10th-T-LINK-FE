@@ -77,7 +77,11 @@ const RoomDetail = () => {
       </div>
       {/* 입금 & 링크 */}
       <div className="p-4 flex flex-col gap-2">
-        <CalendarDeposit nextDeopsit={roomDetail.depositAt} isPermission={roomDetail.permission?.deposit} />
+        <CalendarDeposit
+          roomname={[roomDetail?.roomName]}
+          nextDeopsit={roomDetail.depositAt}
+          isPermission={roomDetail.permission?.deposit}
+        />
         {userRole == 'TEACHER' ? <CalendarNolesson isShareLink={true} /> : ''}
       </div>
     </div>
