@@ -1,9 +1,10 @@
 import { LessonDaysList } from '../../utils/LessonDaysList';
-import { FaUserLarge } from 'react-icons/fa6';
 import depositdot from '../../assets/images/depositdot.png';
 import { hasLesson, hasDeposit } from '../../utils/CalendarUtils';
 import { Cal, Clicked } from '../../models/calendar.model';
 import { groupDatesByWeek } from '../../utils/CalendarUtils';
+import user_blue from '../../assets/images/user_blue.png';
+import lable from '../../assets/images/lable.png';
 
 type GridProps = {
   date: Date;
@@ -16,6 +17,7 @@ const CalendarGrid = ({ date, data, handleDayClick, clickDate }: GridProps) => {
   const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
   const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
   const weeks = groupDatesByWeek(firstDay, lastDay);
+  const roleInfo = localStorage.getItem('roleInfo');
 
   const isToday = (day: Date | null) => {
     const today = new Date();
@@ -51,7 +53,17 @@ const CalendarGrid = ({ date, data, handleDayClick, clickDate }: GridProps) => {
                   ${isToday(day) ? 'border-2 border-primary_600 rounded-[100px]' : ''}`}
               >
                 {day ? day.getDate() : ''}
-                {hasLesson(day, data) ? <FaUserLarge size={24} color="#3E7AF6" /> : <div className="w-6 h-full" />}
+                {hasLesson(day, data) ? (
+                  <div>
+                    {roleInfo === 'TEACHER' ? (
+                      <img src={user_blue} className="w-7 h-7" />
+                    ) : (
+                      <img src={lable} className="w-7 h-7" />
+                    )}
+                  </div>
+                ) : (
+                  <div className="w-6 h-full" />
+                )}
                 {hasDeposit(day, data) ? (
                   <img
                     src={depositdot}

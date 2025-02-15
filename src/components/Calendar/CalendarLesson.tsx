@@ -1,4 +1,5 @@
 import user_blue from '../../assets/images/user_blue.png';
+import lable from '../../assets/images/lable.png';
 import vector from '../../assets/images/vector_gray.png';
 
 type LessonProps = {
@@ -6,10 +7,11 @@ type LessonProps = {
 };
 
 const CalendarLesson = ({ subjectAndRoom }: LessonProps) => {
+  const roleInfo = localStorage.getItem('roleInfo');
   return (
     <div className="flex p-4 gap-3 bg-gray-50 items-center rounded-xl">
       <div className="p-1.5 rounded-full bg-white">
-        <img src={user_blue} className="w-7 h-7" />
+        {roleInfo === 'TEACHER' ? <img src={user_blue} className="w-7 h-7" /> : <img src={lable} className="w-7 h-7" />}
       </div>
       <div>
         <img src={vector} className="w-1 h-6" />
