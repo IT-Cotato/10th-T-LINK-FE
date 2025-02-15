@@ -17,9 +17,9 @@ const CalendarInfo = ({ clickDate, roleInfo }: CalendarProps) => {
       </div>
       <div className="flex flex-col gap-2">
         {clickDate.roomname && <CalendarDeposit roomname={clickDate.roomname} />}
-        {clickDate.subjectAndRoom && <CalendarLesson subjectAndRoom={clickDate.subjectAndRoom} />}
-        {!clickDate.roomname && !clickDate.subjectAndRoom && roleInfo === 'TEACHER' && <CalendarNolesson />}
-        {!clickDate.roomname && !clickDate.subjectAndRoom && (roleInfo === 'PARENT' || roleInfo === 'STUDENT') && (
+        {clickDate.subjectAndRooms && <CalendarLesson subjectAndRooms={clickDate.subjectAndRooms} />}
+        {!clickDate.roomname && !clickDate.subjectAndRooms && roleInfo === 'TEACHER' && <CalendarNolesson />}
+        {!clickDate.roomname && !clickDate.subjectAndRooms && (roleInfo === 'PARENT' || roleInfo === 'STUDENT') && (
           <CalendarNolessonStudent />
         )}
       </div>
