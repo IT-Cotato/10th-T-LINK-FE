@@ -9,9 +9,10 @@ interface PickDateProps {
   setDeadline: (value: string) => void;
   isAble: boolean;
   text: string;
+  onlyDate?: boolean;
 }
 
-const PickDate = ({ deadline, setDeadline, isAble, text }: PickDateProps) => {
+const PickDate = ({ deadline, setDeadline, isAble, text, onlyDate }: PickDateProps) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const handleClick = () => {
@@ -26,7 +27,7 @@ const PickDate = ({ deadline, setDeadline, isAble, text }: PickDateProps) => {
         <Calendar onClick={handleClick} className="cursor-pointer" />
         <input
           className="text-gray-400 text-body3 leading-7 tracking-[-0.048px] flex-1 bg-transparent pointer-events-none"
-          value={deadline}
+          value={onlyDate ? deadline.slice(8) : deadline}
           placeholder={text}
         ></input>
         <MdKeyboardArrowRight size={24} fill="#6A6966" />

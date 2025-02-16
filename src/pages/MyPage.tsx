@@ -8,7 +8,7 @@ import Modal from '../components/Modal/Modal';
 import LogoutModal, { MODAL_TYPE } from '../components/Modal/LogoutModal';
 import { getUserInfo } from '../api/mypage.api';
 import { formatPhoneNumber } from '../utils/FormatPhoneNumber';
-
+import Edit from '../assets/images/RoomDetail/Edit copy.svg?react';
 interface UserInfo {
   role: string;
   username: string;
@@ -69,9 +69,12 @@ const MyPage = () => {
       <div className="flex flex-col mx-4 mt-4 mb-6 py-6 bg-primary_100 items-center justify-center rounded-[16px]">
         <img src={userInfo?.profileUrl} className="w-[88px] h-[88px] rounded-full" />
         <p className="text-[22px] font-bold leading-9 pt-6">{userInfo.username}</p>
-        <p className="text-caption1 leading-[22px] text-gray-500">
-          {userInfo.statusMessage == '' ? `상태메세지를 입력하세요!` : `${userInfo.statusMessage}`}
-        </p>
+        <div className="flex items-center gap-1">
+          <p className="text-caption1 leading-[22px] text-gray-500">
+            {userInfo.statusMessage == '' ? `상태메세지를 입력하세요!` : `${userInfo.statusMessage}`}
+          </p>
+          <Edit className="w-[16px] h-[16px] pb-[1px]" />
+        </div>
       </div>
       {/* 내 정보 */}
       <div className="flex flex-col border-y-2 border-gray-100 px-4 py-6 gap-4">

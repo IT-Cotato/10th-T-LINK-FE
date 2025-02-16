@@ -9,7 +9,7 @@ import Calendar from '../pages/Calendar';
 import MyPage from '../pages/MyPage';
 import Layout from '../components/Layout';
 import RoomDetail from '../pages/Room/RoomDetail';
-import Payment from '../pages/Payment';
+import Payment from '../pages/Payment/Payment';
 import Statistics from '../pages/Statistics';
 import CreateRoom from '../pages/Room/CreateRoom';
 import KakaoOauth from '../components/KakaoOauth';
@@ -32,6 +32,7 @@ import Invite from '../pages/Invite';
 import EditHomework from '../pages/Homework/EditHomework';
 import EditCounseling from '../pages/Counseling/EditCounseling';
 import EditMaterial from '../pages/Material/EditMaterial';
+import CreatePayment from '../pages/Payment/CreatePayment';
 
 export const router = createBrowserRouter([
   {
@@ -81,7 +82,8 @@ export const router = createBrowserRouter([
           { path: 'diary/create', element: <CreateCounseling /> }, // 상담 일지 업로드
           { path: 'diary/:counselingId', element: <CounselingDetail /> }, // 상담 일지 상세
           { path: 'diary/:counselingId/edit', element: <EditCounseling /> }, // 상담 일지 수정
-          { path: 'payment', element: <Payment /> },
+          { path: 'payment', element: <Payment /> }, // 입금 상세
+          { path: 'payment/create', element: <CreatePayment /> }, // 입금 상세
         ],
       },
       { path: 'createroom', element: <CreateRoom /> },

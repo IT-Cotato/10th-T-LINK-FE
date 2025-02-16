@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 
 interface InputProps {
-  name: string;
+  name?: string;
   placeholder: string;
   setDesc: (value: string) => void;
   desc: string;
@@ -15,10 +15,12 @@ const Input = ({ name, placeholder, setDesc, desc, isAble }: InputProps) => {
 
   return (
     <div className="flex flex-col gap-[6px]">
-      <div className="text-body4 leading-[26px] font-medium flex gap-1">
-        <span className="text-gray-900  ">{name}</span>
-        <span className="text-primary_700">(필수)</span>
-      </div>
+      {name && (
+        <div className="text-body4 leading-[26px] font-medium flex gap-1">
+          <span className="text-gray-900  ">{name}</span>
+          {name !== '입금 금액' && <span className="text-primary_700">(필수)</span>}
+        </div>
+      )}
       <input
         placeholder={placeholder}
         className="py-2 px-3 border-gray-300 border-[1px] focus:outline-none focus:outline-2 focus:outline-gray-500 rounded-md text-body3"
