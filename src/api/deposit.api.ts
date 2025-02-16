@@ -24,3 +24,15 @@ export const putDeposit = async (roomId: string, payload: DepositInfo) => {
     console.log(error);
   }
 };
+
+// 입금일 상세 조회
+export const getDeposit = async (roomId: string) => {
+  try {
+    const response = await instance.get(`/api/v1/rooms/${roomId}/deposit`);
+    if (response.status == 200) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

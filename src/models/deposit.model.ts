@@ -5,10 +5,11 @@ export interface BankInfo {
   bankUrl: string;
 }
 
-// 입금일 생성 및 수정
+// 입금일 생성 및 수정 및 조회
 export interface DepositInfo {
-  bankId: number;
+  bankId?: number;
   accountNumber: string;
   depositAmount: number;
   depositAt: number;
+  bankName?: string;
 }
