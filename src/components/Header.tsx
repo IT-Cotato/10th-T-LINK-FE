@@ -1,9 +1,10 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { GoArrowLeft } from 'react-icons/go';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FiTrash2 } from 'react-icons/fi';
 import Modal from './Modal/Modal';
 import RoomDeleteModal from './Modal/RoomDeleteModal';
+import useDeleteStore from '../store/useDeleteStore';
 
 // 뒤로 가기 없는 페이지들
 const ROUTE_TITLES: { [key: string]: string } = {
@@ -27,8 +28,8 @@ const Header = () => {
   const roleInfo = localStorage.getItem('roleInfo');
   const navigate = useNavigate();
   const location = useLocation().pathname;
-  const [modalOpen, setModalOpen] = useState(false);
   const { roomId, homeworkId, materialId, counselingId } = useParams();
+  const { setModalOpen, what, setWhat } = useDeleteStore();
 
   const { title, left, hasBorder } = useMemo(() => {
     // 뒤로 가기 없음
@@ -101,22 +102,31 @@ const Header = () => {
     return { title: '', left: false, hasBorder: false };
   }, [location]);
 
-  const { showBin, what } = useMemo(() => {
+  useEffect(() => {
     switch (title) {
       case '과외방 정보 수정':
-        return { showBin: true, what: '해당 과외방을' };
+        setWhat('해당 과외방을');
+        break;
       case '강의 자료 상세':
-        return { showBin: true, what: '해당 자료를' };
+        setWhat('해당 자료를');
+        break;
       case '숙제 상세':
-        return { showBin: true, what: '해당 숙제를' };
+        setWhat('해당 숙제를');
+        break;
       case '상담 일지 상세':
-        return { showBin: true, what: '해당 일지를' };
+        setWhat('해당 일지를');
+        break;
       case '입금일 정보 수정':
-        return { showBin: true, what: '입금일 정보를' };
+        setWhat('입금일 정보를');
+        break;
       default:
-        return { showBin: false, what: '' };
+        setWhat('');
     }
-  }, [title]);
+  }, [title, setWhat]);
+
+  const showBin = useMemo(() => {
+    return what !== '';
+  }, [what]);
 
   return (
     <div className={`flex items-center py-2 px-1.5 ${hasBorder ? 'border-0' : 'border-b-2'} border-b-gray-100`}>
@@ -142,11 +152,6 @@ const Header = () => {
           </button>
         )}
       </div>
-      {modalOpen && (
-        <Modal onClose={() => setModalOpen(false)}>
-          <RoomDeleteModal setModalOpen={setModalOpen} what={what} />
-        </Modal>
-      )}
     </div>
   );
 };

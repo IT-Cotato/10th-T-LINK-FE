@@ -6,6 +6,9 @@ import Edit from '../../assets/images/RoomDetail/Edit.svg?react';
 import ChooseButton from '../../components/Room/ChooseButton';
 import TextArea from '../../components/Room/TextArea';
 import Loading from '../Loading';
+import useDeleteStore from '../../store/useDeleteStore';
+import Modal from '../../components/Modal/Modal';
+import RoomDeleteModal from '../../components/Modal/RoomDeleteModal';
 
 const CounselingDetail = () => {
   const nav = useNavigate();
@@ -13,6 +16,7 @@ const CounselingDetail = () => {
   const [counselingDetail, setCounselingDetail] = useState<CounselingLogDetail>();
   const [isLoading, setIsLoading] = useState(true);
   const userRole = localStorage.getItem('roleInfo');
+  const { modalOpen, setModalOpen, what } = useDeleteStore();
 
   useEffect(() => {
     getCounselingDetail();
@@ -76,6 +80,11 @@ const CounselingDetail = () => {
           content={counselingDetail.content}
         />
       </div>
+      {modalOpen && (
+        <Modal onClose={() => setModalOpen(false)}>
+          <RoomDeleteModal setModalOpen={setModalOpen} what={what} />
+        </Modal>
+      )}
     </div>
   );
 };

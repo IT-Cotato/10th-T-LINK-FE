@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useDebugValue, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getLectureFileDeatil } from '../../api/materials.api';
 import { LectureFileBoxDetail } from '../../models/materials.model';
 import Edit from '../../assets/images/RoomDetail/Edit.svg?react';
 import { downloadFile } from '../../utils/DownloadFiles';
 import Loading from '../Loading';
+import Modal from '../../components/Modal/Modal';
+import RoomDeleteModal from '../../components/Modal/RoomDeleteModal';
+import useDeleteStore from '../../store/useDeleteStore';
 
 const MaterialDetail = () => {
   const nav = useNavigate();
@@ -12,6 +15,7 @@ const MaterialDetail = () => {
   const [lectureFiles, setLectureFiles] = useState<LectureFileBoxDetail>();
   const [loading, setLoading] = useState<boolean>(true);
   const userRole = localStorage.getItem('roleInfo');
+  const { modalOpen, setModalOpen, what } = useDeleteStore();
 
   useEffect(() => {
     getMaterialDetail();
@@ -59,6 +63,11 @@ const MaterialDetail = () => {
           ))}
         </ul>
       </div>
+      {modalOpen && (
+        <Modal onClose={() => setModalOpen(false)}>
+          <RoomDeleteModal setModalOpen={setModalOpen} what={what} />
+        </Modal>
+      )}
     </div>
   );
 };
