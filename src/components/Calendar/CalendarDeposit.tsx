@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import money from '../../assets/images/money.png';
 import vector from '../../assets/images/vector.png';
+import { getClosestFutureDate } from '../../utils/getCloseDate';
 
 type DepositProps = {
   roomname: string[];
@@ -12,7 +13,10 @@ const CalendarDeposit = ({ roomname, nextDeopsit, isPermission }: DepositProps) 
   const nav = useNavigate();
 
   const handleClick = () => {
-    if (nextDeopsit && isPermission) nav('payment');
+    if (nextDeopsit == '0') nav('payment/create');
+    // 입금일이 등록되지 않은 경우
+    else if (nextDeopsit && isPermission) nav('payment');
+    // 입금일 등록됐을 경우
   };
 
   return (
@@ -39,7 +43,7 @@ const CalendarDeposit = ({ roomname, nextDeopsit, isPermission }: DepositProps) 
               <div className="text-sm leading-6 tracking-[-0.042px] text-gray-800">{item} 입금일 입니다.</div>
             ) : (
               <div className="text-sm leading-6 tracking-[-0.042px] text-gray-800">
-                다음 입금일은 {nextDeopsit} 입니다.
+                다음 입금일은 {getClosestFutureDate(nextDeopsit)} 입니다.
               </div>
             )}
           </div>

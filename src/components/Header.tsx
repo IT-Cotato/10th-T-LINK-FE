@@ -89,6 +89,17 @@ const Header = () => {
           return { title: '상담 일지', left: `/user/${roomId}`, hasBorder: false };
         }
 
+        // 입금 관련 경로
+        if (location.includes('/payment')) {
+          if (location.endsWith('/create')) {
+            return { title: '입금일 생성하기', left: true, hasBorder: false };
+          }
+          if (location.endsWith('/edit')) {
+            return { title: '입금일 정보 수정', left: true, hasBorder: false };
+          }
+          return { title: '입금일', left: `/user/${roomId}`, hasBorder: false };
+        }
+
         return { title, left: true, hasBorder: false };
       }
     }
