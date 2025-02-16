@@ -55,8 +55,8 @@ export const getShareCode = async (roomId: number) => {
   return res;
 };
 
-// 공유 코드로 선생님 이름 조회
-export const getTeacherName = async (shareCode: string) => {
+// 공유 코드로 방 정보 조회
+export const getRoomInfo = async (shareCode: string) => {
   const res = await instance.get(`/api/v1/rooms/code/${shareCode}`);
   return res;
 };

@@ -14,7 +14,6 @@ const EditRoom = () => {
   useEffect(() => {
     const fetchCurrentRoom = async () => {
       const res = await getCurrentRoomInfo(paramsId);
-      console.log(res.data.data);
       setCurrentRoom(res.data.data);
     };
     fetchCurrentRoom();
@@ -23,7 +22,6 @@ const EditRoom = () => {
   const handleUpdate = async (updatedRoom: Room) => {
     try {
       const res = await patchRoomInfo(paramsId, updatedRoom);
-      console.log(res);
       navigate('/user/roomlist');
     } catch (e) {
       console.log(e);
