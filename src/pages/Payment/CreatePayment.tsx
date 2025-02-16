@@ -25,7 +25,7 @@ const CreatePayment = () => {
       depositAt: Number(depositDay.slice(8)),
     };
     putDeposit(roomId!, payload).then((data) => {
-      nav(`user/${roomId}/payment`, { state: { toast: true } });
+      nav(`/user/${roomId}/payment`, { state: { toast: true } });
     });
   };
 
