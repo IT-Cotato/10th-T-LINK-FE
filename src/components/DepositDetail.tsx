@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import Edit from '../assets/images/RoomDetail/Edit copy.svg?react';
 import { DepositInfo } from '../models/deposit.model';
 import { getClosestFutureDate } from '../utils/getCloseDate';
@@ -7,11 +8,17 @@ interface DepositDetailProps {
 }
 
 const DepositDetail = ({ depositInfo }: DepositDetailProps) => {
+  const nav = useNavigate();
+
   const depositDate = getClosestFutureDate(depositInfo.depositAt.toString()).split('-'); // 19일 -> 2025-05-19로 변환 -> [2025, 05, 19]
   const month = depositDate[1].startsWith('0') ? depositDate[1].slice(1) : depositDate[1]; // 만약 0으로 시작한다면(05) 0 제거
   const day = depositDate[2].startsWith('0') ? depositDate[2].slice(1) : depositDate[2]; // 만약 0으로 시작한다면(05) 0 제거
 
   const amount = depositInfo.depositAmount.toLocaleString('ko-KR');
+
+  const goToEdit = () => {
+    nav('create?isEdit=true');
+  };
 
   return (
     <div className="py-[17px] px-4 rounded-xl border-2 border-solid border-gray-100 gap-[10px]">
@@ -20,7 +27,7 @@ const DepositDetail = ({ depositInfo }: DepositDetailProps) => {
         <div className="flex gap-1">
           <p className="px-1 bg-primary_100 text-primary_700 rounded-[4px]">입금</p>
           <p className="text-gray-900 flex-1">{depositInfo.bankName}</p>
-          <Edit />
+          <Edit onClick={goToEdit} />
         </div>
         <p className="text-gray-500 underline">{depositInfo.accountNumber}</p>
       </div>

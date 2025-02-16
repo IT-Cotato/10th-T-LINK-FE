@@ -36,3 +36,15 @@ export const getDeposit = async (roomId: string) => {
     console.log(error);
   }
 };
+
+// 입금일 수정을 위한 상세조회
+export const getDepositDetail = async (roomId: string) => {
+  try {
+    const response = await instance.get(`/api/v1/rooms/${roomId}/deposit/modify`);
+    if (response.status == 200) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};

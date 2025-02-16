@@ -11,6 +11,7 @@ import { CaculateDday } from '../../utils/CaculateDday';
 const Payment = () => {
   const location = useLocation();
   const [toast, setToast] = useState(location.state?.toast || false);
+  const [isEdit, setIsEdit] = useState(location.state?.isEdit || false);
   const { roomId } = useParams<{ roomId: string }>();
   const [depositInfo, setDepositInfo] = useState<DepositInfo>();
 
@@ -48,7 +49,9 @@ const Payment = () => {
       <div className="py-4">
         <DepositDetail depositInfo={depositInfo} />
       </div>
-      {toast && <Toast setToast={setToast} title="입금일 등록이 완료되었습니다." />}
+      {toast && (
+        <Toast setToast={setToast} title={isEdit ? '입금일 수정이 완료되었습니다.' : '입금일 등록이 완료되었습니다.'} />
+      )}
     </div>
   );
 };

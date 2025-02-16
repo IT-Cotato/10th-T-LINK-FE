@@ -1,14 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PickDate from '../../components/Room/PickDate';
 import Input from '../../components/Room/Input';
 import ChooseBank from '../../components/ChooseBank';
 import { BankInfo } from '../../models/deposit.model';
 import LongButton from '../../components/LongButton';
 import Toggle from '../../components/Toggle';
-import { putDeposit } from '../../api/deposit.api';
+import { getDepositDetail, putDeposit } from '../../api/deposit.api';
 import { useNavigate, useParams } from 'react-router-dom';
+import { getClosestFutureDate } from '../../utils/getCloseDate';
 
 const CreatePayment = () => {
+  const params = new URLSearchParams(location.search);
+  const isEdit = params.get('isEdit');
+
+  // depositInfo ? getClosestFutureDate(depositInfo.depositAt) : ''
+
   const [depositDay, setDepositday] = useState('');
   const [depositAmount, setdepositAmount] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
@@ -16,6 +22,18 @@ const CreatePayment = () => {
   const [isChecked, setIsChecked] = useState(false);
   const { roomId } = useParams<{ roomId: string }>();
   const nav = useNavigate();
+
+  useEffect(() => {
+    console.log('실행');
+    if (isEdit) {
+      getDepositDetail(roomId!).then((data) => {
+        setBank(data.data);
+        setDepositday(getClosestFutureDate(data.data.depositAt));
+        setdepositAmount(data.data.depositAmount);
+        setAccountNumber(data.data.accountNumber);
+      });
+    }
+  }, []);
 
   const handleSumbit = () => {
     const payload = {
@@ -25,7 +43,7 @@ const CreatePayment = () => {
       depositAt: Number(depositDay.slice(8)),
     };
     putDeposit(roomId!, payload).then((data) => {
-      nav(`/user/${roomId}/payment`, { state: { toast: true } });
+      nav(`/user/${roomId}/payment`, { state: { toast: true, isEdit: isEdit } });
     });
   };
 
@@ -84,7 +102,7 @@ const CreatePayment = () => {
               {/* 토글 */}
               <Toggle isChecked={isChecked} setIsChecked={setIsChecked} />
               <div className="py-6 mt-auto absolute bottom-0 right-4 left-4">
-                <LongButton onClick={handleSumbit} text="업로드 하기" enable={true} />
+                <LongButton onClick={handleSumbit} text={isEdit ? '수정하기' : '완료'} enable={true} />
               </div>
             </div>
           )}
