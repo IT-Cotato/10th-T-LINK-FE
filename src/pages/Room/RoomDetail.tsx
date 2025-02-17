@@ -41,18 +41,23 @@ const RoomDetail = () => {
         </div>
         <div className="flex flex-col tracking-[-0.042px]">
           {/* 요일&과목명 */}
-          <div className="flex text-body4 font-medium gap-[6px] items-center">
+          <div className="flex flex-wrap text-body4 font-medium gap-[6px] items-center">
             <div>
               <span className="text-gray-500">#</span>
               <span className="text-primary_700">{roomDetail.subject}</span>
             </div>
             {roomDetail.lessonDays &&
-              roomDetail.lessonDays.map((day, index) => (
-                <li key={index} className="list-none">
-                  <span className="text-gray-500">#</span>
-                  <span className="text-primary_700">{day.lessonDay}요일</span>
-                </li>
-              ))}
+              roomDetail.lessonDays
+                .sort((a, b) => {
+                  const dayOrder = ['월', '화', '수', '목', '금', '토', '일'];
+                  return dayOrder.indexOf(a.lessonDay) - dayOrder.indexOf(b.lessonDay);
+                })
+                .map((day, index) => (
+                  <li key={index} className="list-none">
+                    <span className="text-gray-500">#</span>
+                    <span className="text-primary_700">{day.lessonDay}요일</span>
+                  </li>
+                ))}
           </div>
           <div className="flex gap-[6px] text-body4 text-gray-500 items-center">
             <div className="flex gap-[2px]">
