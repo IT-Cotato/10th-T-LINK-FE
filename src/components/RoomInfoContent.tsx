@@ -43,7 +43,9 @@ const RoomInfoContent = ({ room, roleInfo }: RoomProps) => {
             setProfileOpen(false);
           }}
         >
-          {room.opponent && <ProfileModal setModalOpen={setProfileOpen} id={room.opponent.id} />}
+          {room.opponent && (
+            <ProfileModal setModalOpen={setProfileOpen} id={room.opponent.id} profileImg={profileImg} />
+          )}
         </Modal>
       )}
       <div
