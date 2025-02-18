@@ -8,9 +8,10 @@ import { deleteLectureFile } from '../../api/materials.api';
 interface RoomDeleteProps {
   setModalOpen: (value: boolean) => void;
   what: string;
+  stat?: boolean;
 }
 
-const RoomDeleteModal = ({ setModalOpen, what }: RoomDeleteProps) => {
+const RoomDeleteModal = ({ setModalOpen, what, stat }: RoomDeleteProps) => {
   const { roomId, homeworkId, counselingId, materialId } = useParams();
   const [toast, setToast] = useState(false);
 
@@ -84,8 +85,14 @@ const RoomDeleteModal = ({ setModalOpen, what }: RoomDeleteProps) => {
     <>
       <div className="w-[320px] p-4 flex flex-col rounded-2xl items-center justify-center gap-8 bg-white">
         <div className="font-semibold text-lg leading-8">
-          <p>{what} 삭제하시겠습니까?</p>
-          <p>삭제 시 저장하셨던 정보가 사라집니다.</p>
+          {stat == true ? (
+            <p>해당 회차의 성적이 삭제됩니다.</p>
+          ) : (
+            <>
+              <p>{what} 삭제하시겠습니까?</p>
+              <p>삭제 시 저장하셨던 정보가 사라집니다.</p>
+            </>
+          )}
         </div>
         <div className="flex w-full gap-3 text-[16px] font-semibold">
           <button

@@ -101,6 +101,17 @@ const Header = () => {
           return { title: '입금일', left: `/user/${roomId}`, hasBorder: false };
         }
 
+        // 통계 관련 경로
+        if (location.includes('/stats')) {
+          if (location.endsWith('/create')) {
+            return { title: '성적 추가하기', left: true, hasBorder: false };
+          }
+          if (location.endsWith('/edit')) {
+            return { title: '입금일 정보 수정', left: true, hasBorder: false };
+          }
+          return { title: '성적 통계', left: `/user/${roomId}`, hasBorder: false };
+        }
+
         return { title, left: true, hasBorder: false };
       }
     }
