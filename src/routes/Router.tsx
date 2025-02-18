@@ -10,7 +10,7 @@ import MyPage from '../pages/MyPage';
 import Layout from '../components/Layout';
 import RoomDetail from '../pages/Room/RoomDetail';
 import Payment from '../pages/Payment/Payment';
-import Statistics from '../pages/Statistics';
+import Statistics from '../pages/Statistics/Statistics';
 import CreateRoom from '../pages/Room/CreateRoom';
 import KakaoOauth from '../components/KakaoOauth';
 import EditRoom from '../pages/Room/EditRoom';

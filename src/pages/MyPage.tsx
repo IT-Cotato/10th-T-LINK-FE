@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Modal from '../components/Modal/Modal';
 import LogoutModal, { MODAL_TYPE } from '../components/Modal/LogoutModal';
-import { getUserInfo } from '../api/mypage.api';
+import { getUserInfo, patchMessage } from '../api/mypage.api';
 import { formatPhoneNumber } from '../utils/FormatPhoneNumber';
 import Edit from '../assets/images/RoomDetail/Edit copy.svg?react';
 interface UserInfo {
@@ -21,6 +21,7 @@ const MyPage = () => {
   const nav = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const userRole = localStorage.getItem('roleInfo');
+  const [messageOpen, setMessageOpen] = useState(false);
   const [userInfo, setUserInfo] = useState<UserInfo>({
     username: '',
     role: '',
@@ -30,13 +31,14 @@ const MyPage = () => {
       'https://mblogthumb-phinf.pstatic.net/MjAyMDAyMTBfODAg/MDAxNTgxMzA0MTE3ODMy.ACRLtB9v5NH-I2qjWrwiXLb7TeUiG442cJmcdzVum7cg.eTLpNg_n0rAS5sWOsofRrvBy0qZk_QcWSfUiIagTfd8g.JPEG.lattepain/1581304118739.jpg?type=w800',
   });
 
+  const getuserInfo = async () => {
+    const response = await getUserInfo();
+    if (response!.status == 200) {
+      setUserInfo(response!.data.data);
+    }
+  };
+
   useEffect(() => {
-    const getuserInfo = async () => {
-      const response = await getUserInfo();
-      if (response!.status == 200) {
-        setUserInfo(response!.data.data);
-      }
-    };
     getuserInfo();
   }, []);
 
@@ -48,6 +50,12 @@ const MyPage = () => {
 
   // 반드시 존재한다고 가정
   const currentRoleCard = roleCard.find((card) => card.role === userRole)!;
+
+  const ChangeMessage = () => {
+    patchMessage().then((data) => {
+      getuserInfo();
+    });
+  };
 
   return (
     <div>
@@ -73,7 +81,7 @@ const MyPage = () => {
           <p className="text-caption1 leading-[22px] text-gray-500">
             {userInfo.statusMessage == '' ? `상태메세지를 입력하세요!` : `${userInfo.statusMessage}`}
           </p>
-          <Edit className="w-[16px] h-[16px] pb-[1px]" />
+          <Edit className="w-[16px] h-[16px] pb-[1px]" onClick={() => setMessageOpen(true)} />
         </div>
       </div>
       {/* 내 정보 */}
@@ -106,6 +114,11 @@ const MyPage = () => {
         {modalOpen && (
           <Modal onClose={() => setModalOpen(false)}>
             <LogoutModal setModalOpen={setModalOpen} type={MODAL_TYPE.LOGOUT} />
+          </Modal>
+        )}
+        {messageOpen && (
+          <Modal onClose={() => setMessageOpen(false)}>
+            <LogoutModal setModalOpen={setMessageOpen} type={MODAL_TYPE.LOGOUT} />
           </Modal>
         )}
       </div>
