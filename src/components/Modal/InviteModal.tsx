@@ -1,37 +1,22 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { getTeacherName, postShareCode } from '../../api/roomList.api';
+import { getRoomInfo, postShareCode } from '../../api/roomList.api';
 import { useEffect, useState } from 'react';
 import RoomInfoContent from '../RoomInfoContent';
-
-const mockData = {
-  roomId: 15,
-  roomName: '방이름입니당당',
-  subject: '과학',
-  lessonDays: [
-    {
-      lessonDay: '월',
-    },
-  ],
-  opponent: {
-    id: 2,
-    name: '김선생',
-    gender: '여성',
-  },
-};
+import { SimpleRoomInfo } from '../../models/room.model';
 
 const InviteModal = () => {
   const navigation = useNavigate();
   const { roomId, shareCode } = useParams();
   const roleInfo = localStorage.getItem('roleInfo');
-  const [teacherName, setTeacherName] = useState('');
+  const [roomData, setRoomData] = useState<SimpleRoomInfo>();
 
   useEffect(() => {
-    const fetchTeacherName = async () => {
+    const fetchRoomInfo = async () => {
       try {
         if (shareCode) {
-          const res = await getTeacherName(shareCode);
-          setTeacherName(res.data.data.teacherName);
-          console.log(teacherName);
+          const res = await getRoomInfo(shareCode);
+          console.log(res.data.data);
+          setRoomData(res.data.data);
         }
       } catch (e: any) {
         if (e.response.status === 401 || e.response.status === 404) {
@@ -42,7 +27,7 @@ const InviteModal = () => {
       }
     };
     if (roleInfo === 'STUDENT' || roleInfo === 'PARENT') {
-      fetchTeacherName();
+      fetchRoomInfo();
     }
   }, [roleInfo, shareCode]);
 
@@ -67,9 +52,9 @@ const InviteModal = () => {
   return roleInfo === 'STUDENT' || roleInfo === 'PARENT' ? (
     <div className="flex flex-col p-4 gap-6 w-[320px] bg-white rounded-[16px]">
       <div className="text-center font-semibold text-lg leading-8">
-        {teacherName ? (
+        {roomData?.opponent?.name ? (
           <>
-            {teacherName}님이 과외방으로
+            {roomData?.opponent?.name}님이 과외방으로
             <br />
             초대하셨습니다. 입장하시겠습니까?
           </>
@@ -78,7 +63,7 @@ const InviteModal = () => {
         )}
       </div>
       <div className="bg-gray-50 p-4 rounded-lg pointer-events-none">
-        <RoomInfoContent room={mockData} roleInfo={roleInfo} />
+        {roomData && <RoomInfoContent room={roomData} roleInfo={roleInfo} />}
       </div>
       <div className="flex justify-center gap-4 w-full font-semibold text-base">
         <button className="w-full bg-primary_700 text-white rounded-[4px] py-3.5" onClick={handleAccept}>
@@ -93,10 +78,15 @@ const InviteModal = () => {
       </div>
     </div>
   ) : (
-    <div className="flex flex-col py-5 w-[320px] bg-white rounded-[16px]">
-      <div className="flex flex-1 flex-col justify-center items-center">입장할 수 없습니다.</div>
-      <div className="flex justify-center gap-32 w-full">
-        <button onClick={() => navigation('/user/roomlist')}>창 닫기</button>
+    <div className="flex flex-col p-4 gap-6 w-[320px] bg-white rounded-[16px]">
+      <div className="text-center font-semibold text-lg leading-8">과외방에 입장할 수 없습니다.</div>
+      <div className="flex justify-center gap-4 w-full font-semibold text-base">
+        <button
+          className="w-full border border-gray-500 rounded-[4px] py-3.5"
+          onClick={() => navigation('/user/roomlist')}
+        >
+          창닫기
+        </button>
       </div>
     </div>
   );

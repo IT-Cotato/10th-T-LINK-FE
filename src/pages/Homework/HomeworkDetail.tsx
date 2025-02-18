@@ -6,6 +6,9 @@ import Edit from '../../assets/images/RoomDetail/Edit.svg?react';
 import { downloadFile } from '../../utils/DownloadFiles';
 import Loading from '../Loading';
 import Button from '../../components/Button';
+import Modal from '../../components/Modal/Modal';
+import RoomDeleteModal from '../../components/Modal/RoomDeleteModal';
+import useDeleteStore from '../../store/useDeleteStore';
 
 const HomeworkDetail = () => {
   const { roomId, homeworkId } = useParams<{ roomId: string; homeworkId: string }>();
@@ -14,6 +17,7 @@ const HomeworkDetail = () => {
   const nav = useNavigate();
 
   const userRole = localStorage.getItem('roleInfo');
+  const { modalOpen, setModalOpen, what } = useDeleteStore();
 
   // 숙제 상세 조회
   useEffect(() => {
@@ -73,6 +77,11 @@ const HomeworkDetail = () => {
         </ul>
       </div>
       {userRole !== 'TEACHER' ? <Button text={text} onClick={() => nav('edit')} /> : ''}
+      {modalOpen && (
+        <Modal onClose={() => setModalOpen(false)}>
+          <RoomDeleteModal setModalOpen={setModalOpen} what={what} />
+        </Modal>
+      )}
     </div>
   );
 };

@@ -5,6 +5,9 @@ import { LessonDaysList } from '../utils/LessonDaysList';
 import { ParentPermission, StudentPermission } from '../utils/PermissionList';
 import PermissionToggle from './PermissionToggle';
 import LongButton from './LongButton';
+import Modal from './Modal/Modal';
+import RoomDeleteModal from './Modal/RoomDeleteModal';
+import useDeleteStore from '../store/useDeleteStore';
 
 type EditProps = {
   currentRoom: Room | undefined;
@@ -34,6 +37,8 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
     },
   });
   const [isEnable, setIsEnable] = useState(false);
+
+  const { modalOpen, setModalOpen, what } = useDeleteStore();
 
   useEffect(() => {
     if (currentRoom) {
@@ -166,6 +171,11 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
       <div className="py-6 w-full">
         <LongButton onClick={() => onSubmit(input)} text={currentRoom ? '수정 완료' : '생성하기'} enable={isEnable} />
       </div>
+      {modalOpen && (
+        <Modal onClose={() => setModalOpen(false)}>
+          <RoomDeleteModal setModalOpen={setModalOpen} what={what} />
+        </Modal>
+      )}
     </div>
   );
 };
