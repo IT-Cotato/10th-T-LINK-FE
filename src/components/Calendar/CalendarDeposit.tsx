@@ -2,6 +2,9 @@ import { useNavigate } from 'react-router-dom';
 import money from '../../assets/images/money.png';
 import vector from '../../assets/images/vector.png';
 import { getClosestFutureDate } from '../../utils/getCloseDate';
+import { useState } from 'react';
+import Modal from '../Modal/Modal';
+import AccessFail from '../Modal/AccessFail';
 
 type DepositProps = {
   roomname: string[];
@@ -11,12 +14,16 @@ type DepositProps = {
 
 const CalendarDeposit = ({ roomname, nextDeopsit, isPermission }: DepositProps) => {
   const nav = useNavigate();
+  const [modalOpen, setModalOpen] = useState(false);
+  const userRole = localStorage.getItem('roleInfo');
 
   const handleClick = () => {
-    if (nextDeopsit == '0') nav('payment/create');
     // 입금일이 등록되지 않은 경우
-    else if (nextDeopsit && isPermission) nav('payment');
+    if (nextDeopsit == '0') {
+      userRole == 'TEACHER' ? nav('payment/create') : setModalOpen(true);
+    }
     // 입금일 등록됐을 경우
+    else if (nextDeopsit && isPermission) nav('payment');
   };
 
   return (
@@ -49,6 +56,11 @@ const CalendarDeposit = ({ roomname, nextDeopsit, isPermission }: DepositProps) 
           </div>
         </div>
       ))}
+      {modalOpen && (
+        <Modal onClose={() => setModalOpen(false)}>
+          <AccessFail setModalOpen={setModalOpen} text="아직 입금일이 설정되지 않았어요!" />
+        </Modal>
+      )}
     </div>
   );
 };
