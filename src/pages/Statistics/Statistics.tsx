@@ -7,21 +7,22 @@ import Button from '../../components/Button';
 import Modal from '../../components/Modal/Modal';
 import CreateModal from '../../components/Modal/CreateModal';
 import Loading from '../Loading';
-import NoStatsData from '../../components/NoStatsData';
 
 export interface DataType {
   name: string;
   grade: number;
 }
 
+interface Type {
+  id: number;
+  title: string;
+  isClicked: boolean;
+}
+
 const Statistics = () => {
   const nav = useNavigate();
   // const [tags, setTags] = useState([{ id: 0, title: '전체', isClicked: true }]);
-  const [tags, setTags] = useState([
-    { id: 0, title: '국어', isClicked: true },
-    { id: 1, title: '수학', isClicked: false },
-    { id: 2, title: '영어', isClicked: false },
-  ]);
+  const [tags, setTags] = useState<Type[]>();
   const userRole = localStorage.getItem('roleInfo');
   const [modalOpen, setModalOpen] = useState(false);
   const [data, setData] = useState<DataType[]>();
@@ -29,6 +30,11 @@ const Statistics = () => {
   useEffect(() => {
     // 예제 데이터 로드 (실제로는 API 요청을 넣을 수 있음)
     setTimeout(() => {
+      setTags([
+        { id: 0, title: '국어', isClicked: true },
+        // { id: 1, title: '수학', isClicked: false },
+        // { id: 2, title: '영어', isClicked: false },
+      ]);
       setData([
         // { name: 'Page A', grade: 50 },
         // { name: 'Page B', grade: 60 },
@@ -40,8 +46,22 @@ const Statistics = () => {
     }, 1000);
   }, []);
 
+  // tags가 비어있는 경우, 버튼만 렌더링
+  if (tags?.length == 0 || !tags) {
+    return (
+      <div className="flex flex-col h-full justify-center items-center">
+        {userRole == 'TEACHER' ? <Button text="시험 추가하기" onClick={() => setModalOpen(true)} /> : ''}
+        {modalOpen && (
+          <Modal onClose={() => setModalOpen(false)}>
+            <CreateModal type="시험" setModalOpen={setModalOpen} />
+          </Modal>
+        )}
+      </div>
+    );
+  }
+
   const onClickTag = (id: number, title: string) => {
-    setTags((prevTags) =>
+    setTags((prevTags = []) =>
       prevTags.map((tag) => ({
         ...tag,
         isClicked: tag.id === id,
