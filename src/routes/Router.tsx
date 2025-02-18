@@ -33,6 +33,7 @@ import EditHomework from '../pages/Homework/EditHomework';
 import EditCounseling from '../pages/Counseling/EditCounseling';
 import EditMaterial from '../pages/Material/EditMaterial';
 import CreatePayment from '../pages/Payment/CreatePayment';
+import CreateStatistics from '../pages/Statistics/CreateStatistics';
 
 export const router = createBrowserRouter([
   {
@@ -77,7 +78,8 @@ export const router = createBrowserRouter([
           { path: 'homework/create', element: <CreateHomework /> }, // 숙제 업로드
           { path: 'homework/:homeworkId', element: <HomeworkDetail /> }, // 숙제 상세
           { path: 'homework/:homeworkId/edit', element: <EditHomework /> }, // 숙제 상세
-          { path: 'stats', element: <Statistics /> },
+          { path: 'stats', element: <Statistics /> }, // 성적 통계
+          { path: 'stats/create', element: <CreateStatistics /> }, // 성적 통계 생성
           { path: 'diary', element: <CounselingDiary /> }, // 상담 일지
           { path: 'diary/create', element: <CreateCounseling /> }, // 상담 일지 업로드
           { path: 'diary/:counselingId', element: <CounselingDetail /> }, // 상담 일지 상세

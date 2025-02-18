@@ -2,15 +2,16 @@ import { useState } from 'react';
 import SubjectTag from '../../components/SubjectTag';
 import Chart from '../../components/Chart';
 import StatisticsButton from '../../components/StatisticsButton';
+import { useNavigate } from 'react-router-dom';
 
 const Statistics = () => {
+  const nav = useNavigate();
   // const [tags, setTags] = useState([{ id: 0, title: '전체', isClicked: true }]);
   const [tags, setTags] = useState([
     { id: 0, title: '국어', isClicked: true },
     { id: 1, title: '수학', isClicked: false },
     { id: 2, title: '영어', isClicked: false },
   ]);
-  const [selectedTag, setSelectedTag] = useState(0);
 
   const onClickTag = (id: number, title: string) => {
     setTags((prevTags) =>
@@ -38,9 +39,7 @@ const Statistics = () => {
         <div className="w-full h-full">
           <Chart />
         </div>
-        <div>
-          <StatisticsButton />
-        </div>
+        <StatisticsButton onClick={() => nav('create')} />
       </div>
     </div>
   );
