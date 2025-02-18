@@ -18,7 +18,7 @@ const Input = ({ name, placeholder, setDesc, desc, isAble }: InputProps) => {
       {name && (
         <div className="text-body4 leading-[26px] font-medium flex gap-1">
           <span className="text-gray-900  ">{name}</span>
-          {name !== '입금 금액' && name !== '시험 이름' && name !== '점수' && (
+          {name !== '입금 금액' && !name.includes('시험') && name !== '점수' && (
             <span className="text-primary_700">(필수)</span>
           )}
         </div>

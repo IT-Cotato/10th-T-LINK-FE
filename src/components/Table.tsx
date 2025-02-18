@@ -123,7 +123,7 @@ const Table = () => {
       )}
       {createModalOpen && (
         <Modal onClose={() => setCreateModalOpen(false)}>
-          <CreateModal setModalOpen={setCreateModalOpen} />
+          <CreateModal setModalOpen={setCreateModalOpen} type="성적" />
         </Modal>
       )}
     </div>
