@@ -28,7 +28,7 @@ const DepositDetail = ({ depositInfo }: DepositDetailProps) => {
         <div className="flex gap-1">
           <p className="px-1 bg-primary_100 text-primary_700 rounded-[4px]">입금</p>
           <p className="text-gray-900 flex-1">{depositInfo.bankName}</p>
-          {userRole ? <Edit onClick={goToEdit} /> : null}
+          {userRole == 'TEACHER' ? <Edit onClick={goToEdit} /> : null}
         </div>
         <p className="text-gray-500 underline">{depositInfo.accountNumber}</p>
       </div>
