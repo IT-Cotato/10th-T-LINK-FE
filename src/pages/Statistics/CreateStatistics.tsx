@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import SubjectTag from '../../components/SubjectTag';
 import Table from '../../components/Table';
+import useDeleteStore from '../../store/useDeleteStore';
+import Modal from '../../components/Modal/Modal';
+import RoomDeleteModal from '../../components/Modal/RoomDeleteModal';
 
 const CreateStatistics = () => {
   const [tags, setTags] = useState([
@@ -8,6 +11,7 @@ const CreateStatistics = () => {
     { id: 1, title: '수학', isClicked: false },
     { id: 2, title: '영어', isClicked: false },
   ]);
+  const { modalOpen, setModalOpen, what } = useDeleteStore();
 
   const onClickTag = (id: number, title: string) => {
     setTags((prevTags) =>
@@ -40,6 +44,11 @@ const CreateStatistics = () => {
       <div className="py-4">
         <Table />
       </div>
+      {modalOpen && (
+        <Modal onClose={() => setModalOpen(false)}>
+          <RoomDeleteModal setModalOpen={setModalOpen} what={what} />
+        </Modal>
+      )}
     </div>
   );
 };

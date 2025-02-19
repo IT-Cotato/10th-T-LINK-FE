@@ -74,11 +74,14 @@ const RoomDeleteModal = ({ setModalOpen, what, stat }: RoomDeleteProps) => {
     }
   };
 
+  const handleDeleteStatistics = () => {};
+
   const handleDelete = () => {
     if (what.includes('과외방')) handleDeleteRoom();
     else if (what.includes('자료')) handleDeleteFiles();
     else if (what.includes('숙제')) handleDeleteHomework();
     else if (what.includes('일지')) handleDeleteCounseling();
+    else if (what.includes('통계')) handleDeleteStatistics();
   };
 
   return (
