@@ -54,7 +54,7 @@ const Materials = () => {
           key={material.lectureFileBoxId}
         />
       ))}
-      {userRole == 'TEACHER' ? <Button text="강의 자료 업로드" onClick={() => nav('create')} /> : ''}
+      {userRole == 'TEACHER' ? <Button text="자료 업로드하기" onClick={() => nav('create')} /> : ''}
       <Outlet />
       {toast && <Toast setToast={setToast} title="강의 자료 삭제가 완료되었습니다." />}
     </div>

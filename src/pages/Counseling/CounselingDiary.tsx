@@ -47,7 +47,7 @@ const CounselingDiary = () => {
       {filteredLogs.map((logs) => (
         <Preview_1 title={logs.title} updatedAt={logs.updatedAt} type="counseling" id={logs.id} key={logs.id} />
       ))}
-      {userRole == 'TEACHER' && <Button text="상담 일지 업로드" onClick={() => nav('create')} />}
+      {userRole == 'TEACHER' && <Button text="일지 업로드하기" onClick={() => nav('create')} />}
       <Outlet />
       {toast && <Toast setToast={setToast} title="상담 일지 삭제가 완료되었습니다." />}
     </div>
