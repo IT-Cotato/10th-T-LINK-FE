@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import AddIcon from '../assets/images/File_dock_add.svg?react';
+import FileDetail from './FileDetail';
 
 interface AddFileProps {
   setFileList: (value: File[]) => void;
@@ -57,18 +58,10 @@ const AddFile = ({ setFileList, fileList }: AddFileProps) => {
         </label>
       </div>
       {fileList.length > 0 && (
-        <div className="text-center text-gray-700">
-          <p>추가된 파일 목록:</p>
-          <ul>
-            {fileList.map((file, index) => (
-              <li key={index} className="font-bold">
-                {file.name}
-                <button onClick={() => handleDeleteFile(index)} className="text-red-500 hover:underline ml-4">
-                  삭제
-                </button>
-              </li>
-            ))}
-          </ul>
+        <div className="text-center text-gray-700 gap-2 flex flex-col">
+          {fileList.map((file, index) => (
+            <FileDetail key={index} title={file.name} onDelete={() => handleDeleteFile(index)} />
+          ))}
         </div>
       )}
     </>

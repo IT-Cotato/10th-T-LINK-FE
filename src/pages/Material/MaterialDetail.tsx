@@ -8,6 +8,7 @@ import Loading from '../Loading';
 import Modal from '../../components/Modal/Modal';
 import RoomDeleteModal from '../../components/Modal/RoomDeleteModal';
 import useDeleteStore from '../../store/useDeleteStore';
+import FileDetail from '../../components/FileDetail';
 
 const MaterialDetail = () => {
   const nav = useNavigate();
@@ -54,14 +55,12 @@ const MaterialDetail = () => {
           업로드 날짜 {lectureFiles.updatedAt}
         </p>
       </div>
-      <div className="bg-gray-100 h-[100px] rounded-lg mt-2 mb-6 mx-4">
-        <ul>
-          {lectureFiles.lectureFiles.map((file) => (
-            <li onClick={() => downloadFile(file.fileUrl)} key={file.lectureFileId}>
-              {file.originalName}
-            </li>
-          ))}
-        </ul>
+      <div className="mx-4 flex flex-col gap-2">
+        {lectureFiles.lectureFiles.map((file) => (
+          <div>
+            <FileDetail title={file.originalName} fileUrl={file.fileUrl} key={file.lectureFileId} />
+          </div>
+        ))}
       </div>
       {modalOpen && (
         <Modal onClose={() => setModalOpen(false)}>
