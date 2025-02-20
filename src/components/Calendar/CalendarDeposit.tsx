@@ -5,10 +5,11 @@ import { getClosestFutureDate } from '../../utils/getCloseDate';
 import { useState } from 'react';
 import Modal from '../Modal/Modal';
 import AccessFail from '../Modal/AccessFail';
+import vector_gray from '../../assets/images/vector_gray.png';
 
-type DepositProps = { roomname: string[]; nextDeopsit?: string; type: string };
+type DepositProps = { roomname: string[]; nextDeopsit?: string; type: string; isPermission?: boolean };
 
-const CalendarDeposit = ({ roomname, nextDeopsit, type }: DepositProps) => {
+const CalendarDeposit = ({ roomname, nextDeopsit, type, isPermission }: DepositProps) => {
   const nav = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const userRole = localStorage.getItem('roleInfo');
@@ -27,26 +28,34 @@ const CalendarDeposit = ({ roomname, nextDeopsit, type }: DepositProps) => {
       {roomname.map((item, idx) => (
         <div
           key={idx}
-          className={`flex p-4 gap-3  items-center rounded-xl bg-primary_100 cursor-pointer`}
+          className={`flex p-4 gap-3  items-center rounded-xl ${type == 'roomDetail' && !isPermission ? 'bg-gray-100 cursor-not-allowed' : 'bg-primary_100 cursor-pointer'} `}
           onClick={handleClick}
         >
           <div className="p-1.5 rounded-full bg-white">
             <img src={money} className="w-7 h-7" />
           </div>
           <div>
-            <img src={vector} className="w-[3px] h-6" />
+            {type == 'roomDetail' && !isPermission ? (
+              <img src={vector_gray} className="w-[3px] h-6" />
+            ) : (
+              <img src={vector} className="w-[3px] h-6" />
+            )}
           </div>
           <div>
-            <div className="text-primary_800 text-base font-semibold leading-7">입금일</div>
+            <div
+              className={` text-base font-semibold leading-7  ${type == 'roomDetail' && !isPermission ? 'text-[#1D1B20]' : 'text-primary_800'}`}
+            >
+              입금일
+            </div>
             {type == 'calendar' ? (
               <div className="text-sm leading-6 tracking-[-0.042px] text-gray-800">{item} 입금일 입니다.</div>
-            ) : nextDeopsit == '0' ? (
-              <div className="text-sm leading-6 tracking-[-0.042px] text-gray-800">
-                현재 과외 입금일이 존재하지 않아요.
-              </div>
+            ) : !isPermission ? (
+              <div className="text-sm leading-6 tracking-[-0.042px] text-gray-800">입금일에 접근 권한이 없습니다.</div>
             ) : (
               <div className="text-sm leading-6 tracking-[-0.042px] text-gray-800">
-                다음 입금일은 {getClosestFutureDate(nextDeopsit!)} 입니다.
+                {nextDeopsit == '0'
+                  ? '현재 과외 입금일이 존재하지 않아요!'
+                  : `다음 입금일은 ${getClosestFutureDate(nextDeopsit!)} 입니다`}
               </div>
             )}
           </div>
