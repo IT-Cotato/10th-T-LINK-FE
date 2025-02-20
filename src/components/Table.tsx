@@ -1,55 +1,27 @@
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { IoMdAdd } from 'react-icons/io';
 import { FiTrash2 } from 'react-icons/fi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RoomDeleteModal from './Modal/RoomDeleteModal';
 import Modal from './Modal/Modal';
 import CreateModal from './Modal/CreateModal';
+import { getGrade } from '../api/statistics.api';
+import { useParams } from 'react-router-dom';
 
-type Grade = {
-  round: number;
-  title: string;
-  grade: number;
-  icon: React.ElementType;
-};
+type Grade = { round: number; title: string; grade: number; icon: React.ElementType };
 
-const defaultData: Grade[] = [
-  {
-    round: 1,
-    title: '2-2 중간고사',
-    grade: 78,
-    icon: FiTrash2,
-  },
-  {
-    round: 2,
-    title: '2-2 중간고사',
-    grade: 78,
-    icon: FiTrash2,
-  },
-  {
-    round: 3,
-    title: '2-2 중간고사',
-    grade: 78,
-    icon: FiTrash2,
-  },
-];
+const defaultData: Grade[] = [];
 
 const columnHelper = createColumnHelper<Grade>();
 
 const columns = [
-  columnHelper.accessor('round', {
-    cell: (info) => info.getValue(),
-    header: () => <span>회차</span>,
-  }),
+  columnHelper.accessor('round', { cell: (info) => info.getValue(), header: () => <span>회차</span> }),
   columnHelper.accessor((row) => row.title, {
     id: 'title',
     cell: (info) => info.getValue(),
     header: () => <span>시험 이름</span>,
   }),
-  columnHelper.accessor('grade', {
-    cell: (info) => info.renderValue(),
-    header: () => <span>점수</span>,
-  }),
+  columnHelper.accessor('grade', { cell: (info) => info.renderValue(), header: () => <span>점수</span> }),
   columnHelper.accessor('icon', {
     header: () => <IoMdAdd className="w-full stroke-[6px] h-5" />,
     cell: (info) => {
@@ -59,16 +31,30 @@ const columns = [
   }),
 ];
 
-const Table = () => {
-  const [data, _setData] = useState(() => [...defaultData]);
+interface TableProps {
+  selectedId: number;
+}
+
+const Table = ({ selectedId }: TableProps) => {
+  const [data, setData] = useState(() => [...defaultData]);
   const [modalOpen, setModalOpen] = useState(false); // 삭제 모달
   const [createModalOpen, setCreateModalOpen] = useState(false); // 삭제 모달
+  const { roomId } = useParams<{ roomId: string }>();
 
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
+  const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() });
+
+  useEffect(() => {
+    getGrade(roomId!, selectedId.toString()).then((data) => {
+      const transformedData = data.data.exams.map((item: { examName: string; grade: number }, index: number) => ({
+        round: index + 1,
+        title: item.examName,
+        grade: item.grade,
+        icon: FiTrash2,
+      }));
+
+      setData(transformedData);
+    });
+  }, [createModalOpen, modalOpen, selectedId]);
 
   const handleDelete = (id: string) => {
     if (id.includes('icon')) {
@@ -118,12 +104,13 @@ const Table = () => {
       </table>
       {modalOpen && (
         <Modal onClose={() => setModalOpen(false)}>
-          <RoomDeleteModal stat={true} what="성적" setModalOpen={setModalOpen} />
+          {/* id 수정 필요 */}
+          <RoomDeleteModal stat={true} what="성적" setModalOpen={setModalOpen} examBoxId={selectedId} id={1} />
         </Modal>
       )}
       {createModalOpen && (
         <Modal onClose={() => setCreateModalOpen(false)}>
-          <CreateModal setModalOpen={setCreateModalOpen} type="성적" />
+          <CreateModal setModalOpen={setCreateModalOpen} type="성적" id={selectedId} />
         </Modal>
       )}
     </div>

@@ -1,25 +1,22 @@
-import { useState } from 'react';
 import SubjectTag from '../../components/SubjectTag';
 import Table from '../../components/Table';
-import useDeleteStore from '../../store/useDeleteStore';
+import { useLocation } from 'react-router-dom';
+import { Type } from './Statistics';
+import { useState } from 'react';
 import Modal from '../../components/Modal/Modal';
 import RoomDeleteModal from '../../components/Modal/RoomDeleteModal';
 
 const CreateStatistics = () => {
-  const [tags, setTags] = useState([
-    { id: 0, title: '국어', isClicked: true },
-    { id: 1, title: '수학', isClicked: false },
-    { id: 2, title: '영어', isClicked: false },
-  ]);
-  const { modalOpen, setModalOpen, what } = useDeleteStore();
+  const location = useLocation();
+  const { tags, id } = (location.state as { tags: Type[]; id: number }) ?? { tags: [], id: 1 };
+
+  const [tag, setTag] = useState<Type[]>(tags);
+  const [selectedTag, setSelectedTag] = useState<number>(id);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const onClickTag = (id: number, title: string) => {
-    setTags((prevTags) =>
-      prevTags.map((tag) => ({
-        ...tag,
-        isClicked: tag.id === id,
-      })),
-    );
+    setTag((prevTags: Type[]) => prevTags.map((tag) => ({ ...tag, isClicked: tag.id === id })));
+    setSelectedTag(id);
   };
 
   return (
@@ -35,18 +32,16 @@ const CreateStatistics = () => {
       <div className="py-4 flex flex-col gap-[6px]">
         <p className="text-body4 font-medium leading-[26px] tracking-[-0.042px] ">시험 종류</p>
         <div className="flex gap-2">
-          {tags.map((tag) => (
-            <SubjectTag key={tag.id} tag={tag} onClick={onClickTag} />
-          ))}
+          {tag && tag.map((tag) => <SubjectTag key={tag.id} tag={tag} onClick={onClickTag} />)}
         </div>
       </div>
       {/* 그래프 */}
       <div className="py-4">
-        <Table />
+        <Table selectedId={selectedTag} />
       </div>
       {modalOpen && (
         <Modal onClose={() => setModalOpen(false)}>
-          <RoomDeleteModal setModalOpen={setModalOpen} what={what} />
+          <RoomDeleteModal setModalOpen={setModalOpen} what={'통계'} />
         </Modal>
       )}
     </div>

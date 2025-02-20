@@ -2,71 +2,83 @@ import { useEffect, useState } from 'react';
 import SubjectTag from '../../components/SubjectTag';
 import Chart from '../../components/Chart';
 import StatisticsButton from '../../components/StatisticsButton';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Button from '../../components/Button';
 import Modal from '../../components/Modal/Modal';
 import CreateModal from '../../components/Modal/CreateModal';
 import Loading from '../Loading';
+import { getExamType, getGrade } from '../../api/statistics.api';
+import Empty from '../../components/Statistics/Empty';
 
 export interface DataType {
-  name: string;
+  examName: string;
   grade: number;
 }
 
-interface Type {
+export interface Type {
   id: number;
   title: string;
   isClicked: boolean;
 }
 
+interface Subject {
+  id: number;
+  name: string;
+}
+
 const Statistics = () => {
   const nav = useNavigate();
-  // const [tags, setTags] = useState([{ id: 0, title: '전체', isClicked: true }]);
-  const [tags, setTags] = useState<Type[]>();
+  const [tags, setTags] = useState<Type[]>([]);
   const userRole = localStorage.getItem('roleInfo');
   const [modalOpen, setModalOpen] = useState(false);
-  const [data, setData] = useState<DataType[]>();
+  const [data, setData] = useState<DataType[]>([]);
+  const { roomId } = useParams<{ roomId: string }>();
+  const [name, setName] = useState('');
+  const [selectedTag, setSelectedTag] = useState<number>(1);
 
   useEffect(() => {
-    // 예제 데이터 로드 (실제로는 API 요청을 넣을 수 있음)
-    setTimeout(() => {
-      setTags([
-        { id: 0, title: '국어', isClicked: true },
-        // { id: 1, title: '수학', isClicked: false },
-        // { id: 2, title: '영어', isClicked: false },
-      ]);
-      setData([
-        // { name: 'Page A', grade: 50 },
-        // { name: 'Page B', grade: 60 },
-        // { name: 'Page C', grade: 60 },
-        // { name: 'Page D', grade: 90 },
-        // { name: 'Page E', grade: 80 },
-        // { name: 'Page F', grade: 100 },
-      ]);
-    }, 1000);
-  }, []);
+    // 시험 종류 받아오기
+    getExamType(roomId!).then((data) => {
+      if (data.data.examBox.length !== 0) {
+        setTags(
+          data.data.examBox.map((subject: Subject) => ({
+            id: subject.id,
+            title: subject.name,
+            isClicked: subject.id == 1 ? true : false,
+          })),
+        );
+        getExamGrade(1);
+      }
+    });
+  }, [modalOpen]);
+
+  // 성적 조회
+  const getExamGrade = (id: number) => {
+    getGrade(roomId!, id.toString()).then((data) => {
+      if (data.data.exams.length == 0) {
+        setData([]);
+        console.log('이거실행');
+      } else {
+        setName(data.data.examBoxName);
+        setData(data.data.exams);
+      }
+    });
+  };
 
   // tags가 비어있는 경우, 버튼만 렌더링
   if (tags?.length == 0 || !tags) {
     return (
       <div className="flex flex-col h-full justify-center items-center">
-        {userRole == 'TEACHER' ? <Button text="시험 추가하기" onClick={() => setModalOpen(true)} /> : ''}
-        {modalOpen && (
-          <Modal onClose={() => setModalOpen(false)}>
-            <CreateModal type="시험" setModalOpen={setModalOpen} />
-          </Modal>
-        )}
+        <Empty />
       </div>
     );
   }
 
   const onClickTag = (id: number, title: string) => {
-    setTags((prevTags = []) =>
-      prevTags.map((tag) => ({
-        ...tag,
-        isClicked: tag.id === id,
-      })),
-    );
+    setTags((prevTags = []) => prevTags.map((tag) => ({ ...tag, isClicked: tag.id === id })));
+
+    getExamGrade(id);
+    setSelectedTag(id);
   };
 
   if (!data) {
@@ -79,9 +91,7 @@ const Statistics = () => {
       <div className="py-4 flex flex-col gap-[6px] px-4">
         <p className="text-body4 font-medium leading-[26px] tracking-[-0.042px] ">시험 종류</p>
         <div className="flex gap-2">
-          {tags.map((tag) => (
-            <SubjectTag key={tag.id} tag={tag} onClick={onClickTag} isNoSharp={true} />
-          ))}
+          {tags && tags.map((tag) => <SubjectTag key={tag.id} tag={tag} onClick={onClickTag} isNoSharp={true} />)}
         </div>
       </div>
       {/* 그래프 */}
@@ -90,7 +100,14 @@ const Statistics = () => {
         <div className="w-full h-full">
           <Chart data={data} />
         </div>
-        {userRole == 'TEACHER' ? <StatisticsButton onClick={() => nav('create')} /> : ''}
+        {userRole == 'TEACHER' ? (
+          <StatisticsButton
+            type="성적"
+            onClick={() => nav('create', { state: { tags: tags ?? [], id: selectedTag } })}
+          />
+        ) : (
+          ''
+        )}
       </div>
       {userRole == 'TEACHER' ? <Button text="시험 추가하기" onClick={() => setModalOpen(true)} /> : ''}
       {modalOpen && (
