@@ -40,3 +40,15 @@ export const postGrade = async (roomId: string, examBoxId: string, payload: Grad
     console.log(error);
   }
 };
+
+// 시험 삭제
+export const deleteTest = async (roomId: string, examBoxId: number) => {
+  const response = await instance.delete(`/api/v1/rooms/${roomId}/gradeStatistics/${examBoxId}`);
+  return response.data;
+};
+
+// 성적 삭제
+export const deleteGrade = async (roomId: string, examBoxId: number, examId: number) => {
+  const response = await instance.delete(`/api/v1/rooms/${roomId}/gradeStatistics/${examBoxId}/exams/${examId}`);
+  return response.data;
+};
