@@ -6,13 +6,9 @@ import { useState } from 'react';
 import Modal from '../Modal/Modal';
 import AccessFail from '../Modal/AccessFail';
 
-type DepositProps = {
-  roomname: string[];
-  nextDeopsit?: string;
-  isPermission?: boolean;
-};
+type DepositProps = { roomname: string[]; nextDeopsit?: string; type: string };
 
-const CalendarDeposit = ({ roomname, nextDeopsit, isPermission }: DepositProps) => {
+const CalendarDeposit = ({ roomname, nextDeopsit, type }: DepositProps) => {
   const nav = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const userRole = localStorage.getItem('roleInfo');
@@ -23,7 +19,7 @@ const CalendarDeposit = ({ roomname, nextDeopsit, isPermission }: DepositProps) 
       userRole == 'TEACHER' ? nav('payment/create') : setModalOpen(true);
     }
     // 입금일 등록됐을 경우
-    else if (nextDeopsit && isPermission) nav('payment');
+    else if (nextDeopsit) nav('payment');
   };
 
   return (
@@ -31,7 +27,7 @@ const CalendarDeposit = ({ roomname, nextDeopsit, isPermission }: DepositProps) 
       {roomname.map((item, idx) => (
         <div
           key={idx}
-          className={`flex p-4 gap-3 bg-primary_100 items-center rounded-xl ${nextDeopsit && !isPermission ? 'bg-gray-300 opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+          className={`flex p-4 gap-3  items-center rounded-xl bg-primary_100 cursor-pointer`}
           onClick={handleClick}
         >
           <div className="p-1.5 rounded-full bg-white">
@@ -42,15 +38,15 @@ const CalendarDeposit = ({ roomname, nextDeopsit, isPermission }: DepositProps) 
           </div>
           <div>
             <div className="text-primary_800 text-base font-semibold leading-7">입금일</div>
-            {nextDeopsit == '0' ? (
+            {type == 'calendar' ? (
+              <div className="text-sm leading-6 tracking-[-0.042px] text-gray-800">{item} 입금일 입니다.</div>
+            ) : nextDeopsit == '0' ? (
               <div className="text-sm leading-6 tracking-[-0.042px] text-gray-800">
                 현재 과외 입금일이 존재하지 않아요.
               </div>
-            ) : nextDeopsit == null ? (
-              <div className="text-sm leading-6 tracking-[-0.042px] text-gray-800">{item} 입금일 입니다.</div>
             ) : (
               <div className="text-sm leading-6 tracking-[-0.042px] text-gray-800">
-                다음 입금일은 {getClosestFutureDate(nextDeopsit)} 입니다.
+                다음 입금일은 {getClosestFutureDate(nextDeopsit!)} 입니다.
               </div>
             )}
           </div>
