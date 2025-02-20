@@ -37,9 +37,11 @@ const RoomInfo = ({ room, roleInfo, setWillUpdate }: RoomProps) => {
 
       <RoomInfoContent room={room} roleInfo={roleInfo} />
       <div className="flex gap-3 items-center cursor-pointer">
-        <div onClick={handleEdit}>
-          <img src={edit} className="w-7 h-7" />
-        </div>
+        {(roleInfo == 'STUDENT' || roleInfo == 'PARENT') && (
+          <div onClick={handleEdit}>
+            <img src={edit} className="w-7 h-7" />
+          </div>
+        )}
         <FaAngleRight size={20} color="#C6C4C1" onClick={() => navigate(`/user/${room.roomId}`)} />
       </div>
     </div>
