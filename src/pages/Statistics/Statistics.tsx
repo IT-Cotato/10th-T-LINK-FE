@@ -34,7 +34,7 @@ const Statistics = () => {
   const [data, setData] = useState<DataType[]>([]);
   const { roomId } = useParams<{ roomId: string }>();
   const [name, setName] = useState('');
-  const [selectedTag, setSelectedTag] = useState<number>(1);
+  const [selectedTag, setSelectedTag] = useState<number>();
 
   useEffect(() => {
     // 시험 종류 받아오기
@@ -48,6 +48,7 @@ const Statistics = () => {
           })),
         );
         getExamGrade(data.data.examBox[0].id);
+        setSelectedTag(data.data.examBox[0].id);
       }
     });
   }, [modalOpen]);
