@@ -7,6 +7,7 @@ import AddFile from '../../components/AddFile';
 import { downloadFile } from '../../utils/DownloadFiles';
 import LongButton from '../../components/LongButton';
 import Loading from '../Loading';
+import FileDetail from '../../components/FileDetail';
 
 const EditMaterial = () => {
   const { roomId, materialId } = useParams<{ roomId: string; materialId: string }>();
@@ -45,11 +46,7 @@ const EditMaterial = () => {
 
   //  수정
   const handleSubmit = async () => {
-    const payload = {
-      lectureFileBoxName: desc,
-      addLectureFiles: addList,
-      removeLectureFiles: removeList,
-    };
+    const payload = { lectureFileBoxName: desc, addLectureFiles: addList, removeLectureFiles: removeList };
 
     try {
       const data = await patchLectureFile(roomId!, materialId!, payload);
@@ -67,20 +64,20 @@ const EditMaterial = () => {
   return (
     <div className="px-4 flex flex-col h-full pt-4 gap-6">
       <Input setDesc={setDesc} desc={desc} name="자료명" placeholder="자료명을 입력해주세요" isAble={true} />
-      <AddFile setFileList={setAddList} fileList={addList} />
       <div>
-        <p>기존 파일</p>
-        <div>
-          {fileList.map((file, index) => (
-            <div className="flex gap-2" key={file.lectureFileId}>
-              <li onClick={() => downloadFile(file.fileUrl)}>{file.originalName}</li>
-              <button className="text-red-500" onClick={() => handleFileDelete(file, index)}>
-                삭제
-              </button>
-            </div>
-          ))}
-        </div>
+        {fileList.length > 0 && (
+          <div className="text-center text-gray-700 gap-2 flex flex-col">
+            {fileList.map((file, index) => (
+              <FileDetail
+                key={file.lectureFileId}
+                title={file.originalName}
+                onDelete={() => handleFileDelete(file, index)}
+              />
+            ))}
+          </div>
+        )}
       </div>
+      <AddFile setFileList={setAddList} fileList={addList} />
       {/* 버튼 */}
       <div className="py-6 mt-auto">
         <LongButton enable={!!(desc.length > 0)} onClick={handleSubmit} text="수정 완료" />

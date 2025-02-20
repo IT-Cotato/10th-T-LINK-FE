@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { getHomeworkInfo, patchHomework } from '../../api/homework.api';
 import { HomeworkFile, HomeworkFileBoxDetail } from '../../models/homework.model';
 import { downloadFile } from '../../utils/DownloadFiles';
+import FileDetail from '../../components/FileDetail';
 
 const EditHomework = () => {
   const { roomId, homeworkId } = useParams<{ roomId: string; homeworkId: string }>();
@@ -81,24 +82,19 @@ const EditHomework = () => {
         </div>
         <PickDate deadline={deadline} setDeadline={setDeadline} isAble={isAble} text="숙제 마감 날짜를 선택하세요." />
       </div>
+      {fileList.length > 0 && (
+        <div className="text-center text-gray-700 gap-2 flex flex-col">
+          {fileList.map((file, index) => (
+            <FileDetail key={index} title={file.originalName} onDelete={() => handleFileDelete(file, index)} />
+          ))}
+        </div>
+      )}
       {/* 파일첨부 */}
       <div className="py-4 gap-6 flex flex-col">
         {/* 파일 리스트 정하는 거: 생성에서는 전체였고 수정에서는 받아와서 이름을 비교해야하나? 이건 그냥 File[]임*/}
         <AddFile setFileList={setAddList} fileList={addList} />
       </div>
-      <div>
-        <p>기존 파일</p>
-        <div>
-          {fileList.map((file, index) => (
-            <div className="flex gap-2" key={file.homeworkFileId}>
-              <li onClick={() => downloadFile(file.fileUrl)}>{file.originalName}</li>
-              <button className="text-red-500" onClick={() => handleFileDelete(file, index)}>
-                삭제
-              </button>
-            </div>
-          ))}
-        </div>
-      </div>
+
       {/* 버튼 */}
       <div className="py-6 mt-auto">
         <LongButton enable={!!(description.length > 0 && deadline.length > 0)} onClick={handleSubmit} text={text} />
