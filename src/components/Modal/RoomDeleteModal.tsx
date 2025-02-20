@@ -4,14 +4,17 @@ import { deleteRoom } from '../../api/roomList.api';
 import { deleteHomework } from '../../api/homework.api';
 import { deleteCounselingLog } from '../../api/counseling.api';
 import { deleteLectureFile } from '../../api/materials.api';
+import instance from '../../api/axios';
 
 interface RoomDeleteProps {
   setModalOpen: (value: boolean) => void;
   what: string;
   stat?: boolean;
+  examBoxId?: number;
+  id?: number;
 }
 
-const RoomDeleteModal = ({ setModalOpen, what, stat }: RoomDeleteProps) => {
+const RoomDeleteModal = ({ setModalOpen, what, stat, examBoxId, id }: RoomDeleteProps) => {
   const { roomId, homeworkId, counselingId, materialId } = useParams();
   const [toast, setToast] = useState(false);
 
@@ -74,11 +77,26 @@ const RoomDeleteModal = ({ setModalOpen, what, stat }: RoomDeleteProps) => {
     }
   };
 
+  const handleDeleteStatistics = () => {};
+  const handleDeleteGrade = async (examBoxId: number, examId: number) => {
+    try {
+      const res = await instance.delete(`/api/v1/rooms/${roomId}/gradeStatistics/${examBoxId}/exams/${examId}`);
+      console.log(res);
+      if (res.status === 200) {
+        setModalOpen(false);
+      }
+    } catch (error) {
+      console.error('Failed to delete room:', error);
+    }
+  };
+
   const handleDelete = () => {
     if (what.includes('과외방')) handleDeleteRoom();
     else if (what.includes('자료')) handleDeleteFiles();
     else if (what.includes('숙제')) handleDeleteHomework();
     else if (what.includes('일지')) handleDeleteCounseling();
+    else if (what.includes('통계')) handleDeleteStatistics();
+    else if (what.includes('성적')) handleDeleteGrade(examBoxId!, id!);
   };
 
   return (

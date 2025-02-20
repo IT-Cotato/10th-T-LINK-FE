@@ -1,15 +1,38 @@
 import { useState } from 'react';
 import Input from '../Room/Input';
+import { postGrade, postTest } from '../../api/statistics.api';
+import { useParams } from 'react-router-dom';
 
 interface ModalProps {
   setModalOpen: (value: boolean) => void;
   type: string;
+  id?: number;
 }
 
-const CreateModal = ({ setModalOpen, type }: ModalProps) => {
+export interface GradeType {
+  examName: string;
+  grade: number;
+}
+
+const CreateModal = ({ setModalOpen, type, id }: ModalProps) => {
   const [name, setName] = useState('');
   const [grade, setGrade] = useState('');
   const [test, setTest] = useState('');
+  const { roomId } = useParams<{ roomId: string }>();
+
+  const handleCreate = () => {
+    if (type == '시험') {
+      postTest(roomId!, test).then((data) => {
+        setModalOpen(false);
+      });
+    } else {
+      const payload = { examName: name, grade: parseInt(grade) };
+      postGrade(roomId!, id?.toString()!, payload).then((data) => {
+        console.log(data);
+        setModalOpen(false);
+      });
+    }
+  };
 
   return (
     <div className="w-[320px] p-4 flex flex-col rounded-2xl items-center justify-center gap-6 bg-white">
@@ -47,7 +70,10 @@ const CreateModal = ({ setModalOpen, type }: ModalProps) => {
         )}
       </div>
       <div className="w-full justify-between flex gap-3">
-        <button className="flex-1 py-[14px] bg-primary_700 text-white rounded-[4px] box-border text-center">
+        <button
+          className="flex-1 py-[14px] bg-primary_700 text-white rounded-[4px] box-border text-center"
+          onClick={handleCreate}
+        >
           추가하기
         </button>
         <button
