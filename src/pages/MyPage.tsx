@@ -9,6 +9,7 @@ import LogoutModal, { MODAL_TYPE } from '../components/Modal/LogoutModal';
 import { getUserInfo, patchMessage } from '../api/mypage.api';
 import { formatPhoneNumber } from '../utils/FormatPhoneNumber';
 import Edit from '../assets/images/RoomDetail/Edit copy.svg?react';
+import CreateModal from '../components/Modal/CreateModal';
 interface UserInfo {
   role: string;
   username: string;
@@ -40,7 +41,7 @@ const MyPage = () => {
 
   useEffect(() => {
     getuserInfo();
-  }, []);
+  }, [messageOpen]);
 
   const roleCard = [
     { role: 'TEACHER', name: '선생님', ment: '오늘도 화이팅하세요!', image: <img src={teacher} className="w-6 h-6" /> },
@@ -50,12 +51,6 @@ const MyPage = () => {
 
   // 반드시 존재한다고 가정
   const currentRoleCard = roleCard.find((card) => card.role === userRole)!;
-
-  const ChangeMessage = () => {
-    patchMessage().then((data) => {
-      getuserInfo();
-    });
-  };
 
   return (
     <div>
@@ -118,7 +113,7 @@ const MyPage = () => {
         )}
         {messageOpen && (
           <Modal onClose={() => setMessageOpen(false)}>
-            <LogoutModal setModalOpen={setMessageOpen} type={MODAL_TYPE.LOGOUT} />
+            <CreateModal setModalOpen={setMessageOpen} type={'상태메세지'} />
           </Modal>
         )}
       </div>
