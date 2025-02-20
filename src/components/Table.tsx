@@ -40,6 +40,13 @@ const Table = ({ selectedId }: TableProps) => {
   const [modalOpen, setModalOpen] = useState(false); // 삭제 모달
   const [createModalOpen, setCreateModalOpen] = useState(false); // 삭제 모달
   const { roomId } = useParams<{ roomId: string }>();
+  const [list, setList] = useState();
+  const [item, setItem] = useState({
+    examId: 0,
+    examName: '',
+    grade: 0,
+  });
+  const [examId, setExamId] = useState(0);
 
   const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() });
 
@@ -51,16 +58,27 @@ const Table = ({ selectedId }: TableProps) => {
         grade: item.grade,
         icon: FiTrash2,
       }));
-
+      setList(data.data.exams);
       setData(transformedData);
     });
   }, [createModalOpen, modalOpen, selectedId]);
 
   const handleDelete = (id: string) => {
+    const match = id.match(/^\d+/); // 숫자 부분 추출
+    const idx = match ? parseInt(match[0], 10) : null;
+
+    if (list && idx !== null) {
+      setItem(list[idx]);
+    }
+
     if (id.includes('icon')) {
       setModalOpen(true);
     }
   };
+
+  useEffect(() => {
+    if (item) setExamId(item.examId);
+  }, [item]);
 
   const handleCreate = (id: string) => {
     if (id == 'icon') {
@@ -105,7 +123,12 @@ const Table = ({ selectedId }: TableProps) => {
       {modalOpen && (
         <Modal onClose={() => setModalOpen(false)}>
           {/* id 수정 필요 */}
-          <RoomDeleteModal stat={true} what="성적" setModalOpen={setModalOpen} examBoxId={selectedId} id={1} />
+          <RoomDeleteModal
+            what="해당 회차의 성적을"
+            setModalOpen={setModalOpen}
+            examBoxId={selectedId}
+            examId={examId}
+          />
         </Modal>
       )}
       {createModalOpen && (

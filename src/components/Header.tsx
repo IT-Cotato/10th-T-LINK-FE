@@ -142,7 +142,7 @@ const Header = () => {
         setWhat('입금일 정보를');
         break;
       case '성적 추가하기':
-        setWhat('모든 성적 기록을');
+        setWhat('해당 시험을');
         break;
       default:
         setWhat('');

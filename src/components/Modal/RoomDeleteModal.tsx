@@ -76,21 +76,7 @@ const RoomDeleteModal = ({ setModalOpen, what, examBoxId, examId }: RoomDeletePr
     }
   };
 
-  const handleDeleteStatistics = async () => {
-    if (!roomId || !examBoxId || !examId) return;
-
-    try {
-      const res = await deleteGrade(roomId, examBoxId, examId);
-      console.log(res);
-      if (res.status === 200) {
-        setModalOpen(false);
-      }
-    } catch (error) {
-      console.error('Failed to delete room:', error);
-    }
-  };
-
-  const handleDeleteGrade = async () => {
+  const handleDeleteTest = async () => {
     if (!roomId || !examBoxId) return;
 
     try {
@@ -105,12 +91,26 @@ const RoomDeleteModal = ({ setModalOpen, what, examBoxId, examId }: RoomDeletePr
     }
   };
 
+  const handleDeleteGrade = async () => {
+    if (!roomId || !examBoxId || !examId) return;
+
+    try {
+      const res = await deleteGrade(roomId, examBoxId, examId);
+      console.log(res);
+      if (res.status === 200) {
+        setModalOpen(false);
+      }
+    } catch (error) {
+      console.error('Failed to delete room:', error);
+    }
+  };
+
   const handleDelete = () => {
     if (what.includes('과외방')) handleDeleteRoom();
     else if (what.includes('자료')) handleDeleteFiles();
     else if (what.includes('숙제')) handleDeleteHomework();
     else if (what.includes('일지')) handleDeleteCounseling();
-    else if (what.includes('통계')) handleDeleteStatistics();
+    else if (what.includes('시험')) handleDeleteTest();
     else if (what.includes('성적')) handleDeleteGrade();
   };
 
