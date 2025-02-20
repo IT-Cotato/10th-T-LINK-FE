@@ -5,6 +5,7 @@ import { Type } from './Statistics';
 import { useState } from 'react';
 import Modal from '../../components/Modal/Modal';
 import RoomDeleteModal from '../../components/Modal/RoomDeleteModal';
+import useDeleteStore from '../../store/useDeleteStore';
 
 const CreateStatistics = () => {
   const location = useLocation();
@@ -12,7 +13,7 @@ const CreateStatistics = () => {
 
   const [tag, setTag] = useState<Type[]>(tags);
   const [selectedTag, setSelectedTag] = useState<number>(id);
-  const [modalOpen, setModalOpen] = useState(false);
+  const { modalOpen, setModalOpen, what } = useDeleteStore();
 
   const onClickTag = (id: number, title: string) => {
     setTag((prevTags: Type[]) => prevTags.map((tag) => ({ ...tag, isClicked: tag.id === id })));
@@ -41,7 +42,7 @@ const CreateStatistics = () => {
       </div>
       {modalOpen && (
         <Modal onClose={() => setModalOpen(false)}>
-          <RoomDeleteModal setModalOpen={setModalOpen} what={'통계'} />
+          <RoomDeleteModal setModalOpen={setModalOpen} what={what} examBoxId={id} />
         </Modal>
       )}
     </div>
