@@ -44,7 +44,7 @@ const Statistics = () => {
           data.data.examBox.map((subject: Subject, index: number) => ({
             id: subject.id,
             title: subject.name,
-            isClicked: index == 0 ? true : false,
+            isClicked: index === 0,
           })),
         );
         getExamGrade(data.data.examBox[0].id);
@@ -69,7 +69,12 @@ const Statistics = () => {
   if (tags?.length == 0 || !tags) {
     return (
       <div className="flex flex-col h-full justify-center items-center">
-        <Empty />
+        <Empty setModalOpen={setModalOpen} />
+        {modalOpen && (
+          <Modal onClose={() => setModalOpen(false)}>
+            <CreateModal type="시험" setModalOpen={setModalOpen} />
+          </Modal>
+        )}
       </div>
     );
   }
