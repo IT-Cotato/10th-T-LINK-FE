@@ -49,6 +49,7 @@ const Statistics = () => {
         );
         getExamGrade(data.data.examBox[0].id);
         setSelectedTag(data.data.examBox[0].id);
+        setName(data.data.examBox[0].name);
       }
     });
   }, [modalOpen]);
@@ -59,7 +60,6 @@ const Statistics = () => {
       if (data.data.exams.length == 0) {
         setData([]);
       } else {
-        setName(data.data.examBoxName);
         setData(data.data.exams);
       }
     });
@@ -79,6 +79,7 @@ const Statistics = () => {
 
     getExamGrade(id);
     setSelectedTag(id);
+    setName(title);
   };
 
   if (!data) {
@@ -96,7 +97,7 @@ const Statistics = () => {
       </div>
       {/* 그래프 */}
       <div className="flex flex-col pt-4 pb-6 rounded-lg bg-gray-50 w-full justify-center items-center px-4 gap-6">
-        <h1 className="text-body2 font-semibold leading-8 tracking-[-0.18px]">시험 종류명</h1>
+        <h1 className="text-body2 font-semibold leading-8 tracking-[-0.18px]">{name}</h1>
         <div className="w-full h-full">
           <Chart data={data} />
         </div>

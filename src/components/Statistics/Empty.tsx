@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Frame from '../../assets/images/Frame.svg?react';
-import Button from '../Button';
 import StatisticsButton from '../StatisticsButton';
 import Modal from '../Modal/Modal';
 import CreateModal from '../Modal/CreateModal';
