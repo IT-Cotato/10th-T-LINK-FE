@@ -74,7 +74,7 @@ const RoomDetail = () => {
         </div>
       </div>
       {/* 목록 */}
-      <div className="grid grid-cols-2 gap-2 pb-6 px-4 border-b-2 border-gray-100">
+      <div className={`grid grid-cols-2 gap-2 pb-6 px-4 border-b-2 border-gray-100`}>
         <DetailButton type="materials" isPermission={roomDetail.permission?.lectureFile} />
         <DetailButton type="homework" isPermission={roomDetail.permission?.homework} />
         <DetailButton type="stats" isPermission={roomDetail.permission?.gradeStatistic} />
@@ -85,9 +85,11 @@ const RoomDetail = () => {
         <CalendarDeposit
           roomname={[roomDetail?.roomName]}
           nextDeopsit={roomDetail.depositAt}
+          type={'roomDetail'}
           isPermission={roomDetail.permission?.deposit}
         />
-        {userRole == 'TEACHER' ? <CalendarNolesson isShareLink={true} /> : ''}
+
+        {userRole == 'TEACHER' && <CalendarNolesson isShareLink={true} />}
       </div>
     </div>
   );

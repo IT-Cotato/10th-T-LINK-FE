@@ -34,20 +34,21 @@ const Statistics = () => {
   const [data, setData] = useState<DataType[]>([]);
   const { roomId } = useParams<{ roomId: string }>();
   const [name, setName] = useState('');
-  const [selectedTag, setSelectedTag] = useState<number>(1);
+  const [selectedTag, setSelectedTag] = useState<number>();
 
   useEffect(() => {
     // 시험 종류 받아오기
     getExamType(roomId!).then((data) => {
       if (data.data.examBox.length !== 0) {
         setTags(
-          data.data.examBox.map((subject: Subject) => ({
+          data.data.examBox.map((subject: Subject, index: number) => ({
             id: subject.id,
             title: subject.name,
-            isClicked: subject.id == 1 ? true : false,
+            isClicked: index == 0 ? true : false,
           })),
         );
-        getExamGrade(1);
+        getExamGrade(data.data.examBox[0].id);
+        setSelectedTag(data.data.examBox[0].id);
       }
     });
   }, [modalOpen]);
@@ -57,7 +58,6 @@ const Statistics = () => {
     getGrade(roomId!, id.toString()).then((data) => {
       if (data.data.exams.length == 0) {
         setData([]);
-        console.log('이거실행');
       } else {
         setName(data.data.examBoxName);
         setData(data.data.exams);

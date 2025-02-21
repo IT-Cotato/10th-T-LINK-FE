@@ -10,9 +10,9 @@ export const getUserInfo = async () => {
   }
 };
 
-export const patchMessage = async () => {
+export const patchMessage = async (statusMessage: string) => {
   try {
-    const repsonse = await instance.patch(`/api/v1/user/mypage/statusMessage`);
+    const repsonse = await instance.patch(`/api/v1/user/mypage/statusMessage`, { statusMessage });
     return repsonse;
   } catch (error) {
     console.log(error);
