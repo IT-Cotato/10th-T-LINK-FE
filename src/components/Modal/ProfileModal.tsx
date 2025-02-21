@@ -42,7 +42,7 @@ const ProfileModal = ({ setModalOpen, id, profileImg }: ModalProps) => {
 
       <div className="flex flex-1 flex-col gap-6 justify-center items-center bg-primary_100 rounded-2xl py-6">
         <img src={profile.profileImageUrl} className="w-20 h-20 rounded-full" />
-        <div>
+        <div className="flex flex-col items-center">
           <p className="text-[22px] font-bold leading-9">{profile.username}</p>
           <p className="text-caption1 leading-[22px] text-gray-500">{profile.statusMessage}</p>
         </div>

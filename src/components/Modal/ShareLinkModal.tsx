@@ -17,7 +17,7 @@ const ShareLinkModal = ({ roomId }: ShareLinkProps) => {
     try {
       const res = await getShareCode(roomId);
       const shareCode = res.data.data.shareCode;
-      const link = `https://t-link.site:5173/user/roomlist/invite/${roomId}/${shareCode}`;
+      const link = `https://t-link.site/user/roomlist/invite/${roomId}/${shareCode}`;
       console.log(link);
 
       navigator.clipboard.writeText(link);

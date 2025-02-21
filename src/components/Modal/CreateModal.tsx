@@ -25,6 +25,8 @@ const CreateModal = ({ setModalOpen, type, id }: ModalProps) => {
   const handleCreate = () => {
     if (type == '시험') {
       postTest(roomId!, test).then((data) => {
+        console.log(data);
+
         setModalOpen(false);
       });
     } else if (type == '성적') {

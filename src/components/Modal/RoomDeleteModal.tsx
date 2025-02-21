@@ -1,20 +1,19 @@
 import { useState } from 'react';
-import { replace, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { deleteRoom } from '../../api/roomList.api';
 import { deleteHomework } from '../../api/homework.api';
 import { deleteCounselingLog } from '../../api/counseling.api';
 import { deleteLectureFile } from '../../api/materials.api';
-import instance from '../../api/axios';
+import { deleteGrade, deleteTest } from '../../api/statistics.api';
 
 interface RoomDeleteProps {
   setModalOpen: (value: boolean) => void;
   what: string;
-  stat?: boolean;
   examBoxId?: number;
-  id?: number;
+  examId?: number;
 }
 
-const RoomDeleteModal = ({ setModalOpen, what, stat, examBoxId, id }: RoomDeleteProps) => {
+const RoomDeleteModal = ({ setModalOpen, what, examBoxId, examId }: RoomDeleteProps) => {
   const { roomId, homeworkId, counselingId, materialId } = useParams();
   const [toast, setToast] = useState(false);
 
@@ -77,10 +76,26 @@ const RoomDeleteModal = ({ setModalOpen, what, stat, examBoxId, id }: RoomDelete
     }
   };
 
-  const handleDeleteStatistics = () => {};
-  const handleDeleteGrade = async (examBoxId: number, examId: number) => {
+  const handleDeleteTest = async () => {
+    if (!roomId || !examBoxId) return;
+
     try {
-      const res = await instance.delete(`/api/v1/rooms/${roomId}/gradeStatistics/${examBoxId}/exams/${examId}`);
+      const res = await deleteTest(roomId, examBoxId);
+      console.log(res);
+      if (res.status === 200) {
+        setModalOpen(false);
+        navigate(`/user/${roomId}/stats`);
+      }
+    } catch (error) {
+      console.error('Failed to delete room:', error);
+    }
+  };
+
+  const handleDeleteGrade = async () => {
+    if (!roomId || !examBoxId || !examId) return;
+
+    try {
+      const res = await deleteGrade(roomId, examBoxId, examId);
       console.log(res);
       if (res.status === 200) {
         setModalOpen(false);
@@ -95,22 +110,16 @@ const RoomDeleteModal = ({ setModalOpen, what, stat, examBoxId, id }: RoomDelete
     else if (what.includes('자료')) handleDeleteFiles();
     else if (what.includes('숙제')) handleDeleteHomework();
     else if (what.includes('일지')) handleDeleteCounseling();
-    else if (what.includes('통계')) handleDeleteStatistics();
-    else if (what.includes('성적')) handleDeleteGrade(examBoxId!, id!);
+    else if (what.includes('시험')) handleDeleteTest();
+    else if (what.includes('성적')) handleDeleteGrade();
   };
 
   return (
     <>
       <div className="w-[320px] p-4 flex flex-col rounded-2xl items-center justify-center gap-8 bg-white">
         <div className="font-semibold text-lg leading-8">
-          {stat == true ? (
-            <p>해당 회차의 성적이 삭제됩니다.</p>
-          ) : (
-            <>
-              <p>{what} 삭제하시겠습니까?</p>
-              <p>삭제 시 저장하셨던 정보가 사라집니다.</p>
-            </>
-          )}
+          <p>{what} 삭제하시겠습니까?</p>
+          <p>삭제 시 저장하셨던 정보가 사라집니다.</p>
         </div>
         <div className="flex w-full gap-3 text-[16px] font-semibold">
           <button
