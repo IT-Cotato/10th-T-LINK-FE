@@ -1,13 +1,12 @@
-import { useState } from 'react';
 import Frame from '../../assets/images/Frame.svg?react';
-import Button from '../Button';
 import StatisticsButton from '../StatisticsButton';
-import Modal from '../Modal/Modal';
-import CreateModal from '../Modal/CreateModal';
 
-const Empty = () => {
+interface EmptyProps {
+  setModalOpen: (value: boolean) => void;
+}
+
+const Empty = ({ setModalOpen }: EmptyProps) => {
   const userRole = localStorage.getItem('roleInfo');
-  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <div className="p-4 flex flex-col justify-center gap-6 items-center">
@@ -17,11 +16,13 @@ const Empty = () => {
         <p>시험 종류를 추가하고</p>
         <p>성적 통계를 한번에 보세요!</p>
       </div>
-      {userRole == 'TEACHER' ? <StatisticsButton type="시험" onClick={() => setModalOpen(true)} /> : ''}
-      {modalOpen && (
-        <Modal onClose={() => setModalOpen(false)}>
-          <CreateModal type="시험" setModalOpen={setModalOpen} />
-        </Modal>
+      {userRole == 'TEACHER' && (
+        <StatisticsButton
+          type="시험"
+          onClick={() => {
+            setModalOpen(true);
+          }}
+        />
       )}
     </div>
   );
