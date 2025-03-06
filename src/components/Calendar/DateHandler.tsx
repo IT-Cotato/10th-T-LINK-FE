@@ -21,7 +21,7 @@ const DateHandler = ({ date, setDate }: DateProps) => {
         <MdKeyboardArrowLeft size={24} />
       </button>
       <div className="px-2 text-xl font-medium text-gray-900">
-        {date.getFullYear()}.{date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}
+        {date.getFullYear()}.{date.getMonth() < 9 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1}
       </div>
       <button className="p-2" onClick={handleRight}>
         <MdKeyboardArrowRight size={24} />

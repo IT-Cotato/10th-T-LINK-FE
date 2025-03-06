@@ -37,7 +37,7 @@ const DatePicker = ({ setValue, onClose }: DatePickerProps) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl w-[90%] h-[58%] px-4 flex-col justify-between flex pb-4">
+    <div className="bg-white rounded-2xl w-max-[90%] h-min-[58%] px-4 flex-col justify-between flex pb-4">
       <div>
         <DateHandler date={date} setDate={setDate} />
       </div>
