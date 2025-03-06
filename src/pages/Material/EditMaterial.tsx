@@ -2,12 +2,11 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getLectureFileDeatil, patchLectureFile } from '../../api/materials.api';
 import { LectureFile } from '../../models/materials.model';
-import Input from '../../components/Room/Input';
-import AddFile from '../../components/AddFile';
-import { downloadFile } from '../../utils/DownloadFiles';
-import LongButton from '../../components/LongButton';
-import Loading from '../Loading';
-import FileDetail from '../../components/FileDetail';
+import Input from '../../components/RoomDetail/Input';
+import AddFile from '../../components/Material/AddFile';
+import LongButton from '../../components/RoomDetail/LongButton';
+import Loading from '../Common/Loading';
+import FileDetail from '../../components/Material/FileDetail';
 
 const EditMaterial = () => {
   const { roomId, materialId } = useParams<{ roomId: string; materialId: string }>();

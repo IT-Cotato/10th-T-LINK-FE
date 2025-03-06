@@ -1,12 +1,12 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import RoomInfo from '../../components/RoomInfo';
+import RoomInfo from '../../components/Room/RoomInfo';
 import { useEffect, useState } from 'react';
 import { getRoomList } from '../../api/roomList.api';
 import { SimpleRoomInfo } from '../../models/room.model';
 import { IoSearch } from 'react-icons/io5';
-import SubjectTag from '../../components/SubjectTag';
-import Button from '../../components/Button';
-import Toast from '../../components/Toast';
+import SubjectTag from '../../components/Room/SubjectTag';
+import Button from '../../components/RoomDetail/Button';
+import Toast from '../../components/Modal/Toast';
 
 const RoomList = () => {
   const navigate = useNavigate();

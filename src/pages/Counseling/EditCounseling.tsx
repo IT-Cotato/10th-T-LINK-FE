@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getCounselingLogDetail, patchCounselingLog } from '../../api/counseling.api';
-import { CounselingLogDetail } from '../../models/counseling.model';
-import LongButton from '../../components/LongButton';
-import TextArea from '../../components/Room/TextArea';
-import PickDate from '../../components/Room/PickDate';
-import ChooseButton from '../../components/Room/ChooseButton';
-import Input from '../../components/Room/Input';
-import Loading from '../Loading';
+import LongButton from '../../components/RoomDetail/LongButton';
+import TextArea from '../../components/RoomDetail/TextArea';
+import PickDate from '../../components/RoomDetail/PickDate';
+import ChooseButton from '../../components/Counseling/ChooseButton';
+import Input from '../../components/RoomDetail/Input';
+import Loading from '../Common/Loading';
 
 const EditCounseling = () => {
   const nav = useNavigate();

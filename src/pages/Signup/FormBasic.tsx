@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Header from '../../components/Header';
+import Header from '../../components/Common/Header';
 
 const FormBasic = () => {
   const navigate = useNavigate();

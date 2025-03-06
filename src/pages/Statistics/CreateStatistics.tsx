@@ -1,5 +1,5 @@
-import SubjectTag from '../../components/SubjectTag';
-import Table from '../../components/Table';
+import SubjectTag from '../../components/Room/SubjectTag';
+import Table from '../../components/Statistics/Table';
 import { useLocation } from 'react-router-dom';
 import { Type } from './Statistics';
 import { useState } from 'react';

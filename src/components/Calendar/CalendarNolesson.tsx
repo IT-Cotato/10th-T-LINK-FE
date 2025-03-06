@@ -4,7 +4,7 @@ import { MdKeyboardArrowRight } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router-dom';
 import student from '../../assets/images/student_girl.png';
 import { useState } from 'react';
-import Toast from '../Toast';
+import Toast from '../Modal/Toast';
 import { getShareCode } from '../../api/roomList.api';
 
 type Props = {

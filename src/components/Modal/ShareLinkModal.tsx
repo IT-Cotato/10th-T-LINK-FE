@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getShareCode } from '../../api/roomList.api';
-import Toast from '../Toast';
+import Toast from './Toast';
 import link from '../../assets/images/link.png';
 
 interface ShareLinkProps {

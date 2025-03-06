@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { LectureFileBox } from '../../models/materials.model';
-import SearchBar from '../../components/SearchBar';
-import Preview_1 from '../../components/Preview_1';
-import Button from '../../components/Button';
-import { getLectureFileBoxes, uploadLectureFile } from '../../api/materials.api';
-import Toast from '../../components/Toast';
+import SearchBar from '../../components/RoomDetail/SearchBar';
+import Preview_1 from '../../components/Material/Preview_1';
+import Button from '../../components/RoomDetail/Button';
+import { getLectureFileBoxes } from '../../api/materials.api';
+import Toast from '../../components/Modal/Toast';
 
 const Materials = () => {
   const nav = useNavigate();

@@ -3,12 +3,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getLectureFileDeatil } from '../../api/materials.api';
 import { LectureFileBoxDetail } from '../../models/materials.model';
 import Edit from '../../assets/images/RoomDetail/Edit.svg?react';
-import { downloadFile } from '../../utils/DownloadFiles';
-import Loading from '../Loading';
+import Loading from '../Common/Loading';
 import Modal from '../../components/Modal/Modal';
 import RoomDeleteModal from '../../components/Modal/RoomDeleteModal';
 import useDeleteStore from '../../store/useDeleteStore';
-import FileDetail from '../../components/FileDetail';
+import FileDetail from '../../components/Material/FileDetail';
 
 const MaterialDetail = () => {
   const nav = useNavigate();

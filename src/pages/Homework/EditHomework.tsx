@@ -1,13 +1,12 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import AddFile from '../../components/AddFile';
-import LongButton from '../../components/LongButton';
-import Input from '../../components/Room/Input';
-import PickDate from '../../components/Room/PickDate';
+import AddFile from '../../components/Material/AddFile';
+import LongButton from '../../components/RoomDetail/LongButton';
+import Input from '../../components/RoomDetail/Input';
+import PickDate from '../../components/RoomDetail/PickDate';
 import { useEffect, useState } from 'react';
 import { getHomeworkInfo, patchHomework } from '../../api/homework.api';
 import { HomeworkFile, HomeworkFileBoxDetail } from '../../models/homework.model';
-import { downloadFile } from '../../utils/DownloadFiles';
-import FileDetail from '../../components/FileDetail';
+import FileDetail from '../../components/Material/FileDetail';
 
 const EditHomework = () => {
   const { roomId, homeworkId } = useParams<{ roomId: string; homeworkId: string }>();
