@@ -147,6 +147,7 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
         {ParentPermission.map((permission) => (
           <PermissionToggle
             key={permission.id}
+            id={`permission-${permission.id}`}
             permission={permission}
             handleToggleCheck={handleToggleCheck}
             isChecked={input.parentPermission[permission.type as keyof SimplePermission]}
@@ -162,6 +163,7 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
         {StudentPermission.map((permission) => (
           <PermissionToggle
             key={permission.id}
+            id={`permission-${permission.id}`}
             permission={permission}
             handleToggleCheck={handleToggleCheck}
             isChecked={input.studentPermission[permission.type as keyof SimplePermission]}
