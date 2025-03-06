@@ -1,0 +1,39 @@
+import { FaRegFileAlt } from 'react-icons/fa';
+import vector_gray from '../../assets/images/vector_gray.png';
+import { RiDownloadLine } from 'react-icons/ri';
+import { getAllLectureFile } from '../../api/materials.api';
+import { downloadFile } from '../../utils/DownloadFiles';
+import { useParams } from 'react-router-dom';
+import { FiTrash2 } from 'react-icons/fi';
+
+interface FileDetailProps {
+  title: string;
+  fileUrl?: string;
+  onDelete?: () => void;
+}
+
+const FileDetail = ({ title, fileUrl, onDelete }: FileDetailProps) => {
+  return (
+    <div className="p-4 flex gap-3 items-center bg-gray-100 rounded-lg">
+      <div className="p-1">
+        <FaRegFileAlt size={24} fill="#242421" />
+      </div>
+      <div className="flex gap-4 items-center flex-1">
+        <img src={vector_gray} className="w-[3px] h-[24px]" />
+        <div className="tracking-[-0.048px] flex flex-col items-start">
+          <p className="text-body3 font-semibold leading-7 text-gray-900">{title}</p>
+          <p className="text-body4 font-normal leading-[25px] text-gray-500">7.5B</p>
+        </div>
+      </div>
+      <div>
+        {fileUrl ? (
+          <RiDownloadLine size={22} fill="#242421" onClick={() => downloadFile(fileUrl)} />
+        ) : (
+          <FiTrash2 size={22} onClick={onDelete} />
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default FileDetail;

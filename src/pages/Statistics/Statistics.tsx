@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import SubjectTag from '../../components/SubjectTag';
-import Chart from '../../components/Chart';
-import StatisticsButton from '../../components/StatisticsButton';
+import SubjectTag from '../../components/Room/SubjectTag';
+import Chart from '../../components/Statistics/Chart';
+import StatisticsButton from '../../components/Statistics/StatisticsButton';
 import { useNavigate, useParams } from 'react-router-dom';
-import Button from '../../components/Button';
+import Button from '../../components/RoomDetail/Button';
 import Modal from '../../components/Modal/Modal';
 import CreateModal from '../../components/Modal/CreateModal';
-import Loading from '../Loading';
+import Loading from '../Common/Loading';
 import { getExamType, getGrade } from '../../api/statistics.api';
 import Empty from '../../components/Statistics/Empty';
 

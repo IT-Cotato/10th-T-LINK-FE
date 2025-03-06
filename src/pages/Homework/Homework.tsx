@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getHomework } from '../../api/homework.api';
 import { Homeworks } from '../../models/homework.model';
-import Preview_2 from '../../components/Preview_2';
-import Button from '../../components/Button';
+import Preview_2 from '../../components/Material/Preview_2';
+import Button from '../../components/RoomDetail/Button';
 import { CaculateDday } from '../../utils/CaculateDday';
-import Toast from '../../components/Toast';
+import Toast from '../../components/Modal/Toast';
 
 const Homework = () => {
   const { roomId } = useParams<{ roomId: string }>();

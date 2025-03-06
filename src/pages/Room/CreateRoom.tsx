@@ -1,4 +1,4 @@
-import RoomEditor from '../../components/RoomEditor';
+import RoomEditor from '../../components/Room/RoomEditor';
 import { useState } from 'react';
 import { RoomInfo, Room } from '../../models/room.model';
 import { useNavigate } from 'react-router-dom';

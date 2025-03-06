@@ -3,13 +3,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getHomeworkDeatil } from '../../api/homework.api';
 import { HomeworkFile, HomeworkFileBoxDetail } from '../../models/homework.model';
 import Edit from '../../assets/images/RoomDetail/Edit.svg?react';
-import { downloadFile } from '../../utils/DownloadFiles';
-import Loading from '../Loading';
-import Button from '../../components/Button';
+import Loading from '../Common/Loading';
+import Button from '../../components/RoomDetail/Button';
 import Modal from '../../components/Modal/Modal';
 import RoomDeleteModal from '../../components/Modal/RoomDeleteModal';
 import useDeleteStore from '../../store/useDeleteStore';
-import FileDetail from '../../components/FileDetail';
+import FileDetail from '../../components/Material/FileDetail';
 
 const HomeworkDetail = () => {
   const { roomId, homeworkId } = useParams<{ roomId: string; homeworkId: string }>();

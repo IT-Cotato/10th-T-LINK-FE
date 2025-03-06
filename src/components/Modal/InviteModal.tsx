@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { getRoomInfo, postShareCode } from '../../api/roomList.api';
 import { useEffect, useState } from 'react';
-import RoomInfoContent from '../RoomInfoContent';
+import RoomInfoContent from '../Room/RoomInfoContent';
 import { SimpleRoomInfo } from '../../models/room.model';
 
 const InviteModal = () => {

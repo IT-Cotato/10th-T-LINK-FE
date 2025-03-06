@@ -1,18 +1,10 @@
 // router.ts
 import { createBrowserRouter } from 'react-router-dom';
-import ProtectedRoute from '../components/ProtectedRoute';
 import Signup from '../pages/Signup/Signup';
-import Login from '../pages/Login';
-import Splash from '../pages/Splash';
 import RoomList from '../pages/Room/RoomList';
-import Calendar from '../pages/Calendar';
-import MyPage from '../pages/MyPage';
-import Layout from '../components/Layout';
-import RoomDetail from '../pages/Room/RoomDetail';
-import Payment from '../pages/Payment/Payment';
+import Payment from '../pages/Deposit/Payment';
 import Statistics from '../pages/Statistics/Statistics';
 import CreateRoom from '../pages/Room/CreateRoom';
-import KakaoOauth from '../components/KakaoOauth';
 import EditRoom from '../pages/Room/EditRoom';
 import FormTel from '../pages/Signup/FormTel';
 import FormBasic from '../pages/Signup/FormBasic';
@@ -26,14 +18,22 @@ import MaterialDetail from '../pages/Material/MaterialDetail';
 import CounselingDiary from '../pages/Counseling/CounselingDiary';
 import CreateCounseling from '../pages/Counseling/CreateCounseling';
 import CounselingDetail from '../pages/Counseling/CounselingDetail';
-import UserPolicy from '../pages/UserPolicy';
 import ShareCode from '../pages/Room/ShareCode';
-import Invite from '../pages/Invite';
 import EditHomework from '../pages/Homework/EditHomework';
 import EditCounseling from '../pages/Counseling/EditCounseling';
 import EditMaterial from '../pages/Material/EditMaterial';
-import CreatePayment from '../pages/Payment/CreatePayment';
+import CreatePayment from '../pages/Deposit/CreatePayment';
 import CreateStatistics from '../pages/Statistics/CreateStatistics';
+import Splash from '../pages/Common/Splash';
+import Login from '../pages/Signup/Login';
+import KakaoOauth from '../components/Signup/KakaoOauth';
+import ProtectedRoute from '../components/Common/ProtectedRoute';
+import Layout from '../components/Common/Layout';
+import Invite from '../pages/Room/Invite';
+import RoomDetail from '../pages/RoomDetail/RoomDetail';
+import Calendar from '../pages/Calendar/Calendar';
+import MyPage from '../pages/MyPage/MyPage';
+import UserPolicy from '../pages/MyPage/UserPolicy';
 
 export const router = createBrowserRouter([
   {

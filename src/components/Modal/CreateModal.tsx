@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Input from '../Room/Input';
+import Input from '../RoomDetail/Input';
 import { postGrade, postTest } from '../../api/statistics.api';
 import { useParams } from 'react-router-dom';
 import { patchMessage } from '../../api/mypage.api';

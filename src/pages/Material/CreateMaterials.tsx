@@ -2,9 +2,9 @@ import { ChangeEvent, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { uploadLectureFile } from '../../api/materials.api';
-import LongButton from '../../components/LongButton';
-import AddFile from '../../components/AddFile';
-import Input from '../../components/Room/Input';
+import LongButton from '../../components/RoomDetail/LongButton';
+import AddFile from '../../components/Material/AddFile';
+import Input from '../../components/RoomDetail/Input';
 
 const CreateMaterials = () => {
   const { roomId } = useParams<{ roomId: string }>();

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { postCounselingLogs } from '../../api/counseling.api';
 import { useNavigate, useParams } from 'react-router-dom';
-import PickDate from '../../components/Room/PickDate';
-import Input from '../../components/Room/Input';
-import ChooseButton from '../../components/Room/ChooseButton';
-import TextArea from '../../components/Room/TextArea';
-import LongButton from '../../components/LongButton';
+import PickDate from '../../components/RoomDetail/PickDate';
+import Input from '../../components/RoomDetail/Input';
+import ChooseButton from '../../components/Counseling/ChooseButton';
+import TextArea from '../../components/RoomDetail/TextArea';
+import LongButton from '../../components/RoomDetail/LongButton';
 
 const CreateCounseling = () => {
   const nav = useNavigate();

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../../components/Header';
-import RoleSelectionButton from '../../components/RoleSelectionButton';
+import Header from '../../components/Common/Header';
+import RoleSelectionButton from '../../components/Signup/RoleSelectionButton';
 import { RoleList } from '../../utils/RoleList';
 
 const Signup = () => {

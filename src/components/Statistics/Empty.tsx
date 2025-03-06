@@ -1,5 +1,5 @@
 import Frame from '../../assets/images/Frame.svg?react';
-import StatisticsButton from '../StatisticsButton';
+import StatisticsButton from './StatisticsButton';
 
 interface EmptyProps {
   setModalOpen: (value: boolean) => void;
