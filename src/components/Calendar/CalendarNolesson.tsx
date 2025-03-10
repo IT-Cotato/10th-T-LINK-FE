@@ -6,6 +6,7 @@ import student from '../../assets/images/student_girl.png';
 import { useState } from 'react';
 import Toast from '../Modal/Toast';
 import { getShareCode } from '../../api/roomList.api';
+import copy from 'clipboard-copy';
 
 type Props = {
   isShareLink?: boolean;
@@ -24,7 +25,7 @@ const CalendarNolesson = ({ isShareLink, roleInfo }: Props) => {
         const shareCode = res.data.data.shareCode;
         const link = `https://t-link.site/user/roomlist/invite/${roomId}/${shareCode}`;
         console.log(link);
-        await navigator.clipboard.writeText(link);
+        await copy(link);
         setToast(true);
       } catch (e) {
         alert('초대 코드 복사에 실패했습니다.');
