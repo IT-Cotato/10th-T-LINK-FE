@@ -6,12 +6,14 @@ import student from '../../assets/images/student_girl.png';
 import { useState } from 'react';
 import Toast from '../Modal/Toast';
 import { getShareCode } from '../../api/roomList.api';
+import copy from 'clipboard-copy';
 
 type Props = {
   isShareLink?: boolean;
+  roleInfo: string;
 };
 
-const CalendarNolesson = ({ isShareLink }: Props) => {
+const CalendarNolesson = ({ isShareLink, roleInfo }: Props) => {
   const navigation = useNavigate();
   const { roomId } = useParams();
   const [toast, setToast] = useState(false);
@@ -23,12 +25,12 @@ const CalendarNolesson = ({ isShareLink }: Props) => {
         const shareCode = res.data.data.shareCode;
         const link = `https://t-link.site/user/roomlist/invite/${roomId}/${shareCode}`;
         console.log(link);
-        await navigator.clipboard.writeText(link);
+        await copy(link);
         setToast(true);
       } catch (e) {
         alert('초대 코드 복사에 실패했습니다.');
       }
-    } else {
+    } else if (roleInfo === 'TEACHER') {
       navigation('/user/roomlist');
     }
   };
@@ -52,12 +54,14 @@ const CalendarNolesson = ({ isShareLink }: Props) => {
           ) : (
             <>
               <div className="text-gray-900 text-base font-semibold leading-7">오늘은 일정이 없어요!</div>
-              <div className="text-sm leading-6 tracking-[-0.042px]">과외방에서 일정을 추가할 수 있어요</div>
+              {roleInfo === 'TEACHER' && (
+                <div className="text-sm leading-6 tracking-[-0.042px]">과외방에서 일정을 추가할 수 있어요</div>
+              )}
             </>
           )}
         </div>
       </div>
-      <MdKeyboardArrowRight size={24} />
+      {roleInfo === 'TEACHER' && <MdKeyboardArrowRight size={24} />}
     </div>
   );
 };

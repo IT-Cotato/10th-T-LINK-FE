@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { getShareCode } from '../../api/roomList.api';
 import Toast from './Toast';
 import link from '../../assets/images/link.png';
+import copy from 'clipboard-copy';
 
 interface ShareLinkProps {
   setModalOpen: (value: boolean) => void;
@@ -19,8 +20,7 @@ const ShareLinkModal = ({ roomId }: ShareLinkProps) => {
       const shareCode = res.data.data.shareCode;
       const link = `https://t-link.site/user/roomlist/invite/${roomId}/${shareCode}`;
       console.log(link);
-
-      navigator.clipboard.writeText(link);
+      await copy(link);
       setToast(true);
     } catch (e) {
       alert('failed');

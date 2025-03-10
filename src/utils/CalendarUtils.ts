@@ -45,10 +45,12 @@ export const groupDatesByWeek = (firstDay: Date, lastDay: Date) => {
   }
 
   // 말일 이후 공백 추가
-  while (currentWeek.length < 7) {
-    currentWeek.push(null);
+  if (currentWeek.length > 0 && currentWeek.some((day) => day !== null)) {
+    while (currentWeek.length < 7) {
+      currentWeek.push(null);
+    }
+    weeks.push(currentWeek);
   }
 
-  weeks.push(currentWeek);
   return weeks;
 };

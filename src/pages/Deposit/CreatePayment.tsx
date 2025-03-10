@@ -4,10 +4,10 @@ import Input from '../../components/RoomDetail/Input';
 import ChooseBank from '../../components/Deposit/ChooseBank';
 import { BankInfo } from '../../models/deposit.model';
 import LongButton from '../../components/RoomDetail/LongButton';
-import Toggle from '../../components/Deposit/Toggle';
 import { getDepositDetail, putDeposit } from '../../api/deposit.api';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getClosestFutureDate } from '../../utils/getCloseDate';
+import ToggleSwitch from '../../components/Room/ToggleSwitch';
 
 const CreatePayment = () => {
   const params = new URLSearchParams(location.search);
@@ -99,8 +99,13 @@ const CreatePayment = () => {
               <p className="text-body3 font-normal leading-7 tracking-[-0.048px] text-gray-600 border-b-[1px] border-gray-200 pb-4">
                 입금일 1일 전, 학부모님께 알림을 보내드려요!
               </p>
+
               {/* 토글 */}
-              <Toggle isChecked={isChecked} setIsChecked={setIsChecked} />
+              <div className="flex w-full justify-between font-normal text-base leading-7 mt-2 tracking-[-0.048px]">
+                <h1 className={`${isChecked ? 'text-gray-900' : 'text-gray-500'}`}>입금일 알림</h1>
+                <ToggleSwitch id="deposit" onChange={() => setIsChecked(!isChecked)} isChecked={isChecked} />
+              </div>
+
               <div className="py-6 mt-auto absolute bottom-0 right-4 left-4">
                 <LongButton onClick={handleSumbit} text={isEdit ? '수정하기' : '완료'} enable={true} />
               </div>
