@@ -47,9 +47,13 @@ export const patchCounselingLog = async (
   counselingLogId: string,
   payload: CounselingInfo,
 ) => {
-  const response = await instance.put(
-    `/api/v1/rooms/${roomId}/counselingLogs/${counselingLogId}`,
-    payload,
-  );
-  return response.data;
+  try {
+    const response = await instance.put(
+      `/api/v1/rooms/${roomId}/counselingLogs/${counselingLogId}`,
+      payload,
+    );
+    return response.data;
+  } catch (error) {
+    console.log('상담 일지 수정 실패', error);
+  }
 };
