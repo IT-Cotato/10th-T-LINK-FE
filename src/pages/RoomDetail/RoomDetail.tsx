@@ -89,7 +89,7 @@ const RoomDetail = () => {
           isPermission={roomDetail.permission?.deposit}
         />
 
-        {userRole == 'TEACHER' && <CalendarNolesson isShareLink={true} />}
+        {userRole == 'TEACHER' && <CalendarNolesson isShareLink={true} roleInfo="TEACHER" />}
       </div>
     </div>
   );
