@@ -19,18 +19,33 @@ export const postCounselingLogs = async (roomId: string, payload: CounselingInfo
 
 // 상담 일지 상세 조회
 export const getCounselingLogDetail = async (roomId: string, counselingLogId: string) => {
-  const response = await instance.get(`/api/v1/rooms/${roomId}/counselingLogs/${counselingLogId}`);
-  return response.data;
+  try {
+    const response = await instance.get(
+      `/api/v1/rooms/${roomId}/counselingLogs/${counselingLogId}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.log('상담 일지 상세 조회 실패', error);
+  }
 };
 
 // 상담 일지 삭제
 export const deleteCounselingLog = async (roomId: string, counselingLogId: string) => {
-  const response = await instance.delete(`/api/v1/rooms/${roomId}/counselingLogs/${counselingLogId}`);
+  const response = await instance.delete(
+    `/api/v1/rooms/${roomId}/counselingLogs/${counselingLogId}`,
+  );
   return response.data;
 };
 
 // 상담 일지 수정
-export const patchCounselingLog = async (roomId: string, counselingLogId: string, payload: CounselingInfo) => {
-  const response = await instance.put(`/api/v1/rooms/${roomId}/counselingLogs/${counselingLogId}`, payload);
+export const patchCounselingLog = async (
+  roomId: string,
+  counselingLogId: string,
+  payload: CounselingInfo,
+) => {
+  const response = await instance.put(
+    `/api/v1/rooms/${roomId}/counselingLogs/${counselingLogId}`,
+    payload,
+  );
   return response.data;
 };
