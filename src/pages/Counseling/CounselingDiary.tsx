@@ -7,6 +7,7 @@ import Button from '../../components/RoomDetail/Button';
 import Toast from '../../components/Modal/Toast';
 import { searchFilter } from '../../utils/SearchFilter';
 import CounselingList from '../../components/Counseling/CounselingList';
+import Container from '../../components/Common/Container';
 
 const CounselingDiary = () => {
   const { roomId } = useParams<{ roomId: string }>();
@@ -37,7 +38,7 @@ const CounselingDiary = () => {
   });
 
   return (
-    <div className="flex flex-col px-4 h-full relative">
+    <Container>
       <div className="py-4">
         <SearchBar value={search} setValue={setSearch} />
       </div>
@@ -45,7 +46,7 @@ const CounselingDiary = () => {
       {userRole == 'TEACHER' && <Button text="일지 업로드하기" onClick={() => nav('create')} />}
       <Outlet />
       {toast && <Toast setToast={setToast} title="상담 일지 삭제가 완료되었습니다." />}
-    </div>
+    </Container>
   );
 };
 

@@ -9,6 +9,7 @@ import useDeleteStore from '../../store/useDeleteStore';
 import Modal from '../../components/Modal/Modal';
 import RoomDeleteModal from '../../components/Modal/RoomDeleteModal';
 import Description from '../../components/RoomDetail/Description';
+import Container from '../../components/Common/Container';
 
 const CounselingDetail = () => {
   const { roomId, counselingId } = useParams<{ roomId: string; counselingId: string }>();
@@ -23,7 +24,6 @@ const CounselingDetail = () => {
   // 상담일지 상세 조회
   const getCounselingDetail = () => {
     getCounselingLogDetail(roomId!, counselingId!).then((data) => {
-      console.log(data.data);
       setCounselingDetail(data.data);
       setIsLoading(false);
     });
@@ -38,7 +38,7 @@ const CounselingDetail = () => {
   }
 
   return (
-    <div className="px-4 flex flex-col h-full">
+    <Container>
       {/* 설명 */}
       <Description title={counselingDetail.title} updatedAt={counselingDetail.updatedAt} />
       <div className="flex flex-col gap-6">
@@ -66,7 +66,7 @@ const CounselingDetail = () => {
           <RoomDeleteModal setModalOpen={setModalOpen} what={what} />
         </Modal>
       )}
-    </div>
+    </Container>
   );
 };
 

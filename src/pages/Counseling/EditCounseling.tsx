@@ -65,14 +65,20 @@ const EditCounseling = () => {
     <div className="px-4 flex flex-col h-full">
       <div className="flex flex-col gap-6 py-4">
         {/* 날짜 고르기 */}
-        <Input setDesc={setTitle} desc={title} name="상담 제목" placeholder="상담일지명을 입력해주세요" isAble={true} />
-        <div className="flex flex-col gap-[6px]">
-          <div className="text-body4 leading-[26px] font-medium flex gap-1">
-            <span className="text-gray-900">상담 날짜</span>
-            <span className="text-primary_700">(필수)</span>
-          </div>
-          <PickDate deadline={deadline} setDeadline={setDeadline} isAble={true} text="업로드 날짜를 선택해주세요." />
-        </div>
+        <Input
+          setDesc={setTitle}
+          desc={title}
+          name="상담 제목"
+          placeholder="상담일지명을 입력해주세요"
+          isAble={true}
+        />
+        <PickDate
+          deadline={deadline}
+          setDeadline={setDeadline}
+          isAble={true}
+          text="날짜를 선택해주세요."
+          name="상담 날짜"
+        />
         <ChooseButton
           text="학생 참여도"
           type="engage"
