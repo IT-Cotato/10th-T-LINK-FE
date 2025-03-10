@@ -3,10 +3,10 @@ import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { CounselingLogs } from '../../models/counseling.model';
 import { getCounselingLogs } from '../../api/counseling.api';
 import SearchBar from '../../components/RoomDetail/SearchBar';
-import Preview_1 from '../../components/Material/Preview_1';
 import Button from '../../components/RoomDetail/Button';
 import Toast from '../../components/Modal/Toast';
 import { searchFilter } from '../../utils/SearchFilter';
+import CounselingList from '../../components/Counseling/CounselingList';
 
 const CounselingDiary = () => {
   const { roomId } = useParams<{ roomId: string }>();
@@ -41,9 +41,7 @@ const CounselingDiary = () => {
       <div className="py-4">
         <SearchBar value={search} setValue={setSearch} />
       </div>
-      {filteredLogs.map((logs) => (
-        <Preview_1 title={logs.title} updatedAt={logs.updatedAt} type="counseling" id={logs.id} key={logs.id} />
-      ))}
+      <CounselingList logs={filteredLogs} />
       {userRole == 'TEACHER' && <Button text="일지 업로드하기" onClick={() => nav('create')} />}
       <Outlet />
       {toast && <Toast setToast={setToast} title="상담 일지 삭제가 완료되었습니다." />}
