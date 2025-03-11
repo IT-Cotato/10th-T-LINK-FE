@@ -7,7 +7,7 @@ type CalendarProps = { clickDate: Clicked; roleInfo: string };
 
 const CalendarInfo = ({ clickDate, roleInfo }: CalendarProps) => {
   return (
-    <div>
+    <div className="pb-9">
       <div className="flex text-base pt-4 pb-2">
         {clickDate.month}월 {clickDate.day}일
       </div>

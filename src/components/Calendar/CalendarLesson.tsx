@@ -9,7 +9,7 @@ type LessonProps = {
 const CalendarLesson = ({ subjectAndRooms }: LessonProps) => {
   const roleInfo = localStorage.getItem('roleInfo');
   return (
-    <div>
+    <div className="flex flex-col gap-2">
       {subjectAndRooms.map((item, idx) => (
         <div key={idx} className="flex p-4 gap-3 bg-gray-50 items-center rounded-xl">
           <div className="p-1.5 rounded-full bg-white">
