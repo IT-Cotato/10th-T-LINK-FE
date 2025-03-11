@@ -24,7 +24,7 @@ const CalendarDeposit = ({ roomname, nextDeopsit, type, isPermission }: DepositP
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-2">
       {roomname.map((item, idx) => (
         <div
           key={idx}
