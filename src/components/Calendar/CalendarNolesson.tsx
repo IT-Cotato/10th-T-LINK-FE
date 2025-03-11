@@ -3,10 +3,10 @@ import vector from '../../assets/images/vector_gray.png';
 import { MdKeyboardArrowRight } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router-dom';
 import student from '../../assets/images/student_girl.png';
-import { useState } from 'react';
-import Toast from '../Modal/Toast';
+import { useEffect, useState } from 'react';
 import { getShareCode } from '../../api/roomList.api';
-import copy from 'clipboard-copy';
+import Modal from '../Modal/Modal';
+import ShareLinkModal from '../Modal/ShareLinkModal';
 
 type Props = {
   isShareLink?: boolean;
@@ -16,28 +16,35 @@ type Props = {
 const CalendarNolesson = ({ isShareLink, roleInfo }: Props) => {
   const navigation = useNavigate();
   const { roomId } = useParams();
-  const [toast, setToast] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [link, setLink] = useState('');
 
   const handleOnClick = async () => {
     if (isShareLink) {
       try {
         const res = await getShareCode(Number(roomId));
         const shareCode = res.data.data.shareCode;
-        const link = `https://t-link.site/user/roomlist/invite/${roomId}/${shareCode}`;
-        console.log(link);
-        await copy(link);
-        setToast(true);
+        setLink(`https://t-link.site/user/roomlist/invite/${roomId}/${shareCode}`);
+        setModalOpen(true);
       } catch (e) {
-        alert('초대 코드 복사에 실패했습니다.');
+        alert('초대 코드를 가져오는데 실패했습니다.');
       }
     } else if (roleInfo === 'TEACHER') {
       navigation('/user/roomlist');
     }
   };
 
+  useEffect(() => {
+    console.log(link);
+  }, [link]);
+
   return (
     <div className="flex p-4 bg-gray-50 rounded-xl items-center justify-between cursor-pointer" onClick={handleOnClick}>
-      {toast && <Toast setToast={setToast} title="링크가 복사되었습니다." />}
+      {modalOpen && (
+        <Modal onClose={() => setModalOpen(false)}>
+          <ShareLinkModal setModalOpen={setModalOpen} shareLink={link} nav={false} />
+        </Modal>
+      )}
       <div className="flex items-center gap-3">
         <div className="p-1.5 rounded-full bg-white">
           {isShareLink ? <img src={student} className="w-7 h-7" /> : <img src={wow} className="w-7 h-7" />}
