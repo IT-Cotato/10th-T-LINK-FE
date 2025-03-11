@@ -1,31 +1,18 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getShareCode } from '../../api/roomList.api';
 import Toast from './Toast';
 import link from '../../assets/images/link.png';
-import copy from 'clipboard-copy';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 interface ShareLinkProps {
   setModalOpen: (value: boolean) => void;
-  roomId: number;
+  shareLink: string;
+  nav: boolean;
 }
 
-const ShareLinkModal = ({ roomId }: ShareLinkProps) => {
+const ShareLinkModal = ({ setModalOpen, shareLink, nav }: ShareLinkProps) => {
   const navigation = useNavigate();
   const [toast, setToast] = useState(false);
-
-  const handleCopy = async () => {
-    try {
-      const res = await getShareCode(roomId);
-      const shareCode = res.data.data.shareCode;
-      const link = `https://t-link.site/user/roomlist/invite/${roomId}/${shareCode}`;
-      console.log(link);
-      await copy(link);
-      setToast(true);
-    } catch (e) {
-      alert('failed');
-    }
-  };
 
   return (
     <>
@@ -34,15 +21,17 @@ const ShareLinkModal = ({ roomId }: ShareLinkProps) => {
           <p className="font-semibold text-lg leading-8">과외방 링크</p>
           <p className="font-normal text-sm leading-[22px] text-gray-600">학생에게 참여 링크를 공유해주세요.</p>
         </div>
-        <button className="flex flex-col items-center gap-1" onClick={() => handleCopy()}>
-          <div className="bg-gray-50 rounded-full p-2 ">
-            <img src={link} className="w-8 h-8" />
-          </div>
-          <p className="text-gray-500 text-xs font-normal leading-[22px]">링크 복사하기</p>
-        </button>
+        <CopyToClipboard text={shareLink} onCopy={() => setToast(true)}>
+          <button className="flex flex-col items-center gap-1">
+            <div className="bg-gray-50 rounded-full p-2 ">
+              <img src={link} className="w-8 h-8" />
+            </div>
+            <p className="text-gray-500 text-xs font-normal leading-[22px]">링크 복사하기</p>
+          </button>
+        </CopyToClipboard>
         <button
           className="flex-1 w-full text-[16px] font-semibold py-[14px] bg-white border border-gray-500 rounded-full box-border text-center"
-          onClick={() => navigation('/user/roomlist')}
+          onClick={() => (nav ? navigation('/user/roomlist') : setModalOpen(false))}
         >
           완료
         </button>
