@@ -51,14 +51,15 @@ const CreatePayment = () => {
     <div className="px-4 flex flex-col h-full relative">
       {/* 설명 */}
       <div className="py-4">
-        <p className="text-heading6 font-bold leading-10 text-gray-900">어떤 계좌로 언제 입금할까요?</p>
+        <p className="text-heading6 font-bold leading-10 text-gray-900">
+          어떤 계좌로 언제 입금할까요?
+        </p>
         <p className="text-body3 font-normal leading-7 tracking-[-0.048px] text-gray-600">
           입금일 정보를 생성하고 놓치지 마세요!
         </p>
       </div>
       {/* 입금날짜 */}
       <div className="flex flex-col gap-[6px] py-4">
-        {depositDay !== '' && <p className="text-body4 leading-[26px] font-medium text-gray-900">매월 입금일</p>}
         {/* 날짜 고르기 */}
         <PickDate
           deadline={depositDay}
@@ -66,6 +67,7 @@ const CreatePayment = () => {
           isAble={true}
           text="매달 입금될 날짜를 선택해주세요."
           onlyDate={true}
+          name="매월 입금일"
         />
       </div>
       {/* 은행 및 금액 */}
@@ -81,7 +83,9 @@ const CreatePayment = () => {
             />
             <div className="flex flex-col gap-[6px]">
               <ChooseBank setBank={setBank} bank={bank} />
-              <p className="text-body4 leading-[25px] text-gray-400">계좌번호를 입력하면 은행을 찾아드릴게요.</p>
+              <p className="text-body4 leading-[25px] text-gray-400">
+                계좌번호를 입력하면 은행을 찾아드릴게요.
+              </p>
             </div>
           </div>
           {/* 금액 */}
@@ -95,7 +99,9 @@ const CreatePayment = () => {
           {/* 카카오톡 알림 설정 */}
           {bank && accountNumber !== '' && depositDay !== '' && depositAmount !== '' && (
             <div className="py-4 flex flex-col ">
-              <p className="text-body1 font-bold leading-9 text-gray-900 tracking-[-0.4px]">카카오톡 알림 설정하기</p>
+              <p className="text-body1 font-bold leading-9 text-gray-900 tracking-[-0.4px]">
+                카카오톡 알림 설정하기
+              </p>
               <p className="text-body3 font-normal leading-7 tracking-[-0.048px] text-gray-600 border-b-[1px] border-gray-200 pb-4">
                 입금일 1일 전, 학부모님께 알림을 보내드려요!
               </p>
@@ -103,11 +109,19 @@ const CreatePayment = () => {
               {/* 토글 */}
               <div className="flex w-full justify-between font-normal text-base leading-7 mt-2 tracking-[-0.048px]">
                 <h1 className={`${isChecked ? 'text-gray-900' : 'text-gray-500'}`}>입금일 알림</h1>
-                <ToggleSwitch id="deposit" onChange={() => setIsChecked(!isChecked)} isChecked={isChecked} />
+                <ToggleSwitch
+                  id="deposit"
+                  onChange={() => setIsChecked(!isChecked)}
+                  isChecked={isChecked}
+                />
               </div>
 
               <div className="py-6 mt-auto absolute bottom-0 right-4 left-4">
-                <LongButton onClick={handleSumbit} text={isEdit ? '수정하기' : '완료'} enable={true} />
+                <LongButton
+                  onClick={handleSumbit}
+                  text={isEdit ? '수정하기' : '완료'}
+                  enable={true}
+                />
               </div>
             </div>
           )}
