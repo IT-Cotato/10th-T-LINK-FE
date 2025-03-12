@@ -7,57 +7,56 @@ import LongButton from '../../components/RoomDetail/LongButton';
 import { getDepositDetail, putDeposit } from '../../api/deposit.api';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getClosestFutureDate } from '../../utils/getCloseDate';
-import ToggleSwitch from '../../components/Room/ToggleSwitch';
+import CreateDesc from '../../components/RoomDetail/CreateDesc';
+import DepositAlarm from '../../components/Deposit/DepositAlarm';
 
 const CreatePayment = () => {
   const params = new URLSearchParams(location.search);
   const isEdit = params.get('isEdit');
 
-  // depositInfo ? getClosestFutureDate(depositInfo.depositAt) : ''
-
   const [depositDay, setDepositday] = useState('');
   const [depositAmount, setdepositAmount] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
   const [bank, setBank] = useState<BankInfo>();
-  const [isChecked, setIsChecked] = useState(false);
   const { roomId } = useParams<{ roomId: string }>();
   const nav = useNavigate();
 
+  const isFormComplete = bank && accountNumber !== '' && depositDay !== '' && depositAmount !== '';
+
   useEffect(() => {
-    console.log('실행');
     if (isEdit) {
-      getDepositDetail(roomId!).then((data) => {
-        setBank(data.data);
-        setDepositday(getClosestFutureDate(data.data.depositAt));
-        setdepositAmount(data.data.depositAmount);
-        setAccountNumber(data.data.accountNumber);
-      });
+      fetchDepositDetails();
     }
   }, []);
 
-  const handleSumbit = () => {
+  // 입금일 데이터 받아오기
+  const fetchDepositDetails = async () => {
+    const data = await getDepositDetail(roomId!);
+    setBank(data.data);
+    setDepositday(getClosestFutureDate(data.data.depositAt));
+    setdepositAmount(data.data.depositAmount);
+    setAccountNumber(data.data.accountNumber);
+  };
+
+  // 입금일 등록
+  const handleSumbit = async () => {
     const payload = {
       bankId: bank?.bankId!,
       accountNumber: accountNumber,
       depositAmount: Number(depositAmount),
       depositAt: Number(depositDay.slice(8)),
     };
-    putDeposit(roomId!, payload).then((data) => {
-      nav(`/user/${roomId}/payment`, { state: { toast: true, isEdit: isEdit } });
-    });
+    await putDeposit(roomId!, payload);
+    nav(`/user/${roomId}/payment`, { state: { toast: true, isEdit } });
   };
 
   return (
     <div className="px-4 flex flex-col h-full relative">
       {/* 설명 */}
-      <div className="py-4">
-        <p className="text-heading6 font-bold leading-10 text-gray-900">
-          어떤 계좌로 언제 입금할까요?
-        </p>
-        <p className="text-body3 font-normal leading-7 tracking-[-0.048px] text-gray-600">
-          입금일 정보를 생성하고 놓치지 마세요!
-        </p>
-      </div>
+      <CreateDesc
+        title="어떤 계좌로 언제 입금할까요?"
+        desc="입금일 정보를 생성하고 놓치지 마세요!"
+      />
       {/* 입금날짜 */}
       <div className="flex flex-col gap-[6px] py-4">
         {/* 날짜 고르기 */}
@@ -97,25 +96,9 @@ const CreatePayment = () => {
             name="입금 금액"
           />
           {/* 카카오톡 알림 설정 */}
-          {bank && accountNumber !== '' && depositDay !== '' && depositAmount !== '' && (
+          {isFormComplete && (
             <div className="py-4 flex flex-col ">
-              <p className="text-body1 font-bold leading-9 text-gray-900 tracking-[-0.4px]">
-                카카오톡 알림 설정하기
-              </p>
-              <p className="text-body3 font-normal leading-7 tracking-[-0.048px] text-gray-600 border-b-[1px] border-gray-200 pb-4">
-                입금일 1일 전, 학부모님께 알림을 보내드려요!
-              </p>
-
-              {/* 토글 */}
-              <div className="flex w-full justify-between font-normal text-base leading-7 mt-2 tracking-[-0.048px]">
-                <h1 className={`${isChecked ? 'text-gray-900' : 'text-gray-500'}`}>입금일 알림</h1>
-                <ToggleSwitch
-                  id="deposit"
-                  onChange={() => setIsChecked(!isChecked)}
-                  isChecked={isChecked}
-                />
-              </div>
-
+              <DepositAlarm />
               <div className="py-6 mt-auto absolute bottom-0 right-4 left-4">
                 <LongButton
                   onClick={handleSumbit}
