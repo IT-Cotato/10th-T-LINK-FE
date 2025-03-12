@@ -79,12 +79,22 @@ const EditHomework = () => {
           <span className="text-gray-900">숙제 마감 날짜</span>
           <span className="text-primary_700">(필수)</span>
         </div>
-        <PickDate deadline={deadline} setDeadline={setDeadline} isAble={isAble} text="숙제 마감 날짜를 선택하세요." />
+        <PickDate
+          deadline={deadline}
+          setDeadline={setDeadline}
+          isAble={isAble}
+          text="숙제 마감 날짜를 선택하세요."
+          name=""
+        />
       </div>
       {fileList.length > 0 && (
         <div className="text-center text-gray-700 gap-2 flex flex-col">
           {fileList.map((file, index) => (
-            <FileDetail key={index} title={file.originalName} onDelete={() => handleFileDelete(file, index)} />
+            <FileDetail
+              key={index}
+              title={file.originalName}
+              onDelete={() => handleFileDelete(file, index)}
+            />
           ))}
         </div>
       )}
@@ -96,7 +106,11 @@ const EditHomework = () => {
 
       {/* 버튼 */}
       <div className="py-6 mt-auto">
-        <LongButton enable={!!(description.length > 0 && deadline.length > 0)} onClick={handleSubmit} text={text} />
+        <LongButton
+          enable={!!(description.length > 0 && deadline.length > 0)}
+          onClick={handleSubmit}
+          text={text}
+        />
       </div>
     </div>
   );

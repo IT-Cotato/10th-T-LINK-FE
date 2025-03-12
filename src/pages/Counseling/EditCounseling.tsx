@@ -7,6 +7,7 @@ import PickDate from '../../components/RoomDetail/PickDate';
 import ChooseButton from '../../components/Counseling/ChooseButton';
 import Input from '../../components/RoomDetail/Input';
 import Loading from '../Common/Loading';
+import Container from '../../components/Common/Container';
 
 const EditCounseling = () => {
   const nav = useNavigate();
@@ -22,39 +23,30 @@ const EditCounseling = () => {
     getCounselingDetail();
   }, [counselingId, roomId]);
 
-  const getCounselingDetail = async () => {
-    try {
-      const response = await getCounselingLogDetail(roomId!, counselingId!);
-      if (response.status == 200) {
-        setTitle(response.data.title);
-        setContent(response.data.content);
-        setEngagement(response.data.engagement);
-        setHomeworkSubmitted(response.data.homeworkSubmitted);
-        setDeadline(response.data.updatedAt);
-      }
-    } catch (error) {
-      console.log('상세 조회 실패');
-    } finally {
+  // 수정을 위한 상담 일지 상세 조회
+  const getCounselingDetail = () => {
+    getCounselingLogDetail(roomId!, counselingId!).then((data) => {
+      setTitle(data.data.title);
+      setContent(data.data.content);
+      setEngagement(data.data.engagement);
+      setHomeworkSubmitted(data.data.homeworkSubmitted);
+      setDeadline(data.data.updatedAt);
       setIsLoading(false);
-    }
+    });
   };
 
-  const handleSubmit = async () => {
+  // 상담 일지 수정
+  const handleSubmit = () => {
     const payload = {
-      title: title,
-      content: content,
-      engagement: engagement,
-      homeworkSubmitted: homeworkSubmitted,
+      title,
+      content,
+      engagement,
+      homeworkSubmitted,
     };
-    try {
-      const response = await patchCounselingLog(roomId!, counselingId!, payload);
-      if (response.status == 200) {
-        console.log('수정 성공');
-        nav(-1);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+
+    patchCounselingLog(roomId!, counselingId!, payload).then(() => {
+      nav(-1);
+    });
   };
 
   if (isLoading) {
@@ -62,17 +54,23 @@ const EditCounseling = () => {
   }
 
   return (
-    <div className="px-4 flex flex-col h-full">
+    <Container>
       <div className="flex flex-col gap-6 py-4">
         {/* 날짜 고르기 */}
-        <Input setDesc={setTitle} desc={title} name="상담 제목" placeholder="상담일지명을 입력해주세요" isAble={true} />
-        <div className="flex flex-col gap-[6px]">
-          <div className="text-body4 leading-[26px] font-medium flex gap-1">
-            <span className="text-gray-900">상담 날짜</span>
-            <span className="text-primary_700">(필수)</span>
-          </div>
-          <PickDate deadline={deadline} setDeadline={setDeadline} isAble={true} text="업로드 날짜를 선택해주세요." />
-        </div>
+        <Input
+          setDesc={setTitle}
+          desc={title}
+          name="상담 제목"
+          placeholder="상담일지명을 입력해주세요"
+          isAble={true}
+        />
+        <PickDate
+          deadline={deadline}
+          setDeadline={setDeadline}
+          isAble={true}
+          text="날짜를 선택해주세요."
+          name="상담 날짜"
+        />
         <ChooseButton
           text="학생 참여도"
           type="engage"
@@ -102,7 +100,7 @@ const EditCounseling = () => {
           text="수정 완료"
         />
       </div>
-    </div>
+    </Container>
   );
 };
 
