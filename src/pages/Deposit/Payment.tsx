@@ -50,7 +50,10 @@ const Payment = () => {
         <DepositDetail depositInfo={depositInfo} />
       </div>
       {toast && (
-        <Toast setToast={setToast} title={isEdit ? '입금일 수정이 완료되었습니다.' : '입금일 등록이 완료되었습니다.'} />
+        <Toast
+          setToast={setToast}
+          title={isEdit ? '입금일 수정이 완료되었습니다.' : '입금일 등록이 완료되었습니다.'}
+        />
       )}
     </div>
   );
