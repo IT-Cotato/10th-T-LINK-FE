@@ -8,6 +8,7 @@ import Loading from '../Common/Loading';
 import { getClosestFutureDate } from '../../utils/getCloseDate';
 import { CaculateDday } from '../../utils/CaculateDday';
 import CreateDesc from '../../components/RoomDetail/CreateDesc';
+import Container from '../../components/Common/Container';
 
 const Payment = () => {
   const location = useLocation();
@@ -33,7 +34,7 @@ const Payment = () => {
   const dDay = CaculateDday(getDate.toString());
 
   return (
-    <div className="flex flex-col px-4 h-full">
+    <Container>
       {/* 설명 */}
       <CreateDesc
         title={`다음 입금일까지 ${dDay}일 남았어요.`}
@@ -53,7 +54,7 @@ const Payment = () => {
           }
         />
       )}
-    </div>
+    </Container>
   );
 };
 
