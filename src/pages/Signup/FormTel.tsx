@@ -4,6 +4,9 @@ import { postUserInfo } from '../../api/auth.api';
 import Header from '../../components/Common/Header';
 import { UserInfo } from '../../models/user.model';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
+import SignupTitle from '../../components/Signup/SignupTitle';
+import LongButton from '../../components/RoomDetail/LongButton';
+import SignupInput from '../../components/Signup/SignupInput';
 
 const FormTel = () => {
   const navigate = useNavigate();
@@ -43,7 +46,11 @@ const FormTel = () => {
         console.log(res.data.message);
       }
     } catch (err: any) {
-      if (err.response.status === 400 || err.response.status === 401 || err.response.status === 404) {
+      if (
+        err.response.status === 400 ||
+        err.response.status === 401 ||
+        err.response.status === 404
+      ) {
         console.log('오류:', err.response.data.error);
       } else {
         console.log(err);
@@ -56,27 +63,21 @@ const FormTel = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <div className="flex flex-col items-start py-4 px-5">
-        <h1 className="text-heading6 font-bold text-gray-900 leading-10">전화번호를 입력해주세요</h1>
-        <h3 className="text-body3 font-regular text-gray-600 leading-7">입력하신 정보는 서비스 내에서만 사용돼요!</h3>
-      </div>
-      <div className="flex flex-col items-start py-6 px-4 gap-4">
-        <input
-          className="flex items-start gap-1.5 w-full px-3 py-2 border-2 border-gray-300 rounded-md"
-          placeholder="01012341234"
-          value={userInput.phoneNumber}
-          id="phoneNumber"
-          onChange={handleChange}
-        />
-      </div>
+
+      <SignupTitle
+        title1="전화번호를 입력해주세요"
+        title2="입력하신 정보는 서비스 내에서만 사용돼요!"
+      />
+
+      <SignupInput
+        handleChange={handleChange}
+        placeholder="01012341234"
+        value={userInput.phoneNumber}
+        id="phoneNumber"
+      />
+
       <div className="px-5 py-6 flex justify-center fixed bottom-0 max-w-[500px] w-full">
-        <button
-          disabled={userInput.phoneNumber.length !== 11}
-          className="flex-1 px-4 py-3.5 text-gray-500 bg-gray-100 enabled:text-white enabled:bg-primary_700 font-semibold"
-          onClick={handleStart}
-        >
-          완료
-        </button>
+        <LongButton onClick={handleStart} text="완료" enable={userInput.phoneNumber.length == 11} />
       </div>
     </div>
   );
