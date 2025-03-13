@@ -18,10 +18,6 @@ const CreateRoom = () => {
     }
   };
 
-  return (
-    <div>
-      <RoomEditor currentRoom={currentRoom} onSubmit={handleCreate} />
-    </div>
-  );
+  return <RoomEditor currentRoom={currentRoom} onSubmit={handleCreate} />;
 };
 export default CreateRoom;

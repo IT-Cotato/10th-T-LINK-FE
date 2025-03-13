@@ -103,16 +103,9 @@ const RoomList = () => {
         ))}
       </div>
 
-      <div>
-        {filteredRooms?.map((room) => (
-          <RoomInfo
-            key={room.roomId}
-            roleInfo={roleInfo}
-            room={room}
-            setWillUpdate={setWillUpdate}
-          />
-        ))}
-      </div>
+      {filteredRooms?.map((room) => (
+        <RoomInfo key={room.roomId} roleInfo={roleInfo} room={room} setWillUpdate={setWillUpdate} />
+      ))}
 
       <div className="flex justify-end py-8">
         {roleInfo === 'TEACHER' && (
