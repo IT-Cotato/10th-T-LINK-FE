@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../../components/Common/Header';
 import SignupTitle from '../../components/Signup/SignupTitle';
-import LongButton from '../../components/RoomDetail/LongButton';
+import LongButton from '../../components/Common/LongButton';
 import SignupInput from '../../components/Signup/SignupInput';
 import GenderButton from '../../components/Signup/GenderButton';
 

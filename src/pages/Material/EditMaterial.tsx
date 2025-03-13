@@ -4,7 +4,7 @@ import { getLectureFileDeatil, patchLectureFile } from '../../api/materials.api'
 import { LectureFile } from '../../models/materials.model';
 import Input from '../../components/RoomDetail/Input';
 import AddFile from '../../components/Material/AddFile';
-import LongButton from '../../components/RoomDetail/LongButton';
+import LongButton from '../../components/Common/LongButton';
 import Loading from '../Common/Loading';
 import FileDetail from '../../components/Material/FileDetail';
 
@@ -45,7 +45,11 @@ const EditMaterial = () => {
 
   //  수정
   const handleSubmit = async () => {
-    const payload = { lectureFileBoxName: desc, addLectureFiles: addList, removeLectureFiles: removeList };
+    const payload = {
+      lectureFileBoxName: desc,
+      addLectureFiles: addList,
+      removeLectureFiles: removeList,
+    };
 
     try {
       const data = await patchLectureFile(roomId!, materialId!, payload);
@@ -62,7 +66,13 @@ const EditMaterial = () => {
 
   return (
     <div className="px-4 flex flex-col h-full pt-4 gap-6">
-      <Input setDesc={setDesc} desc={desc} name="자료명" placeholder="자료명을 입력해주세요" isAble={true} />
+      <Input
+        setDesc={setDesc}
+        desc={desc}
+        name="자료명"
+        placeholder="자료명을 입력해주세요"
+        isAble={true}
+      />
       <div>
         {fileList.length > 0 && (
           <div className="text-center text-gray-700 gap-2 flex flex-col">

@@ -4,7 +4,7 @@ import Header from '../../components/Common/Header';
 import RoleSelectionButton from '../../components/Signup/RoleSelectionButton';
 import { RoleList } from '../../utils/RoleList';
 import SignupTitle from '../../components/Signup/SignupTitle';
-import LongButton from '../../components/RoomDetail/LongButton';
+import LongButton from '../../components/Common/LongButton';
 
 const Signup = () => {
   const [role, setRole] = useState('');

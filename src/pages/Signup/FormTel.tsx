@@ -5,7 +5,7 @@ import Header from '../../components/Common/Header';
 import { UserInfo } from '../../models/user.model';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import SignupTitle from '../../components/Signup/SignupTitle';
-import LongButton from '../../components/RoomDetail/LongButton';
+import LongButton from '../../components/Common/LongButton';
 import SignupInput from '../../components/Signup/SignupInput';
 
 const FormTel = () => {

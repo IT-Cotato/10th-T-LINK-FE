@@ -4,7 +4,7 @@ import { OnSubmit, SimpleLessonDay, SimplePermission, Room } from '../../models/
 import { LessonDaysList } from '../../utils/LessonDaysList';
 import { ParentPermission, StudentPermission } from '../../utils/PermissionList';
 import PermissionToggle from './PermissionToggle';
-import LongButton from '../RoomDetail/LongButton';
+import LongButton from '../Common/LongButton';
 import Modal from '../Modal/Modal';
 import RoomDeleteModal from '../Modal/RoomDeleteModal';
 import useDeleteStore from '../../store/useDeleteStore';
@@ -51,9 +51,12 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
   }, [input]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.placeholder.includes('방')) setInput((prev) => ({ ...prev, roomName: e.target.value }));
-    if (e.target.placeholder.includes('학생')) setInput((prev) => ({ ...prev, studentName: e.target.value }));
-    if (e.target.placeholder.includes('과목명')) setInput((prev) => ({ ...prev, subject: e.target.value }));
+    if (e.target.placeholder.includes('방'))
+      setInput((prev) => ({ ...prev, roomName: e.target.value }));
+    if (e.target.placeholder.includes('학생'))
+      setInput((prev) => ({ ...prev, studentName: e.target.value }));
+    if (e.target.placeholder.includes('과목명'))
+      setInput((prev) => ({ ...prev, subject: e.target.value }));
   };
 
   const handleDaysClick = (lessonDay: string) => {
@@ -131,7 +134,10 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
             <SelectDate
               key={lessonDayItem.lessonDayId}
               lessonDayItem={lessonDayItem}
-              isClicked={input.lessonDays.find((day) => day.lessonDay === lessonDayItem.lessonDay) !== undefined}
+              isClicked={
+                input.lessonDays.find((day) => day.lessonDay === lessonDayItem.lessonDay) !==
+                undefined
+              }
               handleDaysClick={handleDaysClick}
             />
           ))}
@@ -158,7 +164,9 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
       <div className="flex flex-col py-4 gap-4">
         <div className="border-b-[1px] py-4">
           <h1 className="text-xl font-bold leading-9">학생 권한설정</h1>
-          <h2 className="text-alert font-normal leading-7">*학생: [강의자료함, 주차별 숙제, 성적 통계] 필수 접근</h2>
+          <h2 className="text-alert font-normal leading-7">
+            *학생: [강의자료함, 주차별 숙제, 성적 통계] 필수 접근
+          </h2>
         </div>
         {StudentPermission.map((permission) => (
           <PermissionToggle
@@ -171,7 +179,11 @@ const RoomEditor = ({ currentRoom, onSubmit }: EditProps) => {
         ))}
       </div>
       <div className="py-6 w-full">
-        <LongButton onClick={() => onSubmit(input)} text={currentRoom ? '수정 완료' : '생성하기'} enable={isEnable} />
+        <LongButton
+          onClick={() => onSubmit(input)}
+          text={currentRoom ? '수정 완료' : '생성하기'}
+          enable={isEnable}
+        />
       </div>
       {modalOpen && (
         <Modal onClose={() => setModalOpen(false)}>

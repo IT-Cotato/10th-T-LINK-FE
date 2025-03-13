@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { uploadLectureFile } from '../../api/materials.api';
-import LongButton from '../../components/RoomDetail/LongButton';
+import LongButton from '../../components/Common/LongButton';
 import AddFile from '../../components/Material/AddFile';
 import Input from '../../components/RoomDetail/Input';
 
@@ -48,17 +48,31 @@ const CreateMaterials = () => {
     <div className="px-4 flex flex-col h-full">
       {/* 설명 */}
       <div className="py-4">
-        <p className="text-heading6 font-bold leading-10 text-gray-900">업로드 할 자료의 정보를 입력하세요.</p>
-        <p className="text-body3 font-normal leading-7 tracking-[-0.048px] text-gray-600">언제든지 수정할 수 있어요!</p>
+        <p className="text-heading6 font-bold leading-10 text-gray-900">
+          업로드 할 자료의 정보를 입력하세요.
+        </p>
+        <p className="text-body3 font-normal leading-7 tracking-[-0.048px] text-gray-600">
+          언제든지 수정할 수 있어요!
+        </p>
       </div>
       {/* 파일첨부 */}
       <div className="py-4 gap-6 flex flex-col">
-        <Input setDesc={setDesc} name="자료명" placeholder="자료명을 입력해주세요" desc={desc} isAble={true} />
+        <Input
+          setDesc={setDesc}
+          name="자료명"
+          placeholder="자료명을 입력해주세요"
+          desc={desc}
+          isAble={true}
+        />
         <AddFile fileList={fileList} setFileList={setFileList} />
       </div>
 
       <div className="py-6 mt-auto">
-        <LongButton enable={!!(fileList.length > 0 && desc.length > 0)} onClick={handleSubmit} text="업로드 하기" />
+        <LongButton
+          enable={!!(fileList.length > 0 && desc.length > 0)}
+          onClick={handleSubmit}
+          text="업로드 하기"
+        />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import AddFile from '../../components/Material/AddFile';
-import LongButton from '../../components/RoomDetail/LongButton';
+import LongButton from '../../components/Common/LongButton';
 import Input from '../../components/RoomDetail/Input';
 import PickDate from '../../components/RoomDetail/PickDate';
 import { useEffect, useState } from 'react';

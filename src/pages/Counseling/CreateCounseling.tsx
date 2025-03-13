@@ -5,7 +5,7 @@ import PickDate from '../../components/RoomDetail/PickDate';
 import Input from '../../components/RoomDetail/Input';
 import ChooseButton from '../../components/Counseling/ChooseButton';
 import TextArea from '../../components/RoomDetail/TextArea';
-import LongButton from '../../components/RoomDetail/LongButton';
+import LongButton from '../../components/Common/LongButton';
 import CreateDesc from '../../components/RoomDetail/CreateDesc';
 import Container from '../../components/Common/Container';
 

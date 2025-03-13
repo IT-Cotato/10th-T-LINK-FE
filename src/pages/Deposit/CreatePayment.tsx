@@ -3,7 +3,7 @@ import PickDate from '../../components/RoomDetail/PickDate';
 import Input from '../../components/RoomDetail/Input';
 import ChooseBank from '../../components/Deposit/ChooseBank';
 import { BankInfo } from '../../models/deposit.model';
-import LongButton from '../../components/RoomDetail/LongButton';
+import LongButton from '../../components/Common/LongButton';
 import { getDepositDetail, putDeposit } from '../../api/deposit.api';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getClosestFutureDate } from '../../utils/getCloseDate';
