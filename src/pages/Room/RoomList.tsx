@@ -3,10 +3,10 @@ import RoomInfo from '../../components/Room/RoomInfo';
 import { useEffect, useState } from 'react';
 import { getRoomList } from '../../api/roomList.api';
 import { SimpleRoomInfo } from '../../models/room.model';
-import { IoSearch } from 'react-icons/io5';
 import SubjectTag from '../../components/Room/SubjectTag';
 import Button from '../../components/RoomDetail/Button';
 import Toast from '../../components/Modal/Toast';
+import Search from '../../components/Room/Search';
 
 const RoomList = () => {
   const navigate = useNavigate();
@@ -52,11 +52,13 @@ const RoomList = () => {
 
     setTags((prevTags) => {
       const allTags = [...prevTags, ...newTags];
-      const uniqueTags = Array.from(new Set(allTags.map((tag) => tag.title))).map((title, index) => ({
-        id: index,
-        title,
-        isClicked: title === '전체',
-      }));
+      const uniqueTags = Array.from(new Set(allTags.map((tag) => tag.title))).map(
+        (title, index) => ({
+          id: index,
+          title,
+          isClicked: title === '전체',
+        }),
+      );
       return uniqueTags;
     });
   }, [rooms]);
@@ -93,37 +95,31 @@ const RoomList = () => {
 
   return (
     <div className="flex flex-col">
-      {/* 검색 */}
-      <div className="p-4 flex w-full">
-        <div className="flex w-full p-2 gap-2 items-center bg-gray-100 rounded-lg">
-          <input
-            className="flex-1 bg-gray-100 font-normal leading-7"
-            placeholder="이름 또는 키워드 검색"
-            onChange={onChangeSearch}
-            value={search}
-          />
-          <IoSearch size={24} color="#6A6966" />
-        </div>
-      </div>
+      <Search value={search} onChangeSearch={onChangeSearch} />
 
-      {/* 과목 태그 */}
       <div className="flex p-4 pt-2 gap-2 border-b-2 border-gray-100">
         {tags.map((tag) => (
           <SubjectTag key={tag.id} tag={tag} onClick={onClickTag} />
         ))}
       </div>
 
-      {/* 리스트 */}
       <div>
         {filteredRooms?.map((room) => (
-          <RoomInfo key={room.roomId} roleInfo={roleInfo} room={room} setWillUpdate={setWillUpdate} />
+          <RoomInfo
+            key={room.roomId}
+            roleInfo={roleInfo}
+            room={room}
+            setWillUpdate={setWillUpdate}
+          />
         ))}
       </div>
 
-      {/* 과외방 개설 */}
       <div className="flex justify-end py-8">
-        {roleInfo === 'TEACHER' && <Button text="과외방 개설" onClick={() => navigate('/user/createroom')} />}
+        {roleInfo === 'TEACHER' && (
+          <Button text="과외방 개설" onClick={() => navigate('/user/createroom')} />
+        )}
       </div>
+
       {toast && <Toast setToast={setToast} title="과외방 삭제가 완료되었습니다." />}
       <Outlet />
     </div>
