@@ -12,13 +12,13 @@ const Invite = () => {
   }, [modalOpen]);
 
   return (
-    <div>
+    <>
       {modalOpen && (
         <Modal onClose={() => setModalOpen(false)}>
           <InviteModal />
         </Modal>
       )}
-    </div>
+    </>
   );
 };
 

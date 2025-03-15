@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { uploadHomework } from '../../api/homework.api';
-import LongButton from '../../components/RoomDetail/LongButton';
+import LongButton from '../../components/Common/LongButton';
 
 import AddFile from '../../components/Material/AddFile';
 import Input from '../../components/RoomDetail/Input';

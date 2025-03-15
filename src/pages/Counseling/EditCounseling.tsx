@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getCounselingLogDetail, patchCounselingLog } from '../../api/counseling.api';
-import LongButton from '../../components/RoomDetail/LongButton';
+import LongButton from '../../components/Common/LongButton';
 import TextArea from '../../components/RoomDetail/TextArea';
 import PickDate from '../../components/RoomDetail/PickDate';
 import ChooseButton from '../../components/Counseling/ChooseButton';

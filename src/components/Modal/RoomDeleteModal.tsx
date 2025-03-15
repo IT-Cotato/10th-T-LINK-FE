@@ -15,7 +15,6 @@ interface RoomDeleteProps {
 
 const RoomDeleteModal = ({ setModalOpen, what, examBoxId, examId }: RoomDeleteProps) => {
   const { roomId, homeworkId, counselingId, materialId } = useParams();
-  const [toast, setToast] = useState(false);
 
   const navigate = useNavigate();
 
