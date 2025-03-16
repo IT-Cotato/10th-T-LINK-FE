@@ -1,9 +1,7 @@
 import { FaRegFileAlt } from 'react-icons/fa';
 import vector_gray from '../../assets/images/vector_gray.png';
 import { RiDownloadLine } from 'react-icons/ri';
-import { getAllLectureFile } from '../../api/materials.api';
 import { downloadFile } from '../../utils/DownloadFiles';
-import { useParams } from 'react-router-dom';
 import { FiTrash2 } from 'react-icons/fi';
 
 interface FileDetailProps {

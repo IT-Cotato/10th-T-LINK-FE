@@ -1,4 +1,4 @@
-import { useDebugValue, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getLectureFileDeatil } from '../../api/materials.api';
 import { LectureFileBoxDetail } from '../../models/materials.model';
@@ -8,6 +8,9 @@ import Modal from '../../components/Modal/Modal';
 import RoomDeleteModal from '../../components/Modal/RoomDeleteModal';
 import useDeleteStore from '../../store/useDeleteStore';
 import FileDetail from '../../components/Material/FileDetail';
+import Container from '../../components/Common/Container';
+import Description from '../../components/RoomDetail/Description';
+import FileList from '../../components/Material/FileList';
 
 const MaterialDetail = () => {
   const nav = useNavigate();
@@ -21,18 +24,12 @@ const MaterialDetail = () => {
     getMaterialDetail();
   }, [roomId, materialId]);
 
+  // 강의 자료 상세 조회
   const getMaterialDetail = async () => {
     setLoading(true);
-    try {
-      const response = await getLectureFileDeatil(roomId!, materialId!);
-      if (response.status == 200) {
-        setLectureFiles(response.data);
-      }
-    } catch (error) {
-      console.log('강의 자료 페이지를 불러오는데 실패했습니다.', error);
-    } finally {
-      setLoading(false);
-    }
+    const response = await getLectureFileDeatil(roomId!, materialId!);
+    setLectureFiles(response.data);
+    setLoading(false);
   };
 
   if (loading) {
@@ -44,29 +41,18 @@ const MaterialDetail = () => {
   }
 
   return (
-    <div className="flex flex-col">
-      <div className="py-4 px-4">
-        <div className="flex items-center justify-between">
-          <p className="text-heading6 font-bold leading-10 text-gray-900">{lectureFiles.lectureFileBoxName}</p>
-          {userRole == 'TEACHER' ? <Edit onClick={() => nav(`edit`)} /> : ''}
-        </div>
-        <p className="text-body4 font-normal leading-7 tracking-[-0.048px] text-gray-600">
-          업로드 날짜 {lectureFiles.updatedAt}
-        </p>
-      </div>
-      <div className="mx-4 flex flex-col gap-2">
-        {lectureFiles.lectureFiles.map((file) => (
-          <div>
-            <FileDetail title={file.originalName} fileUrl={file.fileUrl} key={file.lectureFileId} />
-          </div>
-        ))}
-      </div>
+    <Container>
+      <Description
+        title={lectureFiles.lectureFileBoxName}
+        desc={`업로드 날짜 ${lectureFiles.updatedAt}`}
+      />
+      <FileList files={lectureFiles.lectureFiles} />
       {modalOpen && (
         <Modal onClose={() => setModalOpen(false)}>
           <RoomDeleteModal setModalOpen={setModalOpen} what={what} />
         </Modal>
       )}
-    </div>
+    </Container>
   );
 };
 

@@ -3,10 +3,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getLectureFileDeatil, patchLectureFile } from '../../api/materials.api';
 import { LectureFile } from '../../models/materials.model';
 import Input from '../../components/RoomDetail/Input';
-import AddFile from '../../components/Material/AddFile';
 import LongButton from '../../components/Common/LongButton';
 import Loading from '../Common/Loading';
-import FileDetail from '../../components/Material/FileDetail';
+import Container from '../../components/Common/Container';
+import FileList from '../../components/Material/FileList';
 
 const EditMaterial = () => {
   const { roomId, materialId } = useParams<{ roomId: string; materialId: string }>();
@@ -21,19 +21,13 @@ const EditMaterial = () => {
     getMaterialDetail();
   }, [roomId, materialId]);
 
+  // 수정을 위한 상세 조회
   const getMaterialDetail = async () => {
     setLoading(true);
-    try {
-      const response = await getLectureFileDeatil(roomId!, materialId!);
-      if (response.status == 200) {
-        setFileList(response.data.lectureFiles);
-        setDesc(response.data.lectureFileBoxName);
-      }
-    } catch (error) {
-      console.log('강의 자료 페이지를 불러오는데 실패했습니다.', error);
-    } finally {
-      setLoading(false);
-    }
+    const response = await getLectureFileDeatil(roomId!, materialId!);
+    setFileList(response.data.lectureFiles);
+    setDesc(response.data.lectureFileBoxName);
+    setLoading(false);
   };
 
   // 기존 파일 삭제
@@ -51,13 +45,8 @@ const EditMaterial = () => {
       removeLectureFiles: removeList,
     };
 
-    try {
-      const data = await patchLectureFile(roomId!, materialId!, payload);
-      console.log('숙제 업로드 성공:', data);
-      nav(-1);
-    } catch (error) {
-      console.error(error);
-    }
+    await patchLectureFile(roomId!, materialId!, payload);
+    nav(-1);
   };
 
   if (loading) {
@@ -65,33 +54,24 @@ const EditMaterial = () => {
   }
 
   return (
-    <div className="px-4 flex flex-col h-full pt-4 gap-6">
-      <Input
-        setDesc={setDesc}
-        desc={desc}
-        name="자료명"
-        placeholder="자료명을 입력해주세요"
-        isAble={true}
-      />
-      <div>
+    <Container>
+      <div className="flex flex-col gap-6 py-4">
+        <Input
+          setDesc={setDesc}
+          desc={desc}
+          name="자료명"
+          placeholder="자료명을 입력해주세요"
+          isAble={true}
+        />
         {fileList.length > 0 && (
-          <div className="text-center text-gray-700 gap-2 flex flex-col">
-            {fileList.map((file, index) => (
-              <FileDetail
-                key={file.lectureFileId}
-                title={file.originalName}
-                onDelete={() => handleFileDelete(file, index)}
-              />
-            ))}
-          </div>
+          <FileList files={fileList} onDelete={handleFileDelete} type={false} />
         )}
       </div>
-      <AddFile setFileList={setAddList} fileList={addList} />
       {/* 버튼 */}
       <div className="py-6 mt-auto">
-        <LongButton enable={!!(desc.length > 0)} onClick={handleSubmit} text="수정 완료" />
+        <LongButton enable={!!(desc.length > 0)} onClick={handleSubmit} text="수정 완료" />{' '}
       </div>
-    </div>
+    </Container>
   );
 };
 
