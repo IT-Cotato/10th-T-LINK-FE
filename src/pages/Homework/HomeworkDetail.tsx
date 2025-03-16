@@ -7,8 +7,8 @@ import Button from '../../components/RoomDetail/Button';
 import Modal from '../../components/Modal/Modal';
 import RoomDeleteModal from '../../components/Modal/RoomDeleteModal';
 import useDeleteStore from '../../store/useDeleteStore';
-import FileDetail from '../../components/Material/FileDetail';
 import Description from '../../components/RoomDetail/Description';
+import FileList from '../../components/Material/FileList';
 
 const HomeworkDetail = () => {
   const { roomId, homeworkId } = useParams<{ roomId: string; homeworkId: string }>();
@@ -47,28 +47,14 @@ const HomeworkDetail = () => {
         desc={`마감날짜 ${detail.deadline}`}
         className="px-4"
       />
-      <div className=" rounded-lg mt-2 mb-4 mx-4 gap-2 flex flex-col">
-        {detail.teacherFiles?.map((file) => (
-          <div>
-            <FileDetail
-              title={file.originalName}
-              fileUrl={file.fileUrl}
-              key={file.homeworkFileId}
-            />
-          </div>
-        ))}
-      </div>
+      <FileList files={detail.teacherFiles} />
       <Description
         title="제출한 숙제"
         desc="학생이 업로드한 숙제예요."
         className="px-4 border-t-2 border-gray-100"
         edit={false}
       />
-      {detail.studentFiles?.map((file) => (
-        <>
-          <FileDetail title={file.originalName} fileUrl={file.fileUrl} key={file.homeworkFileId} />
-        </>
-      ))}
+      <FileList files={detail.studentFiles} />
       {userRole !== 'TEACHER' ? <Button text={text} onClick={() => nav('edit')} /> : ''}
       {modalOpen && (
         <Modal onClose={() => setModalOpen(false)}>
