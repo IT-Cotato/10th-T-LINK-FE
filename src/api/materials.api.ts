@@ -19,8 +19,12 @@ export const uploadLectureFile = async (roomId: string, payload: SimpleLectureFi
 
 // 강의 자료 목록 조회
 export const getLectureFileBoxes = async (roomId: string) => {
-  const response = await instance.get(`/api/v1/rooms/${roomId}/lectureFileBoxes`);
-  return response.data;
+  try {
+    const response = await instance.get(`/api/v1/rooms/${roomId}/lectureFileBoxes`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // 강의 자료 상세 조회
