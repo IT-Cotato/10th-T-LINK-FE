@@ -26,8 +26,12 @@ export const getHomework = async (roomId: string) => {
 
 // 숙제 상세 조회
 export const getHomeworkDeatil = async (roomId: string, homeworkId: string) => {
-  const response = await instance.get(`/api/v1/rooms/${roomId}/homeworks/${homeworkId}`);
-  return response.data;
+  try {
+    const response = await instance.get(`/api/v1/rooms/${roomId}/homeworks/${homeworkId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // 숙제 삭제

@@ -40,7 +40,7 @@ const CounselingDetail = () => {
   return (
     <Container>
       {/* 설명 */}
-      <Description title={counselingDetail.title} updatedAt={counselingDetail.updatedAt} />
+      <Description title={counselingDetail.title} desc={`상담날짜 ${counselingDetail.updatedAt}`} />
       <div className="flex flex-col gap-6">
         <ChooseButton
           text="학생 참여도"

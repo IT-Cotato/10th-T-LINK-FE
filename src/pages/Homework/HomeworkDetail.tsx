@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getHomeworkDeatil } from '../../api/homework.api';
-import { HomeworkFile, HomeworkFileBoxDetail } from '../../models/homework.model';
-import Edit from '../../assets/images/RoomDetail/Edit.svg?react';
+import { HomeworkFileBoxDetail } from '../../models/homework.model';
 import Loading from '../Common/Loading';
 import Button from '../../components/RoomDetail/Button';
 import Modal from '../../components/Modal/Modal';
 import RoomDeleteModal from '../../components/Modal/RoomDeleteModal';
 import useDeleteStore from '../../store/useDeleteStore';
 import FileDetail from '../../components/Material/FileDetail';
+import Description from '../../components/RoomDetail/Description';
 
 const HomeworkDetail = () => {
   const { roomId, homeworkId } = useParams<{ roomId: string; homeworkId: string }>();
@@ -23,14 +23,9 @@ const HomeworkDetail = () => {
   useEffect(() => {
     const getHomeworkDetail = async () => {
       setLoading(true);
-      try {
-        const response = await getHomeworkDeatil(roomId!, homeworkId!);
-        setDetail(response.data);
-      } catch (error) {
-        console.log('숙제 상세 페이지를 불러오는데 실패했습니다.', error);
-      } finally {
-        setLoading(false);
-      }
+      const response = await getHomeworkDeatil(roomId!, homeworkId!);
+      setDetail(response.data);
+      setLoading(false);
     };
     getHomeworkDetail();
   }, [roomId, homeworkId]);
@@ -47,24 +42,28 @@ const HomeworkDetail = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="py-4 px-4">
-        <div className="flex items-center justify-between">
-          <p className="text-heading6 font-bold leading-10 text-gray-900">{detail.homeworkName}</p>
-          {userRole == 'TEACHER' ? <Edit onClick={() => nav(`edit`)} /> : ''}
-        </div>
-        <p className="text-body4 font-normal leading-7 tracking-[-0.048px] text-gray-600">마감날짜 {detail.deadline}</p>
-      </div>
+      <Description
+        title={detail.homeworkName}
+        desc={`마감날짜 ${detail.deadline}`}
+        className="px-4"
+      />
       <div className=" rounded-lg mt-2 mb-4 mx-4 gap-2 flex flex-col">
         {detail.teacherFiles?.map((file) => (
           <div>
-            <FileDetail title={file.originalName} fileUrl={file.fileUrl} key={file.homeworkFileId} />
+            <FileDetail
+              title={file.originalName}
+              fileUrl={file.fileUrl}
+              key={file.homeworkFileId}
+            />
           </div>
         ))}
       </div>
-      <div className="py-4 px-4 border-t-2 border-gray-100">
-        <p className="text-heading6 font-bold leading-10 text-gray-900">제출한 숙제</p>
-        <p className="text-body4 font-normal leading-7 tracking-[-0.048px] text-gray-600">학생이 업로드한 숙제예요.</p>
-      </div>
+      <Description
+        title="제출한 숙제"
+        desc="학생이 업로드한 숙제예요."
+        className="px-4 border-t-2 border-gray-100"
+        edit={false}
+      />
       {detail.studentFiles?.map((file) => (
         <>
           <FileDetail title={file.originalName} fileUrl={file.fileUrl} key={file.homeworkFileId} />
