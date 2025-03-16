@@ -20,17 +20,14 @@ const Homework = () => {
     getHomeworkList();
   }, []);
 
+  // 숙제 목록 받아오기
   const getHomeworkList = async () => {
-    try {
-      const response = await getHomework(roomId!);
-      if (response.status == 200) {
-        setHomeworkList(response.data.homeworks);
-      }
-    } catch (error) {
-      console.log('숙제 목록 조회 실패', error);
-    }
+    const data = await getHomework(roomId!);
+
+    setHomeworkList(data.data.homeworks);
   };
 
+  // 숙제 분류
   const passedHomework = homeworkList.filter((cur) => cur.passed);
   const nowHomework = homeworkList
     .filter((cur) => !cur.passed)
@@ -56,7 +53,9 @@ const Homework = () => {
           />
         ))}
       </div>
-      <h2 className="p-4 text-heading6 font-bold leading-10 border-t-2 border-gray-100">지난 숙제</h2>
+      <h2 className="p-4 text-heading6 font-bold leading-10 border-t-2 border-gray-100">
+        지난 숙제
+      </h2>
       <div className="px-4 gap-2 flex flex-col mb-2">
         {passedHomework.map((homework) => (
           <Preview_2
