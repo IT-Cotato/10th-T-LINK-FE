@@ -53,18 +53,26 @@ export const patchLectureFile = async (
   lectureFileBoxId: string,
   payload: UpdateLectureFileBox,
 ) => {
-  const formData = createUpdateMaterialFormData(payload);
-  const response = await instance.patch(
-    `/api/v1/rooms/${roomId}/lectureFileBoxes/${lectureFileBoxId}`,
-    formData,
-  );
-  return response.data;
+  try {
+    const formData = createUpdateMaterialFormData(payload);
+    const response = await instance.patch(
+      `/api/v1/rooms/${roomId}/lectureFileBoxes/${lectureFileBoxId}`,
+      formData,
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // 강의 자료 파일 전체 다운로드
 export const getAllLectureFile = async (roomId: string, lectureFileBoxId: number) => {
-  const response = await instance.get(
-    `/api/v1/rooms/${roomId}/lectureFileBoxes/${lectureFileBoxId}/download`,
-  );
-  return response.data;
+  try {
+    const response = await instance.get(
+      `/api/v1/rooms/${roomId}/lectureFileBoxes/${lectureFileBoxId}/download`,
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
