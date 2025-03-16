@@ -29,10 +29,14 @@ export const getLectureFileBoxes = async (roomId: string) => {
 
 // 강의 자료 상세 조회
 export const getLectureFileDeatil = async (roomId: string, lectureFileBoxId: string) => {
-  const response = await instance.get(
-    `/api/v1/rooms/${roomId}/lectureFileBoxes/${lectureFileBoxId}`,
-  );
-  return response.data;
+  try {
+    const response = await instance.get(
+      `/api/v1/rooms/${roomId}/lectureFileBoxes/${lectureFileBoxId}`,
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // 강의 자료 삭제
