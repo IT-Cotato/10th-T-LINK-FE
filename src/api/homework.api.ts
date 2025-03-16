@@ -46,16 +46,24 @@ export const patchHomework = async (
   homeworkId: string,
   payload: HomeworkUpdateRequest,
 ) => {
-  const formData = createUpdateHomeworkFormData(payload);
-  const response = await instance.patch(
-    `/api/v1/rooms/${roomId}/homeworks/${homeworkId}`,
-    formData,
-  );
-  return response.data;
+  try {
+    const formData = createUpdateHomeworkFormData(payload);
+    const response = await instance.patch(
+      `/api/v1/rooms/${roomId}/homeworks/${homeworkId}`,
+      formData,
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-// 숙제 생성을 위한 상세 조회
+// 숙제 수정을 위한 상세 조회
 export const getHomeworkInfo = async (roomId: string, homeworkId: string) => {
-  const response = await instance.get(`/api/v1/rooms/${roomId}/homeworks/${homeworkId}/info`);
-  return response.data;
+  try {
+    const response = await instance.get(`/api/v1/rooms/${roomId}/homeworks/${homeworkId}/info`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };

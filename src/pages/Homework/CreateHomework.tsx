@@ -8,6 +8,7 @@ import AddFile from '../../components/Material/AddFile';
 import Input from '../../components/RoomDetail/Input';
 import PickDate from '../../components/RoomDetail/PickDate';
 import CreateDesc from '../../components/RoomDetail/CreateDesc';
+import Container from '../../components/Common/Container';
 
 const CreateHomework = () => {
   const { roomId } = useParams<{ roomId: string }>();
@@ -50,7 +51,7 @@ const CreateHomework = () => {
   const isComplete = fileList.length > 0 && desc.length > 0 && deadline.length > 0;
 
   return (
-    <div className="px-4 flex flex-col h-full">
+    <Container>
       {/* 설명 */}
       <CreateDesc title="업로드 숙제의 정보를 입력하세요." desc="언제든지 수정할 수 있어요!" />
       <div className="flex flex-col gap-[6px]">
@@ -78,7 +79,7 @@ const CreateHomework = () => {
       <div className="py-6 mt-auto">
         <LongButton enable={isComplete} onClick={handleSubmit} text="업로드 하기" />
       </div>
-    </div>
+    </Container>
   );
 };
 

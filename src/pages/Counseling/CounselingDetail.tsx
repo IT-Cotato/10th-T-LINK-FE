@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { CounselingLogDetail } from '../../models/counseling.model';
 import { getCounselingLogDetail } from '../../api/counseling.api';
 import ChooseButton from '../../components/Counseling/ChooseButton';

@@ -47,14 +47,18 @@ const HomeworkDetail = () => {
         desc={`마감날짜 ${detail.deadline}`}
         className="px-4"
       />
-      <FileList files={detail.teacherFiles} />
+      <div className="px-4">
+        <FileList files={detail.teacherFiles} />
+      </div>
       <Description
         title="제출한 숙제"
         desc="학생이 업로드한 숙제예요."
         className="px-4 border-t-2 border-gray-100"
         edit={false}
       />
-      <FileList files={detail.studentFiles} />
+      <div className="px-4">
+        <FileList files={detail.studentFiles} />
+      </div>
       {userRole !== 'TEACHER' ? <Button text={text} onClick={() => nav('edit')} /> : ''}
       {modalOpen && (
         <Modal onClose={() => setModalOpen(false)}>
