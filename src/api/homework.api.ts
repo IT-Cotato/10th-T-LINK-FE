@@ -16,8 +16,12 @@ export const uploadHomework = async (roomId: string, payload: HomeworkInfo) => {
 
 // 숙제 목록 조회
 export const getHomework = async (roomId: string) => {
-  const response = await instance.get(`/api/v1/rooms/${roomId}/homeworks`);
-  return response.data;
+  try {
+    const response = await instance.get(`/api/v1/rooms/${roomId}/homeworks`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 // 숙제 상세 조회
