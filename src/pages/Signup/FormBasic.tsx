@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../../components/Common/Header';
-import SignupTitle from '../../components/Signup/SignupTitle';
 import LongButton from '../../components/Common/LongButton';
 import SignupInput from '../../components/Signup/SignupInput';
 import GenderButton from '../../components/Signup/GenderButton';
+import CreateDesc from '../../components/RoomDetail/CreateDesc';
 
 const FormBasic = () => {
   const navigate = useNavigate();
@@ -59,20 +59,22 @@ const FormBasic = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <SignupTitle title1="정보를 입력해주세요" title2="티링크를 이용하면서 보여질 정보예요!" />
+      <div className="px-5">
+        <CreateDesc title="정보를 입력해주세요" desc="티링크를 이용하면서 보여질 정보예요!" />
 
-      <div className="flex items-start px-4 py-2 gap-2">
-        {genders.map((gender) => (
-          <GenderButton gender={gender} handleClick={handleGenderClick} />
-        ))}
+        <div className="flex items-start py-2 gap-2">
+          {genders.map((gender) => (
+            <GenderButton gender={gender} handleClick={handleGenderClick} />
+          ))}
+        </div>
+
+        <SignupInput
+          handleChange={handleChange}
+          placeholder="이름을 작성해주세요"
+          value={basicInput.username}
+          id="username"
+        />
       </div>
-
-      <SignupInput
-        handleChange={handleChange}
-        placeholder="이름을 작성해주세요"
-        value={basicInput.username}
-        id="username"
-      />
 
       <div className="px-5 py-6 flex justify-center fixed bottom-0 max-w-[500px] w-full">
         <LongButton
