@@ -4,9 +4,9 @@ import { postUserInfo } from '../../api/auth.api';
 import Header from '../../components/Common/Header';
 import { UserInfo } from '../../models/user.model';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
-import SignupTitle from '../../components/Signup/SignupTitle';
 import LongButton from '../../components/Common/LongButton';
 import SignupInput from '../../components/Signup/SignupInput';
+import CreateDesc from '../../components/RoomDetail/CreateDesc';
 
 const FormTel = () => {
   const navigate = useNavigate();
@@ -63,18 +63,19 @@ const FormTel = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
+      <div className="px-5">
+        <CreateDesc
+          title="전화번호를 입력해주세요"
+          desc="입력하신 정보는 서비스 내에서만 사용돼요!"
+        />
 
-      <SignupTitle
-        title1="전화번호를 입력해주세요"
-        title2="입력하신 정보는 서비스 내에서만 사용돼요!"
-      />
-
-      <SignupInput
-        handleChange={handleChange}
-        placeholder="01012341234"
-        value={userInput.phoneNumber}
-        id="phoneNumber"
-      />
+        <SignupInput
+          handleChange={handleChange}
+          placeholder="01012341234"
+          value={userInput.phoneNumber}
+          id="phoneNumber"
+        />
+      </div>
 
       <div className="px-5 py-6 flex justify-center fixed bottom-0 max-w-[500px] w-full">
         <LongButton onClick={handleStart} text="완료" enable={userInput.phoneNumber.length == 11} />
