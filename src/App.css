@@ -64,3 +64,8 @@ body {
     height: calc(var(--vh, 1vh) * 100);
   }
 }
+
+.scroll-enabled {
+  overflow: auto !important;
+  -webkit-overflow-scrolling: touch;
+}

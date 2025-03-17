@@ -10,3 +10,11 @@ export interface UserCode {
   redirectUrl: string;
   code: string;
 }
+
+export interface MyPageUserInfo {
+  role: string;
+  username: string;
+  statusMessage: string;
+  phoneNumber: string;
+  profileUrl: string;
+}
