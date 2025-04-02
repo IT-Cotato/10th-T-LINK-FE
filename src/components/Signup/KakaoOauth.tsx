@@ -30,7 +30,15 @@ const KakaoOauth = () => {
       const { accessToken, refreshToken, isOnboarding } = res.data.data;
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
+    const res = await postAuthCode(code);
+    if (res.status == 200) {
+      const { accessToken, refreshToken, isOnboarding } = res.data.data;
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
 
+      const decoded = jwtDecode(accessToken) as JwtPayload & { role: string };
+      localStorage.setItem('roleInfo', decoded.role);
+      console.log(res.data.message);
       const decoded = jwtDecode(accessToken) as JwtPayload & { role: string };
       localStorage.setItem('roleInfo', decoded.role);
       console.log(res.data.message);
@@ -40,7 +48,13 @@ const KakaoOauth = () => {
       } else {
         navigate('/signup');
       }
+      if (!isOnboarding) {
+        navigate('/user/roomlist');
+      } else {
+        navigate('/signup');
+      }
 
+      setIsProcessed(true);
       setIsProcessed(true);
     }
   };
