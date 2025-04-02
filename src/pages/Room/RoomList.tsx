@@ -23,15 +23,12 @@ const RoomList = () => {
     const role = localStorage.getItem('roleInfo');
     if (role) setRoleInfo(role);
 
-    const fetchRooms = async () => {
-      try {
-        const res = await getRoomList();
-        const roomData = res.data.data.rooms;
+    const fetchRooms = () => {
+      getRoomList().then((res) => {
+        const roomData = res.data.rooms;
         setRooms(roomData);
         setFilteredRooms(roomData);
-      } catch (e) {
-        console.log(e);
-      }
+      });
     };
 
     fetchRooms();

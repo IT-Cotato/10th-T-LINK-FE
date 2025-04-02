@@ -22,14 +22,13 @@ const Preview_1 = ({ type, title, updatedAt, id }: PreviewProps) => {
   // 파일 다운로드
   const downloadFiles = async (e: React.MouseEvent<HTMLOrSVGElement>) => {
     e.stopPropagation();
-    const response = await getAllLectureFile(roomId!, id!);
-    if (response.status === 200) {
-      const fileUrls = response.data.fileUrls;
+    getAllLectureFile(roomId!, id!).then((res) => {
+      const fileUrls = res.data.fileUrls;
 
       fileUrls.forEach((fileUrl: string) => {
         downloadFile(fileUrl); // 다운로드 함수 호출
       });
-    }
+    });
   };
 
   return (

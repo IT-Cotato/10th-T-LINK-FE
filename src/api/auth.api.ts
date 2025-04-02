@@ -16,7 +16,6 @@ export const postAuthCode = async (code: UserCode) => {
 // 회원가입 시 입력한 정보 보내기
 export const postUserInfo = async (userInfo: UserInfo) => {
   const accessToken = localStorage.getItem('accessToken');
-  console.log(accessToken);
 
   const res = await axios.post(`${baseURL}/api/auth/kakao/onboard`, userInfo, {
     headers: {

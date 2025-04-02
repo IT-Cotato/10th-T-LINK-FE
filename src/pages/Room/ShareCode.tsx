@@ -11,18 +11,11 @@ const ShareCode = () => {
   const [link, setLink] = useState('');
 
   useEffect(() => {
-    const handleLink = async () => {
-      try {
-        const res = await getShareCode(Number(roomId));
-        const shareCode = res.data.data.shareCode;
-        setLink(`https://t-link.site/user/roomlist/invite/${roomId}/${shareCode}`);
-        setModalOpen(true);
-      } catch (e) {
-        alert('초대 코드를 가져오는데 실패했습니다.');
-      }
-    };
-
-    handleLink();
+    getShareCode(Number(roomId)).then((res) => {
+      const shareCode = res.data.shareCode;
+      setLink(`https://t-link.site/user/roomlist/invite/${roomId}/${shareCode}`);
+      setModalOpen(true);
+    });
   }, []);
 
   useEffect(() => {

@@ -21,14 +21,10 @@ const CalendarNolesson = ({ isShareLink, roleInfo }: Props) => {
 
   const handleOnClick = async () => {
     if (isShareLink) {
-      try {
-        const res = await getShareCode(Number(roomId));
-        const shareCode = res.data.data.shareCode;
-        setLink(`https://t-link.site/user/roomlist/invite/${roomId}/${shareCode}`);
-        setModalOpen(true);
-      } catch (e) {
-        alert('초대 코드를 가져오는데 실패했습니다.');
-      }
+      const res = await getShareCode(Number(roomId));
+      const shareCode = res.data.shareCode;
+      setLink(`https://t-link.site/user/roomlist/invite/${roomId}/${shareCode}`);
+      setModalOpen(true);
     } else if (roleInfo === 'TEACHER') {
       navigation('/user/roomlist');
     }
@@ -39,7 +35,10 @@ const CalendarNolesson = ({ isShareLink, roleInfo }: Props) => {
   }, [link]);
 
   return (
-    <div className="flex p-4 bg-gray-50 rounded-xl items-center justify-between cursor-pointer" onClick={handleOnClick}>
+    <div
+      className="flex p-4 bg-gray-50 rounded-xl items-center justify-between cursor-pointer"
+      onClick={handleOnClick}
+    >
       {modalOpen && (
         <Modal onClose={() => setModalOpen(false)}>
           <ShareLinkModal setModalOpen={setModalOpen} shareLink={link} nav={false} />
@@ -47,7 +46,11 @@ const CalendarNolesson = ({ isShareLink, roleInfo }: Props) => {
       )}
       <div className="flex items-center gap-3">
         <div className="p-1.5 rounded-full bg-white">
-          {isShareLink ? <img src={student} className="w-7 h-7" /> : <img src={wow} className="w-7 h-7" />}
+          {isShareLink ? (
+            <img src={student} className="w-7 h-7" />
+          ) : (
+            <img src={wow} className="w-7 h-7" />
+          )}
         </div>
         <div>
           <img src={vector} className="w-1 h-6" />
@@ -56,13 +59,19 @@ const CalendarNolesson = ({ isShareLink, roleInfo }: Props) => {
           {isShareLink ? (
             <>
               <div className="text-gray-900 text-base font-semibold leading-7">학생 초대하기</div>
-              <div className="text-sm leading-6 text-gray-800 tracking-[-0.042px]">초대 링크를 복사해 공유하세요!</div>
+              <div className="text-sm leading-6 text-gray-800 tracking-[-0.042px]">
+                초대 링크를 복사해 공유하세요!
+              </div>
             </>
           ) : (
             <>
-              <div className="text-gray-900 text-base font-semibold leading-7">오늘은 일정이 없어요!</div>
+              <div className="text-gray-900 text-base font-semibold leading-7">
+                오늘은 일정이 없어요!
+              </div>
               {roleInfo === 'TEACHER' && (
-                <div className="text-sm leading-6 tracking-[-0.042px]">과외방에서 일정을 추가할 수 있어요</div>
+                <div className="text-sm leading-6 tracking-[-0.042px]">
+                  과외방에서 일정을 추가할 수 있어요
+                </div>
               )}
             </>
           )}

@@ -9,13 +9,9 @@ const CreateRoom = () => {
   const [currentRoom, setCurrentRoom] = useState<Room | undefined>(undefined);
 
   const handleCreate = async (roomInfo: RoomInfo) => {
-    try {
-      const res = await postRoomInfo(roomInfo);
-      const roomId = res.data.data;
-      navigate('/user/sharecode', { state: { roomId: roomId } });
-    } catch (e) {
-      console.log(e);
-    }
+    const res = await postRoomInfo(roomInfo);
+    const roomId = res.data;
+    navigate('/user/sharecode', { state: { roomId: roomId } });
   };
 
   return <RoomEditor currentRoom={currentRoom} onSubmit={handleCreate} />;
