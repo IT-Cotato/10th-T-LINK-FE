@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import DetailButton from '../../components/RoomDetail/DetailButton';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { RoomDetails } from '../../models/room.model';
 import CalendarDeposit from '../../components/Calendar/CalendarDeposit';
 import CalendarNolesson from '../../components/Calendar/CalendarNolesson';
@@ -11,15 +11,12 @@ import RoomDesc from '../../components/RoomDetail/RoomDesc';
 const RoomDetail = () => {
   const { roomId } = useParams<{ roomId: string }>();
   const [roomDetail, setRoomDetail] = useState<RoomDetails | null>(null);
-  const nav = useNavigate();
 
   // 과외방 상세 정보 조회
   useEffect(() => {
-    const getRoomInfo = async () => {
-      const response = await getRoomDetail(roomId!);
-      setRoomDetail(response?.data.data);
-    };
-    getRoomInfo();
+    getRoomDetail(roomId!).then((res) => {
+      setRoomDetail(res?.data.data);
+    });
   }, [roomId]);
 
   const userRole = localStorage.getItem('roleInfo');

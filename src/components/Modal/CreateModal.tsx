@@ -24,19 +24,16 @@ const CreateModal = ({ setModalOpen, type, id }: ModalProps) => {
 
   const handleCreate = () => {
     if (type == '시험') {
-      postTest(roomId!, test).then((data) => {
-        console.log(data);
-
+      postTest(roomId!, test).then(() => {
         setModalOpen(false);
       });
     } else if (type == '성적') {
       const payload = { examName: name, grade: parseInt(grade) };
-      postGrade(roomId!, id?.toString()!, payload).then((data) => {
-        console.log(data);
+      postGrade(roomId!, id?.toString()!, payload).then(() => {
         setModalOpen(false);
       });
     } else {
-      patchMessage(msg).then((data) => {
+      patchMessage(msg).then(() => {
         setModalOpen(false);
       });
     }
@@ -45,7 +42,9 @@ const CreateModal = ({ setModalOpen, type, id }: ModalProps) => {
   return (
     <div className="w-[320px] p-4 flex flex-col rounded-2xl items-center justify-center gap-6 bg-white">
       <div className="flex flex-col gap-2 items-center text-center">
-        <p className="text-[18px] font-semibold">{type !== '상태메세지' ? `${type} 추가하기` : `${type} 수정`}</p>
+        <p className="text-[18px] font-semibold">
+          {type !== '상태메세지' ? `${type} 추가하기` : `${type} 수정`}
+        </p>
         {type == '시험' ? (
           <p className="text-body4 text-gray-600 leading-[25px] tracking-[-0.042px]">
             시험명을 입력하면
@@ -57,7 +56,13 @@ const CreateModal = ({ setModalOpen, type, id }: ModalProps) => {
       </div>
       <div className="flex flex-col gap-[10px] pb-8 w-full">
         {type == '시험' ? (
-          <Input placeholder="시험 종류를 입력해주세요" name="시험 종류" desc={test} setDesc={setTest} isAble={true} />
+          <Input
+            placeholder="시험 종류를 입력해주세요"
+            name="시험 종류"
+            desc={test}
+            setDesc={setTest}
+            isAble={true}
+          />
         ) : type == '성적' ? (
           <>
             <Input
@@ -76,7 +81,13 @@ const CreateModal = ({ setModalOpen, type, id }: ModalProps) => {
             />
           </>
         ) : (
-          <Input placeholder="상태메세지를 입력해주세요" name="" desc={msg} setDesc={setMsg} isAble={true} />
+          <Input
+            placeholder="상태메세지를 입력해주세요"
+            name=""
+            desc={msg}
+            setDesc={setMsg}
+            isAble={true}
+          />
         )}
       </div>
       <div className="w-full justify-between flex gap-3">

@@ -9,7 +9,8 @@ const KakaoOauth = () => {
   const navigate = useNavigate();
   const [isProcessed, setIsProcessed] = useState(false);
   const [code, setCode] = useState<UserCode | null>(null);
-  const REDIRECT_URI = process.env.VITE_KAKAO_REDIRECT_URI || import.meta.env.VITE_KAKAO_REDIRECT_URI;
+  const REDIRECT_URI =
+    process.env.VITE_KAKAO_REDIRECT_URI || import.meta.env.VITE_KAKAO_REDIRECT_URI;
 
   useEffect(() => {
     const authCode = new URL(window.location.href).searchParams.get('code');
@@ -26,32 +27,23 @@ const KakaoOauth = () => {
 
   const handleAuth = async () => {
     if (!code) return;
-    try {
-      const res = await postAuthCode(code);
-      if (res.status == 200) {
-        const { accessToken, refreshToken, isOnboarding } = res.data.data;
-        localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
 
-        const decoded = jwtDecode(accessToken) as JwtPayload & { role: string };
-        localStorage.setItem('roleInfo', decoded.role);
-        console.log(res.data.message);
+    await postAuthCode(code).then((res) => {
+      const { accessToken, refreshToken, isOnboarding } = res.data.data;
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
 
-        if (!isOnboarding) {
-          navigate('/user/roomlist');
-        } else {
-          navigate('/signup');
-        }
+      const decoded = jwtDecode(accessToken) as JwtPayload & { role: string };
+      localStorage.setItem('roleInfo', decoded.role);
 
-        setIsProcessed(true);
-      }
-    } catch (err: any) {
-      if (err.response.status === 400 || err.response.status === 500) {
-        console.log('오류:', err.response.data.error);
+      if (!isOnboarding) {
+        navigate('/user/roomlist');
       } else {
-        console.log(err);
+        navigate('/signup');
       }
-    }
+
+      setIsProcessed(true);
+    });
   };
 
   useEffect(() => {

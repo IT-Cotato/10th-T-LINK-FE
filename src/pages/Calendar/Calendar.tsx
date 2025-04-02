@@ -24,21 +24,17 @@ const Calendar = () => {
   }, []);
 
   useEffect(() => {
-    const fetchCalendar = async () => {
-      try {
-        const res = await getCalendar();
-        const calInfo = res.data.data.roomInfo;
-        setCalData(calInfo);
-        console.log(calInfo);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchCalendar();
+    getCalendar()
+      .then((res) => setCalData(res.data.roomInfo))
+      .catch((err) => console.error(err));
   }, []);
 
   useEffect(() => {
-    setClickDate({ ...clickDate, roomname: hasDeposit(date, calData), subjectAndRooms: hasLesson(date, calData) });
+    setClickDate({
+      ...clickDate,
+      roomname: hasDeposit(date, calData),
+      subjectAndRooms: hasLesson(date, calData),
+    });
   }, [calData]);
 
   const handleDayClick = (day: Date | null) => {
@@ -56,7 +52,12 @@ const Calendar = () => {
   return (
     <div className="px-4">
       <DateHandler date={date} setDate={setDate} />
-      <CalendarGrid date={date} data={calData} handleDayClick={handleDayClick} clickDate={clickDate} />
+      <CalendarGrid
+        date={date}
+        data={calData}
+        handleDayClick={handleDayClick}
+        clickDate={clickDate}
+      />
       <CalendarInfo roleInfo={roleInfo} clickDate={clickDate} />
     </div>
   );
