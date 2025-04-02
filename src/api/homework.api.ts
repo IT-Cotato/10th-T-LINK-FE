@@ -4,34 +4,22 @@ import { createHomeworkFormData, createUpdateHomeworkFormData } from '../utils/f
 
 // 숙제 생성
 export const uploadHomework = async (roomId: string, payload: HomeworkInfo) => {
-  try {
-    const formData = createHomeworkFormData(payload);
-    const response = await instance.post(`/api/v1/rooms/${roomId}/homeworks`, formData);
+  const formData = createHomeworkFormData(payload);
+  const response = await instance.post(`/api/v1/rooms/${roomId}/homeworks`, formData);
 
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  return response.data;
 };
 
 // 숙제 목록 조회
 export const getHomework = async (roomId: string) => {
-  try {
-    const response = await instance.get(`/api/v1/rooms/${roomId}/homeworks`);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await instance.get(`/api/v1/rooms/${roomId}/homeworks`);
+  return response.data;
 };
 
 // 숙제 상세 조회
 export const getHomeworkDeatil = async (roomId: string, homeworkId: string) => {
-  try {
-    const response = await instance.get(`/api/v1/rooms/${roomId}/homeworks/${homeworkId}`);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await instance.get(`/api/v1/rooms/${roomId}/homeworks/${homeworkId}`);
+  return response.data;
 };
 
 // 숙제 삭제
@@ -46,24 +34,16 @@ export const patchHomework = async (
   homeworkId: string,
   payload: HomeworkUpdateRequest,
 ) => {
-  try {
-    const formData = createUpdateHomeworkFormData(payload);
-    const response = await instance.patch(
-      `/api/v1/rooms/${roomId}/homeworks/${homeworkId}`,
-      formData,
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  const formData = createUpdateHomeworkFormData(payload);
+  const response = await instance.patch(
+    `/api/v1/rooms/${roomId}/homeworks/${homeworkId}`,
+    formData,
+  );
+  return response.data;
 };
 
 // 숙제 수정을 위한 상세 조회
 export const getHomeworkInfo = async (roomId: string, homeworkId: string) => {
-  try {
-    const response = await instance.get(`/api/v1/rooms/${roomId}/homeworks/${homeworkId}/info`);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await instance.get(`/api/v1/rooms/${roomId}/homeworks/${homeworkId}/info`);
+  return response.data;
 };

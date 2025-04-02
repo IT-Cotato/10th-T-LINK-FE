@@ -19,17 +19,10 @@ const ProfileModal = ({ setModalOpen, id, profileImg }: ModalProps) => {
   });
 
   useEffect(() => {
-    const fetchProfileInfo = async () => {
-      try {
-        const res = await getProfileModal(id);
-        const profileInfo = res.data.data;
-        setProfile(profileInfo);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    fetchProfileInfo();
+    getProfileModal(id).then((res) => {
+      const profileInfo = res.data;
+      setProfile(profileInfo);
+    });
   }, []);
 
   return (
@@ -58,7 +51,9 @@ const ProfileModal = ({ setModalOpen, id, profileImg }: ModalProps) => {
 
         <div className="flex gap-2 items-center px-2">
           <p className="text-base font-semibold leading-7">전화번호</p>
-          <p className="text-body3 leading-7 text-gray-500">{formatPhoneNumber(profile.phoneNumber)}</p>
+          <p className="text-body3 leading-7 text-gray-500">
+            {formatPhoneNumber(profile.phoneNumber)}
+          </p>
         </div>
       </div>
     </div>

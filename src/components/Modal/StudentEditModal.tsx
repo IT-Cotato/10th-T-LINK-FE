@@ -17,20 +17,12 @@ const StudentEditModal = ({ setModalOpen, setWillUpdate, name, id }: ModalProps)
     setRoomName(e.target.value);
   };
 
-  const handleUpdate = async () => {
-    try {
-      const roomData: RoomName = { roomName };
-      const res = await patchRoomName(id, roomData);
-    } catch (err: any) {
-      if (err.response?.status === 400 || err.response?.status === 500) {
-        console.log('오류:', err.response.data.error);
-      } else {
-        console.log(err);
-      }
-    } finally {
+  const handleUpdate = () => {
+    const roomData: RoomName = { roomName };
+    patchRoomName(id, roomData).then(() => {
       setModalOpen(false);
       setWillUpdate(true);
-    }
+    });
   };
 
   return (
@@ -47,15 +39,25 @@ const StudentEditModal = ({ setModalOpen, setWillUpdate, name, id }: ModalProps)
       <div className="flex flex-1 flex-col justify-center w-full gap-1.5">
         {/* roomName 상태값을 input value로 설정 */}
         <h1 className="font-medium text-sm leading-[26px]">과외방 이름</h1>
-        <input value={roomName} onChange={handleChange} className="border border-gray-300 rounded-md py-2 px-3" />
+        <input
+          value={roomName}
+          onChange={handleChange}
+          className="border border-gray-300 rounded-md py-2 px-3"
+        />
       </div>
       <div className="flex justify-center gap-4 w-full font-semibold text-base">
         {/* 수정하기 버튼 */}
-        <button onClick={handleUpdate} className="w-full bg-primary_700 text-white rounded-[4px] py-3.5">
+        <button
+          onClick={handleUpdate}
+          className="w-full bg-primary_700 text-white rounded-[4px] py-3.5"
+        >
           수정하기
         </button>
         {/* 취소 버튼 */}
-        <button onClick={() => setModalOpen(false)} className="w-full border border-gray-500 rounded-[4px] py-3.5">
+        <button
+          onClick={() => setModalOpen(false)}
+          className="w-full border border-gray-500 rounded-[4px] py-3.5"
+        >
           취소
         </button>
       </div>

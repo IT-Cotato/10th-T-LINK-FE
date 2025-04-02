@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { deleteRoom } from '../../api/roomList.api';
 import { deleteHomework } from '../../api/homework.api';
@@ -18,90 +17,57 @@ const RoomDeleteModal = ({ setModalOpen, what, examBoxId, examId }: RoomDeletePr
 
   const navigate = useNavigate();
 
-  const handleDeleteRoom = async () => {
+  const handleDeleteRoom = () => {
     if (!roomId) return;
-    try {
-      const res = await deleteRoom(roomId);
-      console.log(res);
-      if (res.status === 200) {
-        setModalOpen(false);
-        navigate('/user/roomlist', { state: { toast: true } });
-      }
-    } catch (error) {
-      console.error('Failed to delete room:', error);
-    }
+
+    deleteRoom(roomId).then(() => {
+      setModalOpen(false);
+      navigate('/user/roomlist', { state: { toast: true } });
+    });
   };
 
   const handleDeleteFiles = async () => {
     if (!roomId || !materialId) return;
-    try {
-      const res = await deleteLectureFile(roomId, materialId);
-      console.log(res);
-      if (res.status === 200) {
-        setModalOpen(false);
-        navigate(`/user/${roomId}/materials`, { state: { toast: true } });
-      }
-    } catch (error) {
-      console.error('Failed to delete room:', error);
-    }
+
+    deleteLectureFile(roomId, materialId).then(() => {
+      setModalOpen(false);
+      navigate(`/user/${roomId}/materials`, { state: { toast: true } });
+    });
   };
 
-  const handleDeleteHomework = async () => {
+  const handleDeleteHomework = () => {
     if (!roomId || !homeworkId) return;
-    try {
-      const res = await deleteHomework(roomId, homeworkId);
-      console.log(res);
-      if (res.status === 200) {
-        setModalOpen(false);
-        navigate(`/user/${roomId}/homework`, { state: { toast: true } });
-      }
-    } catch (error) {
-      console.error('Failed to delete room:', error);
-    }
+
+    deleteHomework(roomId, homeworkId).then(() => {
+      setModalOpen(false);
+      navigate(`/user/${roomId}/homework`, { state: { toast: true } });
+    });
   };
 
-  const handleDeleteCounseling = async () => {
+  const handleDeleteCounseling = () => {
     if (!roomId || !counselingId) return;
 
-    try {
-      const res = await deleteCounselingLog(roomId, counselingId);
-      console.log(res);
-      if (res.status === 200) {
-        setModalOpen(false);
-        navigate(`/user/${roomId}/diary`, { state: { toast: true } });
-      }
-    } catch (error) {
-      console.error('Failed to delete room:', error);
-    }
+    deleteCounselingLog(roomId, counselingId).then(() => {
+      setModalOpen(false);
+      navigate(`/user/${roomId}/diary`, { state: { toast: true } });
+    });
   };
 
-  const handleDeleteTest = async () => {
+  const handleDeleteTest = () => {
     if (!roomId || !examBoxId) return;
 
-    try {
-      const res = await deleteTest(roomId, examBoxId);
-      console.log(res);
-      if (res.status === 200) {
-        setModalOpen(false);
-        navigate(`/user/${roomId}/stats`);
-      }
-    } catch (error) {
-      console.error('Failed to delete room:', error);
-    }
+    deleteTest(roomId, examBoxId).then(() => {
+      setModalOpen(false);
+      navigate(`/user/${roomId}/stats`);
+    });
   };
 
-  const handleDeleteGrade = async () => {
+  const handleDeleteGrade = () => {
     if (!roomId || !examBoxId || !examId) return;
 
-    try {
-      const res = await deleteGrade(roomId, examBoxId, examId);
-      console.log(res);
-      if (res.status === 200) {
-        setModalOpen(false);
-      }
-    } catch (error) {
-      console.error('Failed to delete room:', error);
-    }
+    deleteGrade(roomId, examBoxId, examId).then(() => {
+      setModalOpen(false);
+    });
   };
 
   const handleDelete = () => {

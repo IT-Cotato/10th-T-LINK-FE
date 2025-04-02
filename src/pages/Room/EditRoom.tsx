@@ -12,20 +12,15 @@ const EditRoom = () => {
   const paramsId = Number(params.roomId);
 
   useEffect(() => {
-    const fetchCurrentRoom = async () => {
-      const res = await getCurrentRoomInfo(paramsId);
-      setCurrentRoom(res.data.data);
-    };
-    fetchCurrentRoom();
+    getCurrentRoomInfo(paramsId).then((res) => {
+      setCurrentRoom(res.data);
+    });
   }, []);
 
-  const handleUpdate = async (updatedRoom: Room) => {
-    try {
-      const res = await patchRoomInfo(paramsId, updatedRoom);
+  const handleUpdate = (updatedRoom: Room) => {
+    patchRoomInfo(paramsId, updatedRoom).then(() => {
       navigate('/user/roomlist');
-    } catch (e) {
-      console.log(e);
-    }
+    });
   };
 
   return <RoomEditor currentRoom={currentRoom} onSubmit={handleUpdate} />;

@@ -32,32 +32,19 @@ const FormTel = () => {
   };
 
   const handleStart = async () => {
-    try {
-      const res = await postUserInfo(userInput);
-      if (res.status == 200) {
-        const accessToken = res.data.data.accessToken;
-        const refreshToken = res.data.data.refreshToken;
+    const res = await postUserInfo(userInput);
+    if (res.status == 200) {
+      const accessToken = res.data.data.accessToken;
+      const refreshToken = res.data.data.refreshToken;
 
-        localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
 
-        const decoded = jwtDecode(accessToken) as JwtPayload & { role: string };
-        localStorage.setItem('roleInfo', decoded.role);
-        console.log(res.data.message);
-      }
-    } catch (err: any) {
-      if (
-        err.response.status === 400 ||
-        err.response.status === 401 ||
-        err.response.status === 404
-      ) {
-        console.log('오류:', err.response.data.error);
-      } else {
-        console.log(err);
-      }
-    } finally {
-      navigate('/signupcomplete');
+      const decoded = jwtDecode(accessToken) as JwtPayload & { role: string };
+      localStorage.setItem('roleInfo', decoded.role);
     }
+
+    navigate('/signupcomplete');
   };
 
   return (

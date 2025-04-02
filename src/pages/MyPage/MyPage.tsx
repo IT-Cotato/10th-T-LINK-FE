@@ -23,14 +23,10 @@ const MyPage = () => {
       'https://mblogthumb-phinf.pstatic.net/MjAyMDAyMTBfODAg/MDAxNTgxMzA0MTE3ODMy.ACRLtB9v5NH-I2qjWrwiXLb7TeUiG442cJmcdzVum7cg.eTLpNg_n0rAS5sWOsofRrvBy0qZk_QcWSfUiIagTfd8g.JPEG.lattepain/1581304118739.jpg?type=w800',
   });
 
-  // 유저 정보 받아오기
-  const getuserInfo = async () => {
-    const response = await getUserInfo();
-    setUserInfo(response!.data.data);
-  };
-
   useEffect(() => {
-    getuserInfo();
+    getUserInfo().then((res) => {
+      setUserInfo(res!.data.data);
+    });
   }, [messageOpen]);
 
   return (

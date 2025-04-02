@@ -47,41 +47,26 @@ const LogoutModal = ({ setModalOpen, type }: LogoutModalProps) => {
 
   const handleLogOut = async () => {
     // 로그아웃 로직
-    try {
-      const res = await postLogout();
-      if (res.status == 200) {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        localStorage.removeItem('roleInfo');
-        console.log(res.data.message);
-        navigate('/');
-      }
-    } catch (err: any) {
-      if (err.response.status === 401 || err.response.status === 404) {
-        console.log('오류:', err.response.data.error);
-      } else {
-        console.log(err);
-      }
+
+    const res = await postLogout();
+    if (res.status == 200) {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('roleInfo');
+      console.log(res.data.message);
+      navigate('/');
     }
   };
 
   const handleQuit = async () => {
-    try {
-      const res = await deleteUser();
+    const res = await deleteUser();
 
-      if (res.status == 200) {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        localStorage.removeItem('roleInfo');
-        console.log(res.data.message);
-        navigate('/');
-      }
-    } catch (err: any) {
-      if (err.response.status === 401 || err.response.status === 404) {
-        console.log('오류:', err.response.data.error);
-      } else {
-        console.log(err);
-      }
+    if (res.status == 200) {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('roleInfo');
+      console.log(res.data.message);
+      navigate('/');
     }
   };
 

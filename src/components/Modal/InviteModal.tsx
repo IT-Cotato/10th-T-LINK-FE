@@ -12,18 +12,9 @@ const InviteModal = () => {
 
   useEffect(() => {
     const fetchRoomInfo = async () => {
-      try {
-        if (shareCode) {
-          const res = await getRoomInfo(shareCode);
-          console.log(res.data.data);
-          setRoomData(res.data.data);
-        }
-      } catch (e: any) {
-        if (e.response.status === 401 || e.response.status === 404) {
-          console.log('오류:', e.response.status);
-        } else {
-          console.log(e);
-        }
+      if (shareCode) {
+        const res = await getRoomInfo(shareCode);
+        setRoomData(res.data);
       }
     };
     if (roleInfo === 'STUDENT' || roleInfo === 'PARENT') {
@@ -34,19 +25,9 @@ const InviteModal = () => {
   const handleAccept = async () => {
     if (!shareCode) return;
 
-    try {
-      const res = await postShareCode(shareCode);
-      console.log(res);
+    postShareCode(shareCode).then(() => {
       navigation(`/user/${roomId}`);
-    } catch (e: any) {
-      if (e.response?.status === 401 || e.response?.status === 404) {
-        alert('입장할 수 없습니다.');
-        navigation(`/user/roomlist`);
-        console.log('오류:', e.response.data);
-      } else {
-        console.log(e);
-      }
-    }
+    });
   };
 
   return roleInfo === 'STUDENT' || roleInfo === 'PARENT' ? (
@@ -66,7 +47,10 @@ const InviteModal = () => {
         {roomData && <RoomInfoContent room={roomData} roleInfo={roleInfo} />}
       </div>
       <div className="flex justify-center gap-4 w-full font-semibold text-base">
-        <button className="w-full bg-primary_700 text-white rounded-[4px] py-3.5" onClick={handleAccept}>
+        <button
+          className="w-full bg-primary_700 text-white rounded-[4px] py-3.5"
+          onClick={handleAccept}
+        >
           네
         </button>
         <button
@@ -79,7 +63,9 @@ const InviteModal = () => {
     </div>
   ) : (
     <div className="flex flex-col p-4 gap-6 w-[320px] bg-white rounded-[16px]">
-      <div className="text-center font-semibold text-lg leading-8">과외방에 입장할 수 없습니다.</div>
+      <div className="text-center font-semibold text-lg leading-8">
+        과외방에 입장할 수 없습니다.
+      </div>
       <div className="flex justify-center gap-4 w-full font-semibold text-base">
         <button
           className="w-full border border-gray-500 rounded-[4px] py-3.5"
