@@ -20,34 +20,22 @@ const KakaoOauth = () => {
         redirectUrl: REDIRECT_URI,
         code: authCode,
       });
+    } else {
+      console.error('인가코드가 존재하지 않습니다.');
     }
   }, []);
 
   const handleAuth = async () => {
     if (!code) return;
-    const res = await postAuthCode(code);
-    if (res.status == 200) {
-      const { accessToken, refreshToken, isOnboarding } = res.data.data;
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
-    const res = await postAuthCode(code);
-    if (res.status == 200) {
+
+    await postAuthCode(code).then((res) => {
       const { accessToken, refreshToken, isOnboarding } = res.data.data;
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);
 
       const decoded = jwtDecode(accessToken) as JwtPayload & { role: string };
       localStorage.setItem('roleInfo', decoded.role);
-      console.log(res.data.message);
-      const decoded = jwtDecode(accessToken) as JwtPayload & { role: string };
-      localStorage.setItem('roleInfo', decoded.role);
-      console.log(res.data.message);
 
-      if (!isOnboarding) {
-        navigate('/user/roomlist');
-      } else {
-        navigate('/signup');
-      }
       if (!isOnboarding) {
         navigate('/user/roomlist');
       } else {
@@ -55,8 +43,7 @@ const KakaoOauth = () => {
       }
 
       setIsProcessed(true);
-      setIsProcessed(true);
-    }
+    });
   };
 
   useEffect(() => {
