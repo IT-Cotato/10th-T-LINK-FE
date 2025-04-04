@@ -10,7 +10,7 @@ const CreateRoom = () => {
 
   const handleCreate = async (roomInfo: RoomInfo) => {
     const res = await postRoomInfo(roomInfo);
-    const roomId = res.data;
+    const roomId = res;
     navigate('/user/sharecode', { state: { roomId: roomId } });
   };
 

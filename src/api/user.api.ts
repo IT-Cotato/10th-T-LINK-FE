@@ -3,8 +3,8 @@ import getAPIResponseData from '../utils/getAPIResponseData';
 
 // 회원가입 시 입력한 정보 보내기
 export const postUserInfo = async (userInfo: UserInfo) => {
-  return await getAPIResponseData({
-    url: `/api/auth/kakao/onboard`,
+  return await getAPIResponseData<{ accessToken: string; refreshToken: string }, UserInfo>({
+    url: '/api/auth/kakao/onboard',
     method: 'POST',
     data: userInfo,
   });

@@ -14,7 +14,7 @@ const InviteModal = () => {
     const fetchRoomInfo = async () => {
       if (shareCode) {
         const res = await getRoomInfo(shareCode);
-        setRoomData(res.data);
+        setRoomData(res);
       }
     };
     if (roleInfo === 'STUDENT' || roleInfo === 'PARENT') {

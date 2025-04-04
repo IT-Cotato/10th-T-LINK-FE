@@ -33,16 +33,15 @@ const FormTel = () => {
 
   const handleStart = async () => {
     const res = await postUserInfo(userInput);
-    if (res.status == 200) {
-      const accessToken = res.data.accessToken;
-      const refreshToken = res.data.refreshToken;
 
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
+    const accessToken = res.accessToken;
+    const refreshToken = res.refreshToken;
 
-      const decoded = jwtDecode(accessToken) as JwtPayload & { role: string };
-      localStorage.setItem('roleInfo', decoded.role);
-    }
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
+
+    const decoded = jwtDecode(accessToken) as JwtPayload & { role: string };
+    localStorage.setItem('roleInfo', decoded.role);
 
     navigate('/signupcomplete');
   };

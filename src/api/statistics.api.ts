@@ -1,9 +1,10 @@
 import { GradeType } from '../components/Modal/CreateModal';
+import { Exam, Grade } from '../models/statistics.model';
 import getAPIResponseData from '../utils/getAPIResponseData';
 
 // 시험 종류 조회
 export const getExamType = async (roomId: string) => {
-  return await getAPIResponseData({
+  return await getAPIResponseData<{ examBox: Exam[] }>({
     url: `/api/v1/rooms/${roomId}/gradeStatistics`,
     method: 'GET',
   });
@@ -11,7 +12,7 @@ export const getExamType = async (roomId: string) => {
 
 // 시험 성적 조회
 export const getGrade = async (roomId: string, examBoxId: string) => {
-  return await getAPIResponseData({
+  return await getAPIResponseData<{ exams: Grade[] }>({
     url: `/api/v1/rooms/${roomId}/gradeStatistics/${examBoxId}`,
     method: 'GET',
   });

@@ -22,9 +22,9 @@ const Homework = () => {
 
   // 숙제 목록 받아오기
   const getHomeworkList = async () => {
-    const data = await getHomework(roomId!);
+    const res = await getHomework(roomId!);
 
-    setHomeworkList(data.data.homeworks);
+    setHomeworkList(res.homeworks);
   };
 
   // 숙제 분류

@@ -1,4 +1,9 @@
-import { HomeworkInfo, HomeworkUpdateRequest } from '../models/homework.model';
+import {
+  HomeworkFileBoxDetail,
+  HomeworkInfo,
+  Homeworks,
+  HomeworkUpdateRequest,
+} from '../models/homework.model';
 import { createHomeworkFormData, createUpdateHomeworkFormData } from '../utils/formDataUtils';
 import getAPIResponseData from '../utils/getAPIResponseData';
 
@@ -15,7 +20,7 @@ export const uploadHomework = async (roomId: string, payload: HomeworkInfo) => {
 
 // 숙제 목록 조회
 export const getHomework = async (roomId: string) => {
-  return await getAPIResponseData({
+  return await getAPIResponseData<{ homeworks: Homeworks[] }>({
     url: `/api/v1/rooms/${roomId}/homeworks`,
     method: 'GET',
   });
@@ -23,7 +28,7 @@ export const getHomework = async (roomId: string) => {
 
 // 숙제 상세 조회
 export const getHomeworkDeatil = async (roomId: string, homeworkId: string) => {
-  return await getAPIResponseData({
+  return await getAPIResponseData<HomeworkFileBoxDetail>({
     url: `/api/v1/rooms/${roomId}/homeworks/${homeworkId}`,
     method: 'GET',
   });
@@ -54,7 +59,7 @@ export const patchHomework = async (
 
 // 숙제 수정을 위한 상세 조회
 export const getHomeworkInfo = async (roomId: string, homeworkId: string) => {
-  return await getAPIResponseData({
+  return await getAPIResponseData<HomeworkFileBoxDetail>({
     url: `/api/v1/rooms/${roomId}/homeworks/${homeworkId}/info`,
     method: 'GET',
   });

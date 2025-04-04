@@ -25,8 +25,7 @@ const MyPage = () => {
 
   useEffect(() => {
     getUserInfo().then((res) => {
-      setUserInfo(res!.data);
-      console.log(res.data);
+      setUserInfo(res);
     });
   }, [messageOpen]);
 

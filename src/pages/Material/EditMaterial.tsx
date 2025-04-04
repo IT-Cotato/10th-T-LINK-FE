@@ -24,9 +24,9 @@ const EditMaterial = () => {
   // 수정을 위한 상세 조회
   const getMaterialDetail = async () => {
     setLoading(true);
-    const response = await getLectureFileDeatil(roomId!, materialId!);
-    setFileList(response.data.lectureFiles);
-    setDesc(response.data.lectureFileBoxName);
+    const res = await getLectureFileDeatil(roomId!, materialId!);
+    setFileList(res.lectureFiles);
+    setDesc(res.lectureFileBoxName);
     setLoading(false);
   };
 

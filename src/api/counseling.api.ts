@@ -1,9 +1,9 @@
-import { CounselingInfo } from '../models/counseling.model';
+import { CounselingInfo, CounselingLogDetail, CounselingLogs } from '../models/counseling.model';
 import getAPIResponseData from '../utils/getAPIResponseData';
 
 // 상담 일지 목록 조회
 export const getCounselingLogs = async (roomId: string) => {
-  return await getAPIResponseData({
+  return await getAPIResponseData<{ counselingLogs: CounselingLogs[] }>({
     url: `/api/v1/rooms/${roomId}/counselingLogs`,
     method: 'GET',
   });
@@ -20,7 +20,7 @@ export const postCounselingLogs = async (roomId: string, payload: CounselingInfo
 
 // 상담 일지 상세 조회
 export const getCounselingLogDetail = async (roomId: string, counselingLogId: string) => {
-  return await getAPIResponseData({
+  return await getAPIResponseData<CounselingLogDetail>({
     url: `/api/v1/rooms/${roomId}/counselingLogs/${counselingLogId}`,
     method: 'GET',
   });

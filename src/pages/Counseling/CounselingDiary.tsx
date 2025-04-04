@@ -25,8 +25,8 @@ const CounselingDiary = () => {
 
   // 상담일지 목록 조회
   const getCounselingDiary = async () => {
-    getCounselingLogs(roomId!).then((data) => {
-      setCounselingList(data.data.counselingLogs);
+    getCounselingLogs(roomId!).then((res) => {
+      setCounselingList(res.counselingLogs);
     });
   };
 

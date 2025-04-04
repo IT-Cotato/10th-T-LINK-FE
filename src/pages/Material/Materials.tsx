@@ -22,8 +22,8 @@ const Materials = () => {
   // 강의 자료 목록 조회
   useEffect(() => {
     const getMaterials = async () => {
-      const response = await getLectureFileBoxes(roomId!);
-      setMaterialList(response.data.lectureFileBoxes);
+      const res = await getLectureFileBoxes(roomId!);
+      setMaterialList(res.lectureFileBoxes);
     };
 
     getMaterials();

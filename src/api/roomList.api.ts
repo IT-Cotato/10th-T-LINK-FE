@@ -1,9 +1,10 @@
-import { Room, RoomInfo, RoomName } from '../models/room.model';
+import { Room, RoomDetails, RoomInfo, RoomName, SimpleRoomInfo } from '../models/room.model';
+import { MyPageUserInfo } from '../models/user.model';
 import getAPIResponseData from '../utils/getAPIResponseData';
 
 // 과외방 전체 리스트 출력
 export const getRoomList = async () => {
-  return await getAPIResponseData({
+  return await getAPIResponseData<{ rooms: SimpleRoomInfo[] }>({
     url: '/api/v1/rooms',
     method: 'GET',
   });
@@ -11,7 +12,7 @@ export const getRoomList = async () => {
 
 // 프로필 모달창 (프로필 클릭 시)
 export const getProfileModal = async (userId: number) => {
-  return await getAPIResponseData({
+  return await getAPIResponseData<MyPageUserInfo>({
     url: `/api/v1/user/${userId}/profile`,
     method: 'GET',
   });
@@ -28,7 +29,7 @@ export const postRoomInfo = async (roomInfo: RoomInfo) => {
 
 // 선생님이 과외방 수정 시 과외방 정보 출력
 export const getCurrentRoomInfo = async (roomId: number) => {
-  return await getAPIResponseData({
+  return await getAPIResponseData<Room>({
     url: `/api/v1/rooms/${roomId}/info`,
     method: 'GET',
   });
@@ -62,7 +63,7 @@ export const deleteRoom = async (roomId: string) => {
 
 // 과외방 상세 조회
 export const getRoomDetail = async (roomId: string) => {
-  return await getAPIResponseData({
+  return await getAPIResponseData<RoomDetails>({
     url: `/api/v1/rooms/${roomId}`,
     method: 'GET',
   });
@@ -70,7 +71,7 @@ export const getRoomDetail = async (roomId: string) => {
 
 // 공유 코드 조회
 export const getShareCode = async (roomId: number) => {
-  return await getAPIResponseData({
+  return await getAPIResponseData<{ shareCode: string }>({
     url: `/api/v1/rooms/${roomId}/shareCode`,
     method: 'GET',
   });
@@ -78,7 +79,7 @@ export const getShareCode = async (roomId: number) => {
 
 // 공유 코드로 방 정보 조회
 export const getRoomInfo = async (shareCode: string) => {
-  return await getAPIResponseData({
+  return await getAPIResponseData<SimpleRoomInfo>({
     url: `/api/v1/rooms/code/${shareCode}`,
     method: 'GET',
   });

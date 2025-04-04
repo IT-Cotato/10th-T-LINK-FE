@@ -1,9 +1,9 @@
-import { DepositInfo } from '../models/deposit.model';
+import { BankInfo, DepositInfo } from '../models/deposit.model';
 import getAPIResponseData from '../utils/getAPIResponseData';
 
 // 은행 목록 조회
 export const getBankList = async () => {
-  return await getAPIResponseData({
+  return await getAPIResponseData<{ banks: BankInfo[] }>({
     url: `/api/v1/banks`,
     method: 'GET',
   });
@@ -20,7 +20,7 @@ export const putDeposit = async (roomId: string, payload: DepositInfo) => {
 
 // 입금일 상세 조회
 export const getDeposit = async (roomId: string) => {
-  return await getAPIResponseData({
+  return await getAPIResponseData<DepositInfo>({
     url: `/api/v1/rooms/${roomId}/deposit`,
     method: 'GET',
   });
@@ -28,7 +28,7 @@ export const getDeposit = async (roomId: string) => {
 
 // 입금일 수정을 위한 상세 조회
 export const getDepositDetail = async (roomId: string) => {
-  return await getAPIResponseData({
+  return await getAPIResponseData<BankInfo>({
     url: `/api/v1/rooms/${roomId}/deposit/modify`,
     method: 'GET',
   });

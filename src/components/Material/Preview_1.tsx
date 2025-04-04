@@ -23,7 +23,7 @@ const Preview_1 = ({ type, title, updatedAt, id }: PreviewProps) => {
   const downloadFiles = async (e: React.MouseEvent<HTMLOrSVGElement>) => {
     e.stopPropagation();
     getAllLectureFile(roomId!, id!).then((res) => {
-      const fileUrls = res.data.fileUrls;
+      const fileUrls = res.fileUrls;
 
       fileUrls.forEach((fileUrl: string) => {
         downloadFile(fileUrl); // 다운로드 함수 호출

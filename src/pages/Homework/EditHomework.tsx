@@ -26,11 +26,11 @@ const EditHomework = () => {
 
   // 수정을 위한 상세 조회
   const getHomeworkDetail = async () => {
-    const response = await getHomeworkInfo(roomId!, homeworkId!);
-    setHomeworkList(response.data);
-    setDeadline(response.data.deadline);
-    setDescription(response.data.homeworkName);
-    setFileList(response.data.homeworkFiles); // 기존 파일들 저장
+    const res = await getHomeworkInfo(roomId!, homeworkId!);
+    setHomeworkList(res);
+    setDeadline(res.deadline);
+    setDescription(res.homeworkName);
+    res.homeworkFiles && setFileList(res.homeworkFiles); // 기존 파일들 저장
   };
 
   // 수정 완료

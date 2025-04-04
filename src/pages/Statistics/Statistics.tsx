@@ -38,29 +38,29 @@ const Statistics = () => {
 
   useEffect(() => {
     // 시험 종류 받아오기
-    getExamType(roomId!).then((data) => {
-      if (data.data.examBox.length !== 0) {
+    getExamType(roomId!).then((res) => {
+      if (res.examBox.length !== 0) {
         setTags(
-          data.data.examBox.map((subject: Subject, index: number) => ({
+          res.examBox.map((subject: Subject, index: number) => ({
             id: subject.id,
             title: subject.name,
             isClicked: index === 0,
           })),
         );
-        getExamGrade(data.data.examBox[0].id);
-        setSelectedTag(data.data.examBox[0].id);
-        setName(data.data.examBox[0].name);
+        getExamGrade(res.examBox[0].id);
+        setSelectedTag(res.examBox[0].id);
+        setName(res.examBox[0].name);
       }
     });
   }, [modalOpen]);
 
   // 성적 조회
   const getExamGrade = (id: number) => {
-    getGrade(roomId!, id.toString()).then((data) => {
-      if (data.data.exams.length == 0) {
+    getGrade(roomId!, id.toString()).then((res) => {
+      if (res.exams.length == 0) {
         setData([]);
       } else {
-        setData(data.data.exams);
+        setData(res.exams);
       }
     });
   };
@@ -97,7 +97,10 @@ const Statistics = () => {
       <div className="py-4 flex flex-col gap-[6px] px-4">
         <p className="text-body4 font-medium leading-[26px] tracking-[-0.042px] ">시험 종류</p>
         <div className="flex gap-2">
-          {tags && tags.map((tag) => <SubjectTag key={tag.id} tag={tag} onClick={onClickTag} isNoSharp={true} />)}
+          {tags &&
+            tags.map((tag) => (
+              <SubjectTag key={tag.id} tag={tag} onClick={onClickTag} isNoSharp={true} />
+            ))}
         </div>
       </div>
       {/* 그래프 */}
@@ -115,7 +118,11 @@ const Statistics = () => {
           ''
         )}
       </div>
-      {userRole == 'TEACHER' ? <Button text="시험 추가하기" onClick={() => setModalOpen(true)} /> : ''}
+      {userRole == 'TEACHER' ? (
+        <Button text="시험 추가하기" onClick={() => setModalOpen(true)} />
+      ) : (
+        ''
+      )}
       {modalOpen && (
         <Modal onClose={() => setModalOpen(false)}>
           <CreateModal type="시험" setModalOpen={setModalOpen} />

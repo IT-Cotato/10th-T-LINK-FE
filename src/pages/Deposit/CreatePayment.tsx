@@ -31,11 +31,11 @@ const CreatePayment = () => {
 
   // 입금일 데이터 받아오기
   const fetchDepositDetails = async () => {
-    const data = await getDepositDetail(roomId!);
-    setBank(data.data);
-    setDepositday(getClosestFutureDate(data.data.depositAt));
-    setdepositAmount(data.data.depositAmount);
-    setAccountNumber(data.data.accountNumber);
+    const res = await getDepositDetail(roomId!);
+    setBank(res);
+    res.depositAt && setDepositday(getClosestFutureDate(res.depositAt));
+    res.depositAmount && setdepositAmount(res.depositAmount);
+    res.accountNumber && setAccountNumber(res.accountNumber);
   };
 
   // 입금일 등록

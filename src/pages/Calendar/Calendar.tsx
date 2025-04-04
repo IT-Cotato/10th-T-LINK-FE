@@ -25,7 +25,7 @@ const Calendar = () => {
 
   useEffect(() => {
     getCalendar()
-      .then((res) => setCalData(res.data.roomInfo))
+      .then((res) => setCalData(res.roomInfo))
       .catch((err) => console.error(err));
   }, []);
 

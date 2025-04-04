@@ -45,27 +45,22 @@ const LogoutModal = ({ setModalOpen, type }: LogoutModalProps) => {
     }
   }, []);
 
-  const handleLogOut = async () => {
-    // 로그아웃 로직
-
-    const res = await postLogout();
-    if (res.status == 200) {
+  const handleLogOut = () => {
+    postLogout().then(() => {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('roleInfo');
       navigate('/');
-    }
+    });
   };
 
-  const handleQuit = async () => {
-    const res = await deleteUser();
-
-    if (res.status == 200) {
+  const handleQuit = () => {
+    deleteUser().then(() => {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('roleInfo');
       navigate('/');
-    }
+    });
   };
 
   return (

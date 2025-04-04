@@ -1,4 +1,9 @@
-import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
 import { IoMdAdd } from 'react-icons/io';
 import { FiTrash2 } from 'react-icons/fi';
 import { useEffect, useState } from 'react';
@@ -15,13 +20,19 @@ const defaultData: Grade[] = [];
 const columnHelper = createColumnHelper<Grade>();
 
 const columns = [
-  columnHelper.accessor('round', { cell: (info) => info.getValue(), header: () => <span>회차</span> }),
+  columnHelper.accessor('round', {
+    cell: (info) => info.getValue(),
+    header: () => <span>회차</span>,
+  }),
   columnHelper.accessor((row) => row.title, {
     id: 'title',
     cell: (info) => info.getValue(),
     header: () => <span>시험 이름</span>,
   }),
-  columnHelper.accessor('grade', { cell: (info) => info.renderValue(), header: () => <span>점수</span> }),
+  columnHelper.accessor('grade', {
+    cell: (info) => info.renderValue(),
+    header: () => <span>점수</span>,
+  }),
   columnHelper.accessor('icon', {
     header: () => <IoMdAdd className="w-full stroke-[6px] h-5" />,
     cell: (info) => {
@@ -51,14 +62,16 @@ const Table = ({ selectedId }: TableProps) => {
   const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() });
 
   useEffect(() => {
-    getGrade(roomId!, selectedId.toString()).then((data) => {
-      const transformedData = data.data.exams.map((item: { examName: string; grade: number }, index: number) => ({
-        round: index + 1,
-        title: item.examName,
-        grade: item.grade,
-        icon: FiTrash2,
-      }));
-      setList(data.data.exams);
+    getGrade(roomId!, selectedId.toString()).then((res) => {
+      const transformedData = res.exams.map(
+        (item: { examName: string; grade: number }, index: number) => ({
+          round: index + 1,
+          title: item.examName,
+          grade: item.grade,
+          icon: FiTrash2,
+        }),
+      );
+      setList(res.exams);
       setData(transformedData);
     });
   }, [createModalOpen, modalOpen, selectedId]);

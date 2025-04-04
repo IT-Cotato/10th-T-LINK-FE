@@ -1,8 +1,9 @@
+import { MyPageUserInfo } from '../models/user.model';
 import getAPIResponseData from '../utils/getAPIResponseData';
 
 // 유저 정보 조회
 export const getUserInfo = async () => {
-  return await getAPIResponseData({
+  return await getAPIResponseData<MyPageUserInfo>({
     url: '/api/v1/user/mypage',
     method: 'GET',
   });
