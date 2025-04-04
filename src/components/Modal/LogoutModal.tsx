@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { deleteUser, postLogout } from '../../api/auth.api';
+import { deleteUser, postLogout } from '../../api/user.api';
 import { useNavigate } from 'react-router-dom';
 
 interface LogoutModalProps {
@@ -53,7 +53,6 @@ const LogoutModal = ({ setModalOpen, type }: LogoutModalProps) => {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('roleInfo');
-      console.log(res.data.message);
       navigate('/');
     }
   };
@@ -65,7 +64,6 @@ const LogoutModal = ({ setModalOpen, type }: LogoutModalProps) => {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('roleInfo');
-      console.log(res.data.message);
       navigate('/');
     }
   };

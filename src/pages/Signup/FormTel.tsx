@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { postUserInfo } from '../../api/auth.api';
+import { postUserInfo } from '../../api/user.api';
 import Header from '../../components/Common/Header';
 import { UserInfo } from '../../models/user.model';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
@@ -34,8 +34,8 @@ const FormTel = () => {
   const handleStart = async () => {
     const res = await postUserInfo(userInput);
     if (res.status == 200) {
-      const accessToken = res.data.data.accessToken;
-      const refreshToken = res.data.data.refreshToken;
+      const accessToken = res.data.accessToken;
+      const refreshToken = res.data.refreshToken;
 
       localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('refreshToken', refreshToken);

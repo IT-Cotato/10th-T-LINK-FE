@@ -15,7 +15,7 @@ const RoomDetail = () => {
   // 과외방 상세 정보 조회
   useEffect(() => {
     getRoomDetail(roomId!).then((res) => {
-      setRoomDetail(res?.data.data);
+      setRoomDetail(res?.data);
     });
   }, [roomId]);
 

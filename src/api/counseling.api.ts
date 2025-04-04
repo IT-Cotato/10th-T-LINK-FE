@@ -1,30 +1,37 @@
 import { CounselingInfo } from '../models/counseling.model';
-import instance from './axios';
+import getAPIResponseData from '../utils/getAPIResponseData';
 
 // 상담 일지 목록 조회
 export const getCounselingLogs = async (roomId: string) => {
-  const response = await instance.get(`/api/v1/rooms/${roomId}/counselingLogs`);
-  return response.data;
+  return await getAPIResponseData({
+    url: `/api/v1/rooms/${roomId}/counselingLogs`,
+    method: 'GET',
+  });
 };
 
 // 상담 일지 업로드
 export const postCounselingLogs = async (roomId: string, payload: CounselingInfo) => {
-  const response = await instance.post(`/api/v1/rooms/${roomId}/counselingLogs`, payload);
-  return response.data;
+  return await getAPIResponseData({
+    url: `/api/v1/rooms/${roomId}/counselingLogs`,
+    method: 'POST',
+    data: payload,
+  });
 };
 
 // 상담 일지 상세 조회
 export const getCounselingLogDetail = async (roomId: string, counselingLogId: string) => {
-  const response = await instance.get(`/api/v1/rooms/${roomId}/counselingLogs/${counselingLogId}`);
-  return response.data;
+  return await getAPIResponseData({
+    url: `/api/v1/rooms/${roomId}/counselingLogs/${counselingLogId}`,
+    method: 'GET',
+  });
 };
 
 // 상담 일지 삭제
 export const deleteCounselingLog = async (roomId: string, counselingLogId: string) => {
-  const response = await instance.delete(
-    `/api/v1/rooms/${roomId}/counselingLogs/${counselingLogId}`,
-  );
-  return response.data;
+  return await getAPIResponseData({
+    url: `/api/v1/rooms/${roomId}/counselingLogs/${counselingLogId}`,
+    method: 'DELETE',
+  });
 };
 
 // 상담 일지 수정
@@ -33,9 +40,9 @@ export const patchCounselingLog = async (
   counselingLogId: string,
   payload: CounselingInfo,
 ) => {
-  const response = await instance.put(
-    `/api/v1/rooms/${roomId}/counselingLogs/${counselingLogId}`,
-    payload,
-  );
-  return response.data;
+  return await getAPIResponseData({
+    url: `/api/v1/rooms/${roomId}/counselingLogs/${counselingLogId}`,
+    method: 'PUT',
+    data: payload,
+  });
 };
