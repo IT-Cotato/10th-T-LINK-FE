@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getProfileModal } from '../../api/roomList.api';
-import { formatPhoneNumber } from '../../utils/FormatPhoneNumber';
 import { IoClose } from 'react-icons/io5';
-import { MyPageUserInfo } from '../../models/user.model';
+import { ProfileInfo } from '../../models/user.model';
 
 type ModalProps = {
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -11,7 +10,7 @@ type ModalProps = {
 };
 
 const ProfileModal = ({ setModalOpen, id, profileImg }: ModalProps) => {
-  const [profile, setProfile] = useState<MyPageUserInfo>();
+  const [profile, setProfile] = useState<ProfileInfo>();
 
   useEffect(() => {
     getProfileModal(id).then((res) => {
@@ -29,7 +28,7 @@ const ProfileModal = ({ setModalOpen, id, profileImg }: ModalProps) => {
       </div>
 
       <div className="flex flex-1 flex-col gap-6 justify-center items-center bg-primary_100 rounded-2xl py-6">
-        <img src={profile?.profileUrl} className="w-20 h-20 rounded-full" />
+        <img src={profile?.profileImageUrl} className="w-20 h-20 rounded-full" />
         <div className="flex flex-col items-center">
           <p className="text-[22px] font-bold leading-9">{profile?.username}</p>
           <p className="text-caption1 leading-[22px] text-gray-500">{profile?.statusMessage}</p>
@@ -47,7 +46,9 @@ const ProfileModal = ({ setModalOpen, id, profileImg }: ModalProps) => {
         <div className="flex gap-2 items-center px-2">
           <p className="text-base font-semibold leading-7">전화번호</p>
           <p className="text-body3 leading-7 text-gray-500">
-            {formatPhoneNumber(profile?.phoneNumber)}
+            {profile?.phoneNumber
+              .replace(/[^0-9]/g, '')
+              .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3')}
           </p>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { Room, RoomDetails, RoomInfo, RoomName, SimpleRoomInfo } from '../models/room.model';
-import { MyPageUserInfo } from '../models/user.model';
+import { ProfileInfo } from '../models/user.model';
 import getAPIResponseData from '../utils/getAPIResponseData';
 
 // 과외방 전체 리스트 출력
@@ -12,7 +12,7 @@ export const getRoomList = async () => {
 
 // 프로필 모달창 (프로필 클릭 시)
 export const getProfileModal = async (userId: number) => {
-  return await getAPIResponseData<MyPageUserInfo>({
+  return await getAPIResponseData<ProfileInfo>({
     url: `/api/v1/user/${userId}/profile`,
     method: 'GET',
   });
