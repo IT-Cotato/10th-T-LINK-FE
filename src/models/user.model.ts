@@ -18,3 +18,12 @@ export interface MyPageUserInfo {
   phoneNumber: string;
   profileUrl: string;
 }
+
+// 백에서 넘기는 이름이 달라서 새로 만듦
+export interface ProfileInfo {
+  role: string;
+  username: string;
+  statusMessage: string;
+  phoneNumber: string;
+  profileImageUrl: string;
+}

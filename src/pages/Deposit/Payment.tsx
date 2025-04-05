@@ -19,8 +19,8 @@ const Payment = () => {
   // 입금일 데이터 받아오기
   useEffect(() => {
     const getDepositInfo = () => {
-      getDeposit(roomId!).then((data) => {
-        setDepositInfo(data.data);
+      getDeposit(roomId!).then((res) => {
+        setDepositInfo(res);
       });
     };
     getDepositInfo();

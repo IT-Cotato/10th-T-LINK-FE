@@ -28,7 +28,7 @@ const MaterialDetail = () => {
   const getMaterialDetail = async () => {
     setLoading(true);
     const response = await getLectureFileDeatil(roomId!, materialId!);
-    setLectureFiles(response.data);
+    setLectureFiles(response);
     setLoading(false);
   };
 

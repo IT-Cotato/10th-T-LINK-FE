@@ -22,7 +22,7 @@ const CalendarNolesson = ({ isShareLink, roleInfo }: Props) => {
   const handleOnClick = async () => {
     if (isShareLink) {
       const res = await getShareCode(Number(roomId));
-      const shareCode = res.data.shareCode;
+      const shareCode = res.shareCode;
       setLink(`https://t-link.site/user/roomlist/invite/${roomId}/${shareCode}`);
       setModalOpen(true);
     } else if (roleInfo === 'TEACHER') {

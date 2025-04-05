@@ -1,12 +1,19 @@
-import instance from './axios';
+import { MyPageUserInfo } from '../models/user.model';
+import getAPIResponseData from '../utils/getAPIResponseData';
 
-// 유저 정보
+// 유저 정보 조회
 export const getUserInfo = async () => {
-  const response = await instance.get(`/api/v1/user/mypage`);
-  return response;
+  return await getAPIResponseData<MyPageUserInfo>({
+    url: '/api/v1/user/mypage',
+    method: 'GET',
+  });
 };
 
+// 상태 메시지 수정
 export const patchMessage = async (statusMessage: string) => {
-  const repsonse = await instance.patch(`/api/v1/user/mypage/statusMessage`, { statusMessage });
-  return repsonse;
+  return await getAPIResponseData({
+    url: '/api/v1/user/mypage/statusMessage',
+    method: 'PATCH',
+    data: { statusMessage },
+  });
 };

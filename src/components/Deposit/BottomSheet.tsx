@@ -13,8 +13,8 @@ const BottomSheet = ({ setBottomSheetOpen, setBank }: BottomSheetProps) => {
   const [bankList, setBankList] = useState<BankInfo[]>([]);
 
   const getBanks = () => {
-    getBankList().then((data) => {
-      setBankList(data.data.banks);
+    getBankList().then((res) => {
+      setBankList(res.banks);
     });
   };
 
@@ -47,7 +47,12 @@ const BottomSheet = ({ setBottomSheetOpen, setBank }: BottomSheetProps) => {
       <div className="overflow-auto overscroll-contain scrollbar-hide h-[calc(100vh-10rem)] px-4 py-6">
         <div className="grid grid-cols-3 gap-2">
           {bankList.map((bank) => (
-            <Bank key={bank.bankId} bankName={bank.bankName} bankUrl={bank.bankUrl} onClick={() => handleBank(bank)} />
+            <Bank
+              key={bank.bankId}
+              bankName={bank.bankName}
+              bankUrl={bank.bankUrl}
+              onClick={() => handleBank(bank)}
+            />
           ))}
         </div>
       </div>

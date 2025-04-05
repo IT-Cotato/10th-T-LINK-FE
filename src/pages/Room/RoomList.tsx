@@ -25,7 +25,7 @@ const RoomList = () => {
 
     const fetchRooms = () => {
       getRoomList().then((res) => {
-        const roomData = res.data.rooms;
+        const roomData = res.rooms;
         setRooms(roomData);
         setFilteredRooms(roomData);
       });

@@ -12,7 +12,7 @@ const ShareCode = () => {
 
   useEffect(() => {
     getShareCode(Number(roomId)).then((res) => {
-      const shareCode = res.data.shareCode;
+      const shareCode = res.shareCode;
       setLink(`https://t-link.site/user/roomlist/invite/${roomId}/${shareCode}`);
       setModalOpen(true);
     });

@@ -1,45 +1,53 @@
 import { GradeType } from '../components/Modal/CreateModal';
-import instance from './axios';
+import { Exam, Grade } from '../models/statistics.model';
+import getAPIResponseData from '../utils/getAPIResponseData';
 
 // 시험 종류 조회
 export const getExamType = async (roomId: string) => {
-  const response = await instance.get(`/api/v1/rooms/${roomId}/gradeStatistics`);
-  return response.data;
+  return await getAPIResponseData<{ examBox: Exam[] }>({
+    url: `/api/v1/rooms/${roomId}/gradeStatistics`,
+    method: 'GET',
+  });
 };
 
 // 시험 성적 조회
 export const getGrade = async (roomId: string, examBoxId: string) => {
-  const response = await instance.get(`/api/v1/rooms/${roomId}/gradeStatistics/${examBoxId}`);
-  return response.data;
+  return await getAPIResponseData<{ exams: Grade[] }>({
+    url: `/api/v1/rooms/${roomId}/gradeStatistics/${examBoxId}`,
+    method: 'GET',
+  });
 };
 
 // 시험 추가
 export const postTest = async (roomId: string, examBoxName: string) => {
-  const response = await instance.post(`/api/v1/rooms/${roomId}/gradeStatistics`, {
-    examBoxName,
+  return await getAPIResponseData({
+    url: `/api/v1/rooms/${roomId}/gradeStatistics`,
+    method: 'POST',
+    data: { examBoxName },
   });
-  return response.data;
 };
 
 // 성적 추가
 export const postGrade = async (roomId: string, examBoxId: string, payload: GradeType) => {
-  const response = await instance.post(
-    `/api/v1/rooms/${roomId}/gradeStatistics/${examBoxId}`,
-    payload,
-  );
-  return response.data;
+  return await getAPIResponseData({
+    url: `/api/v1/rooms/${roomId}/gradeStatistics/${examBoxId}`,
+    method: 'POST',
+    data: payload,
+  });
 };
 
 // 시험 삭제
 export const deleteTest = async (roomId: string, examBoxId: number) => {
-  const response = await instance.delete(`/api/v1/rooms/${roomId}/gradeStatistics/${examBoxId}`);
-  return response.data;
+  return await getAPIResponseData({
+    url: `/api/v1/rooms/${roomId}/gradeStatistics/${examBoxId}`,
+    method: 'DELETE',
+  });
 };
 
 // 성적 삭제
 export const deleteGrade = async (roomId: string, examBoxId: number, examId: number) => {
-  const response = await instance.delete(
-    `/api/v1/rooms/${roomId}/gradeStatistics/${examBoxId}/exams/${examId}`,
-  );
-  return response.data;
+  return await getAPIResponseData({
+    url: `/api/v1/rooms/${roomId}/gradeStatistics/${examBoxId}/exams/${examId}`,
+    method: 'DELETE',
+  });
 };

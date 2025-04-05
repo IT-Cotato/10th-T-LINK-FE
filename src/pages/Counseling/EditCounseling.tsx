@@ -25,12 +25,12 @@ const EditCounseling = () => {
 
   // 수정을 위한 상담 일지 상세 조회
   const getCounselingDetail = () => {
-    getCounselingLogDetail(roomId!, counselingId!).then((data) => {
-      setTitle(data.data.title);
-      setContent(data.data.content);
-      setEngagement(data.data.engagement);
-      setHomeworkSubmitted(data.data.homeworkSubmitted);
-      setDeadline(data.data.updatedAt);
+    getCounselingLogDetail(roomId!, counselingId!).then((res) => {
+      setTitle(res.title);
+      setContent(res.content);
+      setEngagement(res.engagement);
+      setHomeworkSubmitted(res.homeworkSubmitted);
+      setDeadline(res.updatedAt);
       setIsLoading(false);
     });
   };

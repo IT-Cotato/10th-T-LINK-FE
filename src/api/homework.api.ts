@@ -1,31 +1,45 @@
-import instance from './axios';
-import { HomeworkInfo, HomeworkUpdateRequest } from '../models/homework.model';
+import {
+  HomeworkFileBoxDetail,
+  HomeworkInfo,
+  Homeworks,
+  HomeworkUpdateRequest,
+} from '../models/homework.model';
 import { createHomeworkFormData, createUpdateHomeworkFormData } from '../utils/formDataUtils';
+import getAPIResponseData from '../utils/getAPIResponseData';
 
 // 숙제 생성
 export const uploadHomework = async (roomId: string, payload: HomeworkInfo) => {
   const formData = createHomeworkFormData(payload);
-  const response = await instance.post(`/api/v1/rooms/${roomId}/homeworks`, formData);
-
-  return response.data;
+  return await getAPIResponseData({
+    url: `/api/v1/rooms/${roomId}/homeworks`,
+    method: 'POST',
+    data: formData,
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
 };
 
 // 숙제 목록 조회
 export const getHomework = async (roomId: string) => {
-  const response = await instance.get(`/api/v1/rooms/${roomId}/homeworks`);
-  return response.data;
+  return await getAPIResponseData<{ homeworks: Homeworks[] }>({
+    url: `/api/v1/rooms/${roomId}/homeworks`,
+    method: 'GET',
+  });
 };
 
 // 숙제 상세 조회
 export const getHomeworkDeatil = async (roomId: string, homeworkId: string) => {
-  const response = await instance.get(`/api/v1/rooms/${roomId}/homeworks/${homeworkId}`);
-  return response.data;
+  return await getAPIResponseData<HomeworkFileBoxDetail>({
+    url: `/api/v1/rooms/${roomId}/homeworks/${homeworkId}`,
+    method: 'GET',
+  });
 };
 
 // 숙제 삭제
 export const deleteHomework = async (roomId: string, homeworkId: string) => {
-  const response = await instance.delete(`/api/v1/rooms/${roomId}/homeworks/${homeworkId}`);
-  return response.data;
+  return await getAPIResponseData({
+    url: `/api/v1/rooms/${roomId}/homeworks/${homeworkId}`,
+    method: 'DELETE',
+  });
 };
 
 // 숙제 수정
@@ -35,15 +49,18 @@ export const patchHomework = async (
   payload: HomeworkUpdateRequest,
 ) => {
   const formData = createUpdateHomeworkFormData(payload);
-  const response = await instance.patch(
-    `/api/v1/rooms/${roomId}/homeworks/${homeworkId}`,
-    formData,
-  );
-  return response.data;
+  return await getAPIResponseData({
+    url: `/api/v1/rooms/${roomId}/homeworks/${homeworkId}`,
+    method: 'PATCH',
+    data: formData,
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
 };
 
 // 숙제 수정을 위한 상세 조회
 export const getHomeworkInfo = async (roomId: string, homeworkId: string) => {
-  const response = await instance.get(`/api/v1/rooms/${roomId}/homeworks/${homeworkId}/info`);
-  return response.data;
+  return await getAPIResponseData<HomeworkFileBoxDetail>({
+    url: `/api/v1/rooms/${roomId}/homeworks/${homeworkId}/info`,
+    method: 'GET',
+  });
 };

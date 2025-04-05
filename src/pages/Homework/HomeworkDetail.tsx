@@ -23,8 +23,8 @@ const HomeworkDetail = () => {
   useEffect(() => {
     const getHomeworkDetail = async () => {
       setLoading(true);
-      const response = await getHomeworkDeatil(roomId!, homeworkId!);
-      setDetail(response.data);
+      const res = await getHomeworkDeatil(roomId!, homeworkId!);
+      setDetail(res);
       setLoading(false);
     };
     getHomeworkDetail();

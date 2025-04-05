@@ -23,8 +23,8 @@ const CounselingDetail = () => {
 
   // 상담일지 상세 조회
   const getCounselingDetail = () => {
-    getCounselingLogDetail(roomId!, counselingId!).then((data) => {
-      setCounselingDetail(data.data);
+    getCounselingLogDetail(roomId!, counselingId!).then((res) => {
+      setCounselingDetail(res);
       setIsLoading(false);
     });
   };

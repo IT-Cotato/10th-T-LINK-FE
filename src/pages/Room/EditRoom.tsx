@@ -13,7 +13,7 @@ const EditRoom = () => {
 
   useEffect(() => {
     getCurrentRoomInfo(paramsId).then((res) => {
-      setCurrentRoom(res.data);
+      setCurrentRoom(res);
     });
   }, []);
 
