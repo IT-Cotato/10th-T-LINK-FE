@@ -12,12 +12,16 @@ import Modal from '../Modal/Modal';
 import CreateModal from '../Modal/CreateModal';
 import { getGrade } from '../../api/statistics.api';
 import { useParams } from 'react-router-dom';
+import { Grade as GradeData } from '../../models/statistics.model';
 
-type Grade = { round: number; title: string; grade: number; icon: React.ElementType };
+type GradeRow = {
+  round: number;
+  title: string;
+  grade: number;
+  icon: React.ElementType;
+};
 
-const defaultData: Grade[] = [];
-
-const columnHelper = createColumnHelper<Grade>();
+const columnHelper = createColumnHelper<GradeRow>();
 
 const columns = [
   columnHelper.accessor('round', {
@@ -47,11 +51,11 @@ interface TableProps {
 }
 
 const Table = ({ selectedId }: TableProps) => {
-  const [data, setData] = useState(() => [...defaultData]);
+  const [data, setData] = useState<GradeRow[]>([]);
   const [modalOpen, setModalOpen] = useState(false); // 삭제 모달
   const [createModalOpen, setCreateModalOpen] = useState(false); // 삭제 모달
   const { roomId } = useParams<{ roomId: string }>();
-  const [list, setList] = useState();
+  const [list, setList] = useState<GradeData[]>([]);
   const [item, setItem] = useState({
     examId: 0,
     examName: '',
@@ -63,7 +67,7 @@ const Table = ({ selectedId }: TableProps) => {
 
   useEffect(() => {
     getGrade(roomId!, selectedId.toString()).then((res) => {
-      const transformedData = res.exams.map(
+      const transformedData: GradeRow[] = res.exams.map(
         (item: { examName: string; grade: number }, index: number) => ({
           round: index + 1,
           title: item.examName,
