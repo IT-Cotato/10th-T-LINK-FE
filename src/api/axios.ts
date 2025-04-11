@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
+import toast from 'react-hot-toast';
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 
@@ -27,14 +28,14 @@ instance.interceptors.request.use(
 );
 
 instance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   async (error) => {
+    const status = error.response.status;
+    const method = error.config.method.toUpperCase();
     const refreshToken = localStorage.getItem('refreshToken');
 
-    // 메세지에 상관없이 코드가 401이면 모두 토큰 재발급
-    if (error.response.status === 401) {
+    // 기존 토큰 재발급 코드
+    if (status === 401 && refreshToken) {
       try {
         const res = await axios.post(
           `${baseURL}/api/auth/kakao/reissue`,
@@ -47,29 +48,48 @@ instance.interceptors.response.use(
           },
         );
 
-        if (res.status == 200) {
+        if (res.status === 200) {
           const { accessToken, refreshToken } = res.data.data;
           localStorage.setItem('accessToken', accessToken);
           localStorage.setItem('refreshToken', refreshToken);
 
           const decoded = jwtDecode(accessToken) as JwtPayload & { role: string };
           localStorage.setItem('roleInfo', decoded.role);
-          console.log('재발급 완료');
+          console.log('🔁 토큰 재발급 성공');
+
+          // 요청 재시도
+          error.config.headers.Authorization = `Bearer ${accessToken}`;
+          return axios(error.config);
         }
-
-        // 새 토큰으로 헤더 업데이트 후 재요청
-        error.config.headers.Authorization = `Bearer ${res.data.data.accessToken}`;
-        return axios(error.config);
       } catch (refreshErr) {
-        console.log('Token 갱신 실패: ', refreshErr);
-
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        localStorage.removeItem('roleInfo');
-
+        console.log('🚫 토큰 재발급 실패:', refreshErr);
+        localStorage.clear();
         window.location.href = '/login';
+        return Promise.reject(refreshErr);
       }
     }
+
+    // 에러 처리 코드
+    const statusMessages: Record<number, string> = {
+      400: '잘못된 요청입니다.',
+      403: '접근 권한이 없습니다.',
+      404: '요청하신 데이터를 찾을 수 없습니다.',
+      413: '파일의 용량이 너무 큽니다.',
+      500: '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+    };
+
+    const message = statusMessages[status] || '알 수 없는 오류가 발생했습니다.';
+
+    if (method === 'GET') {
+      window.dispatchEvent(
+        new CustomEvent('triggerErrorUI', {
+          detail: { status, message },
+        }),
+      );
+    } else {
+      toast.error(message);
+    }
+
     return Promise.reject(error);
   },
 );
