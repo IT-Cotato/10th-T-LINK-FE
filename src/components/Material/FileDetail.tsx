@@ -16,11 +16,11 @@ const FileDetail = ({ title, fileUrl, onDelete }: FileDetailProps) => {
       <div className="p-1">
         <FaRegFileAlt size={24} fill="#242421" />
       </div>
-      <div className="flex gap-4 items-center flex-1">
+      <div className="flex gap-4 items-center flex-1 overflow-hidden">
         <img src={vector_gray} className="w-[3px] h-[24px]" />
-        <div className="tracking-[-0.048px] flex flex-col items-start">
-          <p className="text-body3 font-semibold leading-7 text-gray-900">{title}</p>
-        </div>
+        <p className="truncate tracking-[-0.048px] text-body3 font-semibold leading-7 text-gray-900">
+          {title}
+        </p>
       </div>
       <div>
         {fileUrl ? (
