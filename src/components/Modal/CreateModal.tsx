@@ -8,6 +8,7 @@ interface ModalProps {
   setModalOpen: (value: boolean) => void;
   type: string;
   id?: number;
+  message?: string;
 }
 
 export interface GradeType {
@@ -15,7 +16,7 @@ export interface GradeType {
   grade: number;
 }
 
-const CreateModal = ({ setModalOpen, type, id }: ModalProps) => {
+const CreateModal = ({ setModalOpen, type, id, message }: ModalProps) => {
   const [name, setName] = useState('');
   const [grade, setGrade] = useState('');
   const [test, setTest] = useState('');
@@ -82,7 +83,7 @@ const CreateModal = ({ setModalOpen, type, id }: ModalProps) => {
           </>
         ) : (
           <Input
-            placeholder="상태메세지를 입력해주세요"
+            placeholder={message || '상태메세지를 입력해주세요'}
             name=""
             desc={msg}
             setDesc={setMsg}

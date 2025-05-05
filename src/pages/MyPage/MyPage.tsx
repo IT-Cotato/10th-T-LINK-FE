@@ -46,7 +46,11 @@ const MyPage = () => {
       )}
       {messageOpen && (
         <Modal onClose={() => setMessageOpen(false)}>
-          <CreateModal setModalOpen={setMessageOpen} type={'상태메세지'} />
+          <CreateModal
+            setModalOpen={setMessageOpen}
+            type={'상태메세지'}
+            message={userInfo.statusMessage}
+          />
         </Modal>
       )}
     </div>
