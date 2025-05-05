@@ -34,6 +34,7 @@ import RoomDetail from '../pages/RoomDetail/RoomDetail';
 import Calendar from '../pages/Calendar/Calendar';
 import MyPage from '../pages/MyPage/MyPage';
 import UserPolicy from '../pages/MyPage/UserPolicy';
+import ChatList from '../pages/Chatting/ChatList';
 
 export const router = createBrowserRouter([
   {
@@ -92,6 +93,7 @@ export const router = createBrowserRouter([
       { path: 'sharecode', element: <ShareCode /> },
       { path: 'calendar', element: <Calendar /> },
       { path: 'mypage', element: <MyPage /> },
+      { path: 'chatList', element: <ChatList /> }, // 채팅 목록
     ],
   },
   {
