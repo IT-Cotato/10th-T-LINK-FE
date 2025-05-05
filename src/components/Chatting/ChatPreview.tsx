@@ -1,7 +1,10 @@
 import student_boy from '../../assets/images/student_boy.png';
 import Menu from '../../assets/images/Chatting/Meatballs_Horizental menu.svg?react';
+import { useState } from 'react';
 
 const ChatPreview = () => {
+  const [showMenu, setShowMenu] = useState(false);
+
   return (
     <div className="px-4 flex gap-4 items-center py-3">
       {/* 프로필 사진 */}
@@ -22,7 +25,13 @@ const ChatPreview = () => {
           <p>선생님</p>
         </div>
       </div>
-      <Menu />
+      <Menu onClick={() => setShowMenu(!showMenu)} />
+      {showMenu && (
+        <div className="absolute right-6 mt-24 border-[1px] border-gray-500 rounded-xl text-body4 text-gray-500">
+          <div className="flex border-b-[1px] px-2 py-1 items-center">채팅방 나가기</div>
+          <div className="flex px-2 py-1 justify-center">알림끄기</div>
+        </div>
+      )}
     </div>
   );
 };
