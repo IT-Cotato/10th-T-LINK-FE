@@ -1,5 +1,21 @@
+import { useState } from 'react';
+import Search from '../../components/Room/Search';
+import ChatPreview from '../../components/Chatting/ChatPreview';
+
 const ChatList = () => {
-  return <div>채팅 목록</div>;
+  const [search, setSearch] = useState('');
+  const onChangeSearch = () => {};
+
+  return (
+    <div className="flex flex-col">
+      <Search value={search} onChangeSearch={onChangeSearch} />
+      <div>
+        <ChatPreview />
+        <ChatPreview />
+        <ChatPreview />
+      </div>
+    </div>
+  );
 };
 
 export default ChatList;
