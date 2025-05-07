@@ -35,6 +35,7 @@ import Calendar from '../pages/Calendar/Calendar';
 import MyPage from '../pages/MyPage/MyPage';
 import UserPolicy from '../pages/MyPage/UserPolicy';
 import ChatList from '../pages/Chatting/ChatList';
+import ChatRoom from '../pages/Chatting/ChatRoom';
 
 export const router = createBrowserRouter([
   {
@@ -101,6 +102,14 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <UserPolicy />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: 'user/chat/:chatId',
+    element: (
+      <ProtectedRoute>
+        <ChatRoom />
       </ProtectedRoute>
     ),
   },

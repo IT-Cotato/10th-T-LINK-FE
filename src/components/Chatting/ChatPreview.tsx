@@ -3,10 +3,13 @@ import { useState } from 'react';
 import student_boy from '../../assets/images/student_boy.png';
 import { MdLogout } from 'react-icons/md';
 import { MdOutlineAlarmOff } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
 const ChatPreview = () => {
   const [showActions, setShowActions] = useState(false);
   const controls = useAnimation();
+  const nav = useNavigate();
+  const chatId = 1;
 
   const handleDragEnd = (event: any, info: any) => {
     if (info.offset.x < -100) {
@@ -18,7 +21,7 @@ const ChatPreview = () => {
   };
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative overflow-hidden" onClick={() => nav(`/user/chat/${chatId}`)}>
       {showActions && (
         <div className="absolute inset-0 bg-gray-100 flex items-center z-0 justify-end">
           <div className="bg-blue-400 h-full w-[80px] justify-center flex items-center">
