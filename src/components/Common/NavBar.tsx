@@ -8,6 +8,7 @@ import HomeFill from '../../assets/images/homeFill.svg?react';
 import MypageSvg from '../../assets/images/mypage.svg?react';
 import MyPageFill from '../../assets/images/mypageFill.svg?react';
 import Indicator from '../../assets/images/Indicator.svg?react';
+import { IoChatbubblesSharp } from 'react-icons/io5';
 
 const NavBar = () => {
   const nav = useNavigate();
@@ -16,7 +17,7 @@ const NavBar = () => {
 
   useEffect(() => {
     const pathname = location.pathname.split('/');
-    if (pathname[2] === 'calendar' || pathname[2] === 'mypage') {
+    if (pathname[2] === 'calendar' || pathname[2] === 'mypage' || pathname[2] === 'chatList') {
       setCurrentMenu(pathname[2]);
     } else {
       setCurrentMenu('roomlist');
@@ -37,6 +38,12 @@ const NavBar = () => {
       active: <CalendarFill className="w-6 h-6" />,
     },
     {
+      menu: '채팅',
+      name: 'chatList',
+      inactive: <IoChatbubblesSharp className="w-5 h-5 mt-[2px] mb-[2px]" fill="#8D8D8A" />,
+      active: <IoChatbubblesSharp className="w-5 h-5 mt-[2px] mb-[2px]" fill="#12B500" />,
+    },
+    {
       menu: '내 정보',
       name: 'mypage',
       inactive: <MypageSvg className="w-6 h-6" />,
@@ -46,7 +53,7 @@ const NavBar = () => {
 
   return (
     <div className="border-t border-gray-200 flex bg-white">
-      <div className="grid grid-cols-3 w-full px-[7.5px]">
+      <div className="grid grid-cols-4 w-full px-[7.5px]">
         {menus.map((menuItem) => (
           <div
             key={menuItem.name}

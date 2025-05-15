@@ -12,25 +12,6 @@ const getAPIResponseData = async <T, D = T>(option: AxiosRequestConfig<D>): Prom
 
     return data as T;
   } catch (e) {
-    if (e instanceof AxiosError) {
-      const method = option.method?.toUpperCase();
-
-      // 공통
-      if (e.response?.status === 500) {
-        localStorage.clear();
-        window.location.href = '/';
-        return Promise.reject(e);
-      }
-
-      // POST - 토스트 띄우기
-      if (method === 'POST') {
-      }
-
-      // GET - 에러 페이지 띄우기
-      if (method === 'GET') {
-      }
-    }
-
     throw e;
   }
 };

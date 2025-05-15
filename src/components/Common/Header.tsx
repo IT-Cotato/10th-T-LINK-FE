@@ -2,8 +2,6 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { GoArrowLeft } from 'react-icons/go';
 import { useEffect, useMemo, useState } from 'react';
 import { FiTrash2 } from 'react-icons/fi';
-import Modal from '../Modal/Modal';
-import RoomDeleteModal from '../Modal/RoomDeleteModal';
 import useDeleteStore from '../../store/useDeleteStore';
 
 // 뒤로 가기 없는 페이지들
@@ -11,6 +9,7 @@ const ROUTE_TITLES: { [key: string]: string } = {
   '/user/mypage': '내 정보',
   '/user/calendar': '달력',
   '/user/roomlist': '과외방',
+  '/user/chatList': '채팅 목록',
 };
 
 // 뒤로 가기 존재
