@@ -34,6 +34,7 @@ import RoomDetail from '../pages/RoomDetail/RoomDetail';
 import Calendar from '../pages/Calendar/Calendar';
 import MyPage from '../pages/MyPage/MyPage';
 import UserPolicy from '../pages/MyPage/UserPolicy';
+import EnterShareCode from '../pages/Room/EnterShareCode';
 
 export const router = createBrowserRouter([
   {
@@ -60,6 +61,11 @@ export const router = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: [
+      {
+        path: 'roomlist',
+        element: <RoomList />,
+        children: [{ path: 'invite/:roomId', element: <EnterShareCode /> }],
+      },
       {
         path: 'roomlist',
         element: <RoomList />,

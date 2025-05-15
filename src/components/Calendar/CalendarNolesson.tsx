@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { getShareCode } from '../../api/roomList.api';
 import Modal from '../Modal/Modal';
 import ShareLinkModal from '../Modal/ShareLinkModal';
+import { getUserInfo } from '../../api/mypage.api';
 
 type Props = {
   isShareLink?: boolean;
@@ -21,18 +22,22 @@ const CalendarNolesson = ({ isShareLink, roleInfo }: Props) => {
 
   const handleOnClick = async () => {
     if (isShareLink) {
-      const res = await getShareCode(Number(roomId));
-      const shareCode = res.shareCode;
-      setLink(`https://t-link.site/user/roomlist/invite/${roomId}/${shareCode}`);
+      getUserInfo().then((userRes) => {
+        getShareCode(Number(roomId)).then((codeRes) => {
+          const shareCode = codeRes.shareCode;
+          setLink(
+            `${userRes.username} 선생님이 참여 코드를 보내셨어요!
+아래 링크로 들어가서 참여 코드를 입력해주세요.
+https://t-link.site/user/roomlist/invite/${roomId}
+참여 코드: ${shareCode}`,
+          );
+        });
+      });
       setModalOpen(true);
     } else if (roleInfo === 'TEACHER') {
       navigation('/user/roomlist');
     }
   };
-
-  useEffect(() => {
-    console.log(link);
-  }, [link]);
 
   return (
     <div
