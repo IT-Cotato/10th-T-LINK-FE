@@ -64,7 +64,8 @@ const InviteModal = () => {
   ) : (
     <div className="flex flex-col p-4 gap-6 w-[320px] bg-white rounded-[16px]">
       <div className="text-center font-semibold text-lg leading-8">
-        과외방에 입장할 수 없습니다.
+        과외방에 입장할 수 없습니다. <br />
+        초대 코드나 계정을 다시 확인해주세요.
       </div>
       <div className="flex justify-center gap-4 w-full font-semibold text-base">
         <button
